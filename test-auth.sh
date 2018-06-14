@@ -4,7 +4,7 @@ echo -n "Testing REST and SWORD access..."
 
 ### dspace 6 instance: 
 #DSPACE_SERVER="http://bib-test.rz.uni-ulm.de"
-DSPACE_SERVER="http://134.60.51.65:8080"
+DSPACE_SERVER="https://demo-dspace.sara-service.org:8080"
 
 #SARA_USER="kiz.oparu-testuser01@uni-ulm.de"
 SARA_USER="project-sara@uni-konstanz.de"
@@ -12,7 +12,9 @@ SARA_PWD="SaraTest"
 
 # set one user that exists and one that doesnt
 USER1="stefan.kombrink@uni-ulm.de"
+# ...and one that doesnt
 USER2="daniel.duesentrieb@uni-entenhausen.de"
+# ...and one that exists but has different rights
 USER3="kiz.oparu-testuser02@uni-ulm.de"
 
 

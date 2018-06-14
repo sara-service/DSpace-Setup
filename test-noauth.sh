@@ -2,7 +2,7 @@
 
 echo "Testing REST and SWORD access without authorization"
 
-DSPACE_SERVER="http://134.60.51.65:8080"
+DSPACE_SERVER="https://demo-dspace.sara-service.org:8080"
 
 echo "ITEMS"
 curl -s -H "Accept: application/json" $DSPACE_SERVER/rest/items | python -m json.tool
