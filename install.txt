@@ -30,7 +30,7 @@
   * https://bwcloud.ruf.uni-freiburg.de
   * Compute -> Instances -> Start new insatance
   * Use "Ubuntu Server 16.04" image from the image
-  * RAM be at least 4GB.
+  * RAM be at least 4GB, better 8GB+
   * A default hard-drive capacity 10 GB is enough at least for the installation.
 
 ## In case you have an running instance already which you would like to replace
@@ -40,17 +40,21 @@
  * Use "Ubuntu Server 16.04" image from the image, Partitioning "Automatic"
  * The IP address will be unchanged!
    remove the host key from SSH known hosts:
-   ssh-keygen -f "/home/stefan/.ssh/known_hosts" -R 134.60.51.65
+   ssh-keygen -f "/home/stefan/.ssh/known_hosts" -R <BWCLOUD_IP>
+
+## Setup subdomain
+ * Point your subdomain to the <BWCLOUD_IP>. Here, we use: 
+
+     demo-dspace.sara-service.org
 
 ### Clone this setup from git
-ssh -A ubuntu@134.60.51.65
-git clone git@git.uni-konstanz.de:sara/forschung.git /tmp/x
-ln -s /tmp/x/tests/dspace-6.2-bwcloud-vm ~
+ssh -A ubuntu@demo-dspace.sara-service.org
+git clone git@git.uni-konstanz.de:sara/DSpace-Setup.git
 
 ### Start the installation script "dspace-install.sh". 
 #FIXME this throws errors when not executed as root... for now use sudo
 
-cd ~/dspace-6.2-bwcloud-vm
+cd ~/DSpace-Setup
 sudo ./dspace-install.sh
 
 ### At the end of the installation you will be asked to create an admin user. 
@@ -59,10 +63,15 @@ sudo ./dspace-install.sh
 
 ### When installation is finished, please visit a web page of the DSpace server:
 
-firefox http://134.60.51.65:8080/xmlui
+firefox http://demo-dspace.sara-service.org:8080/xmlui
 
 ### Login as the admin user and create a user using an email address where you have access to.
 ###   Equip this user with submit permissions. I used my gmail address...
+
+### Rebuild dspace from sources (OPTIONAL)
+./dspace-checkout.sh
+#then select your desired branch
+./dspace-rebuild.sh
 
 ### Install letsencrypt, create and configure SSL cert
 sudo apt-get install letsencrypt
