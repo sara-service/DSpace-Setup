@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<import_structure>
+  <community>
+    <name>Fakultät für Ingenieurwissenschaften, Informatik und Psychologie</name>
+    <collection>
+      <name>Publikationen</name>
+    </collection>
+    <collection>
+      <name>Forschungsdaten</name>
+    </collection>
+  </community>
+  <community>
+    <name>Fakultät für Mathematik und Wirtschaftswissenschaften</name>
+    <collection>
+      <name>Publikationen</name>
+    </collection>
+    <collection>
+      <name>Forschungsdaten</name>
+    </collection>
+  </community>
+  <community>
+    <name>Fakultät für Psychopathie</name>
+    <collection>
+      <name>Publikationen</name>
+    </collection>
+    <collection>
+      <name>Forschungsdaten</name>
+    </collection>
+    <collection>
+      <name>Amokläufe</name>
+    </collection>
+  </community>
+</import_structure>
