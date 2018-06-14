@@ -182,6 +182,8 @@ sudo cp -p /dspace/config/modules/swordv2-server.cfg /dspace/config/modules/swor
 sudo cp -p /dspace/config/modules/sword-server.cfg /dspace/config/modules/sword-server.cfg.orig
 sudo cp -p /dspace/config/dspace.cfg /dspace/config/dspace.cfg.orig
 sudo cp -p /dspace/config/xmlui.xconf /dspace/config/xmlui.xconf.orig
+sudo cp -p /dspace/config/item-submission.xml /dspace/config/item-submission.xml.orig
+sudo cp -p /dspace/config/input-forms.xml /dspace/config/input-forms.xml.orig
 
 # Replace config files
 echo "[DSpace-Install] Replace DSpace-config files."
