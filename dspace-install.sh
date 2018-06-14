@@ -191,7 +191,7 @@ sudo cat $CONFIGDIR/sword/sword-server.cfg | sudo -u dspace tee /dspace/config/m
 sudo cat $CONFIGDIR/dspace.cfg | sudo -u dspace tee /dspace/config/dspace.cfg
 sudo cat $CONFIGDIR/xmlui.xconf | sudo -u dspace tee /dspace/config/xmlui.xconf
 sudo cat $CONFIGDIR/item-submission.xml | sudo -u dspace tee /dspace/config/item-submission.xml
-sudo cat $CONFIGDIR/input-forms.xml | /dspace/config/input-forms.xml
+sudo cat $CONFIGDIR/input-forms.xml | sudo -u dspace tee /dspace/config/input-forms.xml
 
 # Replace email templates
 echo "[DSpace-Install] Replace email-files."
