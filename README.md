@@ -58,20 +58,22 @@ sudo dpkg-reconfigure locales # generate en_EN@UTF8 and de_DE@UTF8, set en_EN as
 sudo ./dspace-install.sh
 ```
 
-### At the end of the installation you will be asked to create an admin user. 
-### Please type the mail address, name, surname and password.
-### It will send no email as the admin user is written to the DB directly.
+At the end of the installation you will be asked to create an admin user. 
+Please type the mail address, name, surname and password.
+It will send no email as the admin user is written to the DB directly.
 
-### When installation is finished, please visit a web page of the DSpace server:
+When installation is finished, please visit a web page of the DSpace server:
 
 `firefox http://demo-dspace.sara-service.org:8080/xmlui`
 
-### Login as the admin user and create a user using an email address where you have access to.
-###   Equip this user with submit permissions. I used my gmail address...
+Login as the admin user and create a user using an email address where you have access to.
+Equip this user with submit permissions. I used my gmail address...
 
 ### Rebuild dspace from sources (OPTIONAL)
 `./dspace-checkout.sh`
-#then select your desired branch
+
+then select your desired branch
+
 `./dspace-rebuild.sh`
 
 ### Install letsencrypt, create and configure SSL cert
