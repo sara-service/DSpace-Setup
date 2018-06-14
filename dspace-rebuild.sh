@@ -30,7 +30,7 @@ cd $WORKDIR
 
 cd $SRCDIR && sudo -u dspace mvn -e package -Dmirage2.on=true && \
  sudo service tomcat stop && \
- cd /home/dspace/DSpace/dspace/target/dspace-installer/ && sudo -u dspace ant update && \
+ cd $SRCDIR/dspace/target/dspace-installer/ && sudo -u dspace ant update && \
  sudo cp -R -p /dspace/webapps/* /opt/tomcat/webapps/ && \
  sudo -u dspace rm -rf /dspace/*bak*
 echo "OK"
