@@ -1,3 +1,5 @@
+### TODO rerun from scratch to test if it works
+
 # How to Install DSpace-6 on your virtual machine
 
 This manual provides some steps, after that you can have installed and already
@@ -76,6 +78,9 @@ then select your desired branch
 
 `./dspace-rebuild.sh`
 
+
+### TODO make work from there on!
+
 ### Install letsencrypt, create and configure SSL cert
 ```
 sudo apt-get install letsencrypt
@@ -96,7 +101,7 @@ sudo vim /dspace/config/modules/swordv2-server.cfg # fix swordv2-server.url, swo
 sudo service tomcat restart
 ```
 
-### TODO: setup automatic renewal script...http -> httpd redirect...
+### setup automatic renewal script...http -> httpd redirect...
 `sudo sh -c 'echo "15 3 * * * root /usr/bin/letsencrypt renew && service apache2 reload" > /etc/cron.d/letsencrypt'`
 
 prepend also:
