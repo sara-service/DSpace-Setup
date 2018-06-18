@@ -73,6 +73,15 @@ When installation is finished, please visit a web page of the DSpace server:
 Login as the admin user and create a user using an email address where you have access to.
 Equip this user with submit permissions. I used my gmail address...
 
+### Performance optimizations
+Append
+`CATALINA_OPTS="-Xmx2048M -Xms2048M  -XX:MaxPermSize=512m -XX:+UseG1GC -Dfile.encoding=UTF-8"`
+in
+`/opt/tomcat/bin/catalina.sh`
+
+Restart TomCat
+`sudo service tomcat restart`
+
 ### Rebuild dspace from sources (OPTIONAL)
 `./dspace-checkout.sh`
 
