@@ -64,9 +64,7 @@ At the end of the installation you will be asked to create an admin user.
 Please type the mail address, name, surname and password.
 It will send no email as the admin user is written to the DB directly.
 
-When installation is finished, please visit a web page of the DSpace server:
-
-`firefox http://demo-dspace.sara-service.org:8080/xmlui`
+When installation is finished, please visit a web page of the DSpace server: http://demo-dspace.sara-service.org:8080/xmlui
 
 Login as the admin user and create a user using an email address where you have access to.
 Equip this user with submit permissions. I used my gmail address...
@@ -102,7 +100,7 @@ sudo a2enmod ssl proxy_http
 sudo service apache2 restart
 ```
 
-Now you will see the standard apache index page: `firefox http://demo-dspace.sara-service.org`
+Now you will see the standard apache index page: http://demo-dspace.sara-service.org
 
 ### Install letsencrypt, create and configure SSL cert
 ```
@@ -110,8 +108,7 @@ sudo apt-get install letsencrypt python-letsencrypt-apache
 sudo service apache2 stop
 sudo letsencrypt --authenticator standalone --installer apache --domains demo-dspace.sara-service.org
 ```
-Choose `secure redirect` . Now you should be able to access via https only:
-`firefox http://demo-dspace.sara-service.org`
+Choose `secure redirect` . Now you should be able to access via https only: http://demo-dspace.sara-service.org
 
 ###
 ...
