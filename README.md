@@ -1,5 +1,3 @@
-### TODO rerun from scratch to test if it works
-
 # How to Install DSpace-6 on your virtual machine
 
 This manual provides some steps, after that you can have installed and already
@@ -81,6 +79,13 @@ in
 
 Restart TomCat
 `sudo service tomcat restart`
+
+### Free up disk space
+```
+du -hs /tmp/dspace-6.2-src-release
+#4,2G	dspace-6.2-src-release
+rm -rf /tmp/dspace-6.2-src-release
+```
 
 ### Rebuild dspace from sources (OPTIONAL)
 `./dspace-checkout.sh`
