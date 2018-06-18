@@ -57,6 +57,8 @@ git clone git@git.uni-konstanz.de:sara/DSpace-Setup.git
 cd ~/DSpace-Setup
 sudo hostname demo-dspace.sara-service.org
 sudo dpkg-reconfigure locales # generate en_EN@UTF8 and de_DE@UTF8, set en_EN as default
+sudo apt update
+sudo apt upgrade
 sudo ./dspace-install.sh
 ```
 
