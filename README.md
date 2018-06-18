@@ -84,7 +84,7 @@ Restart TomCat
 ```
 du -hs /tmp/dspace-6.2-src-release
 #4,2G	dspace-6.2-src-release
-rm -rf /tmp/dspace-6.2-src-release
+sudo rm -rf /tmp/dspace-6.2-src-release
 ```
 
 ### Rebuild dspace from sources (OPTIONAL)
