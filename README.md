@@ -87,7 +87,7 @@ du -hs /tmp/dspace-6.2-src-release
 sudo rm -rf /tmp/dspace-6.2-src-release
 ```
 
-### Rebuild dspace from sources (OPTIONAL)
+### Rebuild dspace from sources (OPTIONAL) - TODO test it!
 `./dspace-checkout.sh`
 
 then select your desired branch
@@ -95,14 +95,28 @@ then select your desired branch
 `./dspace-rebuild.sh`
 
 
-### TODO make work from there on!
+### Install and configure apache httpd
+```
+sudo apt-get install apache2
+sudo a2enmod ssl proxy_http
+sudo service apache2 restart
+```
+
+Now you will see the standard apache index page: `firefox http://demo-dspace.sara-service.org`
 
 ### Install letsencrypt, create and configure SSL cert
 ```
-sudo apt-get install letsencrypt
-mkdir -p /var/www/html
-sudo letsencrypt certonly --webroot -w /var/www/html -d bwcloud-vm65.rz.uni-ulm.de
-sudo ls /etc/letsencrypt/live/bwcloud-vm65.rz.uni-ulm.de
+sudo apt-get install letsencrypt python-letsencrypt-apache
+sudo service apache2 stop
+sudo letsencrypt --authenticator standalone --installer apache --domains demo-dspace.sara-service.org
+```
+Choose `secure redirect` . Now you should be able to access via https only:
+`firefox http://demo-dspace.sara-service.org`
+
+###
+...
+sudo letsencrypt certonly --webroot -w /var/www/html -d demo-dspace.sara-service.org
+sudo ls /etc/letsencrypt/live/demo-dspace.sara-service.org
 # cert.pem  chain.pem  fullchain.pem  privkey.pem
 # as root:
 openssl pkcs12 -export -in fullchain.pem -inkey privkey.pem -out fullchain_and_key.p12 -name tomcat
