@@ -35,10 +35,10 @@ In case of questions please contact:
  * Use "Ubuntu Server 16.04" image from the image, Partitioning "Automatic"
  * The IP address will be unchanged!
    remove the host key from SSH known hosts:
-   ssh-keygen -f "/home/stefan/.ssh/known_hosts" -R <BWCLOUD_IP>
+   ssh-keygen -f "/home/stefan/.ssh/known_hosts" -R BWCLOUD_IP
 
 ### Setup subdomain
- * Point your subdomain to the <BWCLOUD_IP>. Here, we use: 
+ * Point your subdomain to the `BWCLOUD_IP`. Here, we use: 
 
      demo-dspace.sara-service.org
 
@@ -71,12 +71,18 @@ Equip this user with submit permissions. I used my gmail address...
 
 ### Performance optimizations
 Append
-`CATALINA_OPTS="-Xmx2048M -Xms2048M  -XX:MaxPermSize=512m -XX:+UseG1GC -Dfile.encoding=UTF-8"`
+```
+CATALINA_OPTS="-Xmx2048M -Xms2048M  -XX:MaxPermSize=512m -XX:+UseG1GC -Dfile.encoding=UTF-8"
+```
 in
-`/opt/tomcat/bin/catalina.sh`
+```
+/opt/tomcat/bin/catalina.sh
+```
 
 Restart TomCat
-`sudo service tomcat restart`
+```
+sudo service tomcat restart
+```
 
 ### Free up disk space
 ```
@@ -86,13 +92,13 @@ sudo rm -rf /tmp/dspace-6.2-src-release
 ```
 
 ### Rebuild dspace from sources (OPTIONAL) - TODO test it!
-`./dspace-checkout.sh`
-
+```
+./dspace-checkout.sh
+```
 then select your desired branch
-
-`./dspace-rebuild.sh`
-
-
+```
+./dspace-rebuild.sh
+```
 ### Install and configure apache httpd
 ```
 sudo apt-get install apache2
@@ -110,32 +116,60 @@ sudo letsencrypt --authenticator standalone --installer apache --domains demo-ds
 ```
 Choose `secure redirect` . Now you should be able to access via https only: http://demo-dspace.sara-service.org
 
-###
-...
-sudo letsencrypt certonly --webroot -w /var/www/html -d demo-dspace.sara-service.org
-sudo ls /etc/letsencrypt/live/demo-dspace.sara-service.org
-# cert.pem  chain.pem  fullchain.pem  privkey.pem
-# as root:
-openssl pkcs12 -export -in fullchain.pem -inkey privkey.pem -out fullchain_and_key.p12 -name tomcat
-keytool -importkeystore -deststorepass dspace -destkeypass dspace -destkeystore /dspace/config/dspace.jks -srckeystore fullchain_and_key.p12 -srcstoretype PKCS12 -srcstorepass dspace -alias tomcat
+### Adapt dspace config
+Append the following section to your virtual server config under `/etc/apache2/sites-enabled/000-default-le-ssl.conf` :
+```
+        ProxyPass /xmlui http://localhost:8080/xmlui
+        ProxyPassReverse /xmlui http://localhost:8080/xmlui
 
-sudo vim /opt/tomcat/conf/server.xml # disable http Connector on 8080
-# insert https connector on 8080 instead like so:
-<Connector port="8080" protocol="org.apache.coyote.http11.Http11Protocol" URIEncoding="UTF-8" maxThreads="150" SSLEnabled="true" scheme="https" secure="true" clientAuth="false" sslProtocol="TLS" keystoreFile="/dspace/config/dspace.jks" keystorePass="dspace" keyAlias="tomcat" keyPass="dspace"/>
+        ProxyPass /oai http://localhost:8080/oai
+        ProxyPassReverse /oai http://localhost:8080/oai
+        ProxyPass /rest http://localhost:8080/rest
+        ProxyPassReverse /rest http://localhost:8080/rest
+        ProxyPass /solr http://localhost:8080/solr
+        ProxyPassReverse /solr http://localhost:8080/solr
+        ProxyPass /swordv2 http://localhost:8080/swordv2
 
-sudo vim /dspace/config/modules/swordv2-server.cfg # fix swordv2-server.url, swordv2-server.{servicedocument,collection}.url to match the host name of the SSL certificate
+        #ProxyPass /oai !
+        #ProxyPass /rest !
+        #ProxyPass /swordv2 !
+        #ProxyPass /solr !
+        #ProxyPass /robots.txt !
 
+        #RewriteRule /oai - [L]
+        #RewriteRule /rest - [L]
+        #RewriteRule /swordv2 - [L]
+        #RewriteRule /solr - [L]
+        #RewriteRule /query - [L]
+
+        RewriteCond %{SERVER_NAME}  !^demo-dspace.sara-service.org [NC]
+        RewriteRule ^(.*)$        https://demo-dspace.sara-service.org [last,redirect=301]
+
+        ProxyPass / http://localhost:8080/xmlui
+        ProxyPassReverse / http://localhost:8080/xmlui
+```
+Restart apache:
+```
+sudo service apache2 restart
+```
+
+Now you need to remove the local ports in the dspace config. Replace 
+```
+http://demo-dspace.sara-service.org:8080
+``` 
+by 
+```
+http://demo-dspace.sara-service.org
+``` 
+in
+```
+/dspace/config/{local.cfg,dspace.cfg,modules/swordv2-server.cfg}
+```
+this should be 6 occurences altogether.
+```
 sudo service tomcat restart
 ```
 
-### setup automatic renewal script...http -> httpd redirect...
-`sudo sh -c 'echo "15 3 * * * root /usr/bin/letsencrypt renew && service apache2 reload" > /etc/cron.d/letsencrypt'`
+### Close ports
 
-prepend also:
-```
-#<VirtualHost *:80>
-#    RewriteEngine On
-#    RewriteCond %{HTTPS} off
-#    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
-#</VirtualHost>
-```
+Now you can login the bwCloud user interface and disable the port settings for 8080/8443 for better security!
