@@ -71,7 +71,7 @@
          <required></required>
        </field-->
 
-       <field>
+       <!--field>
          <dc-schema>dc</dc-schema>
          <dc-element>date</dc-element>
          <dc-qualifier>issued</dc-qualifier>
@@ -82,7 +82,8 @@
                         You can leave out the day and/or month if they aren't
                         applicable.</hint>
          <required>You must enter at least the year.</required>
-       </field>
+         <visibility otherwise="readonly">submit</visibility>
+       </field-->
 
        <!--field>
          <dc-schema>dc</dc-schema>
