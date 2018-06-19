@@ -4,7 +4,7 @@ echo -n "Testing REST and SWORD access..."
 
 ### dspace 6 instance: 
 #DSPACE_SERVER="http://bib-test.rz.uni-ulm.de"
-DSPACE_SERVER="https://demo-dspace.sara-service.org
+DSPACE_SERVER="https://demo-dspace.sara-service.org"
 
 #SARA_USER="kiz.oparu-testuser01@uni-ulm.de"
 SARA_USER="project-sara@uni-konstanz.de"
@@ -30,7 +30,7 @@ curl -H "on-behalf-of: $USER3" -i $DSPACE_SERVER/swordv2/servicedocument --user 
 
 
 # submit item with SARA submit user, on-behalf user (Nachweis, no bitstreams attached!)
-cat << 'EOF' > entry.xml
+cat >entry.xml <<EOF
 <?xml version='1.0' encoding='UTF-8'?> 
 <entry xmlns="http://www.w3.org/2005/Atom"
            xmlns:dc="http://purl.org/dc/elements/1.1/"
