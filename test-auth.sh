@@ -4,7 +4,7 @@ echo -n "Testing REST and SWORD access..."
 
 ### dspace 6 instance: 
 #DSPACE_SERVER="http://bib-test.rz.uni-ulm.de"
-DSPACE_SERVER="https://demo-dspace.sara-service.org:8080"
+DSPACE_SERVER="https://demo-dspace.sara-service.org
 
 #SARA_USER="kiz.oparu-testuser01@uni-ulm.de"
 SARA_USER="project-sara@uni-konstanz.de"

@@ -159,13 +159,19 @@ http://demo-dspace.sara-service.org:8080
 ``` 
 by 
 ```
-http://demo-dspace.sara-service.org
+https://demo-dspace.sara-service.org
 ``` 
 in
 ```
 /dspace/config/{local.cfg,dspace.cfg,modules/swordv2-server.cfg}
 ```
-this should be 6 occurences altogether.
+except for the service document url, this needs to be 
+```
+http://demo-dspace.sara-service.org
+```
+due to the local redirect. TODO This is not nice and should be fixed e.g. by configuring tomcat for https exclusively!
+You should count five replacements altogether.
+
 ```
 sudo service tomcat restart
 ```
