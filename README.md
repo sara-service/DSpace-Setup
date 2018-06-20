@@ -79,10 +79,11 @@ sudo service tomcat restart
 to update the host name for DSpace.
 
 ### Test your instance
-Please visit a web page of the DSpace server: http://demo-dspace.sara-service.org:8080/xmlui
+Please visit a web page of the DSpace server: http://demo-dspace.sara-service.org:8080/xmlui .
+You should be able to login with your admin account.
 
 ### Performance optimizations
-Append
+Prepend
 ```
 CATALINA_OPTS="-Xmx2048M -Xms2048M  -XX:MaxPermSize=512m -XX:+UseG1GC -Dfile.encoding=UTF-8"
 ```
