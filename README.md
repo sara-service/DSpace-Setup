@@ -73,7 +73,7 @@ It will send no email as the admin user is written to the DB directly.
 
 The prepared dspace configuration files use `demo-dspace.sara-service.org` everywhere. Run
 ```
-sudo sed -i.orig 's/demo-dspace.sara-service.org/your-host-name/g' /dspace/config/{dspace.cfg,local.cfg,modules/swordv2-server.cfg}
+sudo sed -i 's/demo-dspace.sara-service.org/your-host-name/g' /dspace/config/{dspace.cfg,local.cfg,modules/swordv2-server.cfg}
 sudo service tomcat restart
 ``` 
 to update the host name for DSpace.
