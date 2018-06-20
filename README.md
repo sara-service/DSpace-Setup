@@ -42,6 +42,10 @@ In case of questions please contact:
 
      demo-dspace.sara-service.org
 
+### Enable history search (pgup,pgdn)
+```
+sudo sed -i.orig '37,+1s/^# //' /etc/inputrc
+```
 ### Clone this setup from git
 ```
 ssh -A ubuntu@demo-dspace.sara-service.org
