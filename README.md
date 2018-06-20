@@ -119,16 +119,16 @@ Choose `secure redirect` . Now you should be able to access via https only: http
 ### Adapt dspace config
 Append the following section to your virtual server config under `/etc/apache2/sites-enabled/000-default-le-ssl.conf` :
 ```
-        ProxyPass /xmlui http://localhost:8080/xmlui
-        ProxyPassReverse /xmlui http://localhost:8080/xmlui
+        ProxyPass /xmlui ajp://http://localhost:8009/xmlui
+        ProxyPassReverse /xmlui ajp://http://localhost:8009/xmlui
 
-        ProxyPass /oai http://localhost:8080/oai
-        ProxyPassReverse /oai http://localhost:8080/oai
-        ProxyPass /rest http://localhost:8080/rest
-        ProxyPassReverse /rest http://localhost:8080/rest
-        ProxyPass /solr http://localhost:8080/solr
-        ProxyPassReverse /solr http://localhost:8080/solr
-        ProxyPass /swordv2 http://localhost:8080/swordv2
+        ProxyPass /oai ajp://http://localhost:8009/oai
+        ProxyPassReverse /oai ajp://http://localhost:8009/oai
+        ProxyPass /rest ajp://http://localhost:8009/rest
+        ProxyPassReverse /rest ajp://http://localhost:8009/rest
+        ProxyPass /solr ajp://http://localhost:8009/solr
+        ProxyPassReverse /solr ajp://http://localhost:8009/solr
+        ProxyPass /swordv2 ajp://http://localhost:8009/swordv2
 
         #ProxyPass /oai !
         #ProxyPass /rest !
@@ -142,11 +142,11 @@ Append the following section to your virtual server config under `/etc/apache2/s
         #RewriteRule /solr - [L]
         #RewriteRule /query - [L]
 
-        RewriteCond %{SERVER_NAME}  !^demo-dspace.sara-service.org [NC]
-        RewriteRule ^(.*)$        https://demo-dspace.sara-service.org [last,redirect=301]
+        #RewriteCond %{SERVER_NAME}  !^demo-dspace.sara-service.org [NC]
+        #RewriteRule ^(.*)$        https://demo-dspace.sara-service.org [last,redirect=301]
 
-        ProxyPass / http://localhost:8080/xmlui
-        ProxyPassReverse / http://localhost:8080/xmlui
+        ProxyPass / ajp://http://localhost:8009/xmlui
+        ProxyPassReverse / ajp://http://localhost:8009/xmlui
 ```
 Restart apache:
 ```
