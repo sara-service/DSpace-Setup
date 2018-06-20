@@ -17,8 +17,8 @@ Further DSpace-configuration can be done according the documentation:
 https://wiki.duraspace.org/display/DSDOC6x/DSpace+6.x+Documentation
 
 In case of questions please contact:
-* Volodymyr Kushnarenko, Ulm University, Germany / e-mail: volodymyr.kushnarenko[at]uni-ulm.de
 * Stefan Kombrink, Ulm University, Germany / e-mail: stefan.kombrink[at]uni-ulm.de
+* Volodymyr Kushnarenko, Ulm University, Germany / e-mail: volodymyr.kushnarenko[at]uni-ulm.de
 
 ### Create a virtual machine (e.g. an instance on the bwCloud):
 
@@ -42,14 +42,15 @@ In case of questions please contact:
 
      demo-dspace.sara-service.org
 
-### Enable history search (pgup,pgdn)
-```
-sudo sed -i.orig '37,+1s/^# //' /etc/inputrc
-```
 ### Clone this setup from git
 ```
 ssh -A ubuntu@demo-dspace.sara-service.org
 git clone git@git.uni-konstanz.de:sara/DSpace-Setup.git
+```
+
+### Enable history search (pgup,pgdn)
+```
+sudo sed -i.orig '37,+1s/^# //' /etc/inputrc
 ```
 
 ### Start the installation script "dspace-install.sh". 
