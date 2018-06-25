@@ -97,6 +97,13 @@ Restart TomCat
 sudo service tomcat restart
 ```
 
+### Stability optimizations
+Append `kernel.panic = 30` to `/etc/sysctl.conf`
+
+```
+sudo sysctl -p /etc/sysctl.conf
+```
+
 ### Free up disk space
 ```
 du -hs /tmp/dspace-6.2-src-release
