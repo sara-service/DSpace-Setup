@@ -50,7 +50,7 @@ git clone git@git.uni-konstanz.de:sara/DSpace-Setup.git
 
 ### Enable history search (pgup,pgdn)
 ```
-sudo sed -i.orig '37,+1s/^# //' /etc/inputrc
+sudo sed -i.orig '41,+1s/^# //' /etc/inputrc
 ```
 
 ### Start the installation script "dspace-install.sh". 
