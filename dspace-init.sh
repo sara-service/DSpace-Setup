@@ -11,6 +11,7 @@ sudo /dspace/bin/dspace user --add --email franziska.rapp@uni-ulm.de --password 
 sudo /dspace/bin/dspace user --add --email matthias.fratz@uni-konstanz.de --password SaraTest --givenname Matthias --surname Fratz
 sudo /dspace/bin/dspace user --add --email daniel.scharon@uni-konstanz.de --password SaraTest --givenname Daniel --surname Scharon
 sudo /dspace/bin/dspace user --add --email kosmas.kaifel@uni-ulm.de --password SaraTest --givenname Kosmas --surname Kaifel
+sudo /dspace/bin/dspace user --add --email uli.hahn@uni-ulm.de --password SaraTest --givenname Uli --surname Hahn
 # generic SARA test user
 sudo /dspace/bin/dspace user --add --email demo-user@sara-service.org --password SaraTest --givenname Demo --surname User
 # generic SARA test user, no submit rights
