@@ -104,6 +104,8 @@ Append `kernel.panic = 30` to `/etc/sysctl.conf`
 sudo sysctl -p /etc/sysctl.conf
 ```
 
+This will perform an automatic reboot 30 seconds after a kernel panic has occurred.
+
 ### Free up disk space
 ```
 du -hs /tmp/dspace-6.2-src-release
