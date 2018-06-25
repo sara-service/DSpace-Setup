@@ -38,7 +38,7 @@ In case of questions please contact:
    ssh-keygen -f "/home/stefan/.ssh/known_hosts" -R BWCLOUD_IP
 
 ### Setup subdomain
- * Point your subdomain to the `BWCLOUD_IP`. Here, we use: 
+Point your subdomain to the IP of the bwCloud VM. Here, we use: 
 
      demo-dspace.sara-service.org
 
@@ -50,7 +50,7 @@ git clone git@git.uni-konstanz.de:sara/DSpace-Setup.git
 
 ### Enable history search (pgup,pgdn)
 ```
-sudo sed -i.orig '37,+1s/^# //' /etc/inputrc
+sudo sed -i.orig '41,+1s/^# //' /etc/inputrc
 ```
 
 ### Start the installation script "dspace-install.sh". 
@@ -69,13 +69,21 @@ At the end of the installation you will be asked to create an admin user.
 Please type the mail address, name, surname and password.
 It will send no email as the admin user is written to the DB directly.
 
-When installation is finished, please visit a web page of the DSpace server: http://demo-dspace.sara-service.org:8080/xmlui
+### Adapt dspace configuration to alternate host name
 
-Login as the admin user and create a user using an email address where you have access to.
-Equip this user with submit permissions. I used my gmail address...
+The prepared dspace configuration files use `demo-dspace.sara-service.org` everywhere. Run
+```
+sudo sed -i 's/demo-dspace.sara-service.org/your-host-name/g' /dspace/config/{dspace.cfg,local.cfg,modules/swordv2-server.cfg}
+sudo service tomcat restart
+``` 
+to update the host name for DSpace.
+
+### Test your instance
+Please visit a web page of the DSpace server: http://demo-dspace.sara-service.org:8080/xmlui .
+You should be able to login with your admin account.
 
 ### Performance optimizations
-Append
+Prepend
 ```
 CATALINA_OPTS="-Xmx2048M -Xms2048M  -XX:MaxPermSize=512m -XX:+UseG1GC -Dfile.encoding=UTF-8"
 ```
@@ -88,6 +96,15 @@ Restart TomCat
 ```
 sudo service tomcat restart
 ```
+
+### Stability optimizations
+Append `kernel.panic = 30` to `/etc/sysctl.conf`
+
+```
+sudo sysctl -p /etc/sysctl.conf
+```
+
+This will perform an automatic reboot 30 seconds after a kernel panic has occurred.
 
 ### Free up disk space
 ```
