@@ -1,9 +1,19 @@
-﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <import_structure>
   <community>
     <name>Fakultät für Informatik</name>
+    <description>Descriptive text</description>
+    <intro>Introductory text</intro>
+    <copyright>Special copyright notice</copyright>
+    <sidebar>Sidebar text</sidebar>
     <collection>
       <name>Publikationen (Workflow)</name>
+      <description>Descriptive text</description>
+      <intro>Introductory text</intro>
+      <copyright>Special copyright notice</copyright>
+      <sidebar>Sidebar text</sidebar>
+      <license>Special licence</license>
+      <provenance>Provenance information</provenance>
     </collection>
     <collection>
       <name>Forschungsdaten (Workspace)</name>
