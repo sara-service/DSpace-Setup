@@ -1,33 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <import_structure>
   <community>
-    <name>Fakultät für Ingenieurwissenschaften, Informatik und Psychologie</name>
+    <name>Fakultät für Informatik</name>
     <collection>
-      <name>Publikationen</name>
+      <name>Publikationen (Workflow)</name>
     </collection>
     <collection>
-      <name>Forschungsdaten</name>
-    </collection>
-  </community>
-  <community>
-    <name>Fakultät für Mathematik und Wirtschaftswissenschaften</name>
-    <collection>
-      <name>Publikationen</name>
-    </collection>
-    <collection>
-      <name>Forschungsdaten</name>
+      <name>Forschungsdaten (Workspace)</name>
     </collection>
   </community>
   <community>
-    <name>Fakultät für Psychopathie</name>
+    <name>Fakultät für Psychologie</name>
     <collection>
-      <name>Publikationen</name>
+      <name>Publikationen (Workflow)</name>
     </collection>
     <collection>
-      <name>Forschungsdaten</name>
+      <name>Forschungsdaten (Workspace)</name>
+    </collection>
+  </community>
+  <community>
+    <name>Fakultät für Elektrotechnik</name>
+    <collection>
+      <name>Publikationen (Workflow)</name>
     </collection>
     <collection>
-      <name>Amokläufe</name>
+      <name>Forschungsdaten (Workspace)</name>
+    </collection>
+    <collection>
+      <name>Testreihen (Workspace)</name>
     </collection>
   </community>
 </import_structure>
