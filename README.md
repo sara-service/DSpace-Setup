@@ -176,4 +176,4 @@ sudo service tomcat restart
 
 ### Close ports
 
-Now you can login the bwCloud user interface and disable the port settings for 8080/8443 for better security!
+Now you can login the bwCloud user interface and disable the tomcat ports 8080/8443 for better security!
