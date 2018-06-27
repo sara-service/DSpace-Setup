@@ -83,7 +83,7 @@ Please visit a web page of the DSpace server: http://demo-dspace.sara-service.or
 You should be able to login with your admin account.
 
 ### Dump your active config
-This is useful for debugging. DSpace has a `read` command to perform a sequence of commands in a single call but it does not work. Hence this solution is very slow:
+This is useful for debugging. DSpace has a `read` command to perform a sequence of commands in a single call but it does not work. Hence this solution which is very slow:
 ```
 for prop in `cat ~/DSpace-Setup/config/local.cfg | awk '/^\S\S*\s*=/{if (split($0,a,"=")>0) {print a[1]}}'`; do 
     echo "$prop = "; sudo /dspace/bin/dspace dsprop -p $prop; echo; 
