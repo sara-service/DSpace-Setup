@@ -188,9 +188,6 @@ sudo cp -p /dspace/config/input-forms.xml /dspace/config/input-forms.xml.orig
 # Replace config files
 echo "[DSpace-Install] Replace DSpace-config files."
 sudo cat $CONFIGDIR/rest/web.xml | sudo -u dspace tee /dspace/webapps/rest/WEB-INF/web.xml
-sudo cat $CONFIGDIR/swordv2/swordv2-server.cfg | sudo -u dspace tee /dspace/config/modules/swordv2-server.cfg
-sudo cat $CONFIGDIR/sword/sword-server.cfg | sudo -u dspace tee /dspace/config/modules/sword-server.cfg
-sudo cat $CONFIGDIR/dspace.cfg | sudo -u dspace tee /dspace/config/dspace.cfg
 sudo cat $CONFIGDIR/xmlui.xconf | sudo -u dspace tee /dspace/config/xmlui.xconf
 sudo cat $CONFIGDIR/item-submission.xml | sudo -u dspace tee /dspace/config/item-submission.xml
 sudo cat $CONFIGDIR/input-forms.xml | sudo -u dspace tee /dspace/config/input-forms.xml
