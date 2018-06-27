@@ -168,26 +168,9 @@ Restart apache:
 sudo service apache2 restart
 ```
 
-Now you need to remove the local ports in the dspace config. Replace 
+Now you need to remove the local port 8080 and the http in the dspace config:
 ```
-http://demo-dspace.sara-service.org:8080
-``` 
-by 
-```
-https://demo-dspace.sara-service.org
-``` 
-in
-```
-/dspace/config/{local.cfg,dspace.cfg,modules/swordv2-server.cfg}
-```
-except for the service document url, this needs to be 
-```
-http://demo-dspace.sara-service.org
-```
-due to the local redirect. TODO This is not nice and should be fixed e.g. by configuring tomcat for https exclusively!
-You should count five replacements altogether.
-
-```
+sudo sed -i 's#dspace.baseUrl = http://${dspace.hostname}:8080#dspace.baseUrl = https://${dspace.hostname}#' /dspace/config/local.cfg
 sudo service tomcat restart
 ```
 
