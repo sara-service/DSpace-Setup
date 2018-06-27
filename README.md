@@ -160,21 +160,6 @@ Append the following section to your virtual server config under `/etc/apache2/s
         ProxyPassReverse /solr ajp://http://localhost:8009/solr
         ProxyPass /swordv2 ajp://http://localhost:8009/swordv2
 
-        #ProxyPass /oai !
-        #ProxyPass /rest !
-        #ProxyPass /swordv2 !
-        #ProxyPass /solr !
-        #ProxyPass /robots.txt !
-
-        #RewriteRule /oai - [L]
-        #RewriteRule /rest - [L]
-        #RewriteRule /swordv2 - [L]
-        #RewriteRule /solr - [L]
-        #RewriteRule /query - [L]
-
-        #RewriteCond %{SERVER_NAME}  !^demo-dspace.sara-service.org [NC]
-        #RewriteRule ^(.*)$        https://demo-dspace.sara-service.org [last,redirect=301]
-
         ProxyPass / ajp://http://localhost:8009/xmlui
         ProxyPassReverse / ajp://http://localhost:8009/xmlui
 ```
