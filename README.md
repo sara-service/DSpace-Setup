@@ -20,6 +20,7 @@ It is advised to walk through this manual without interruptions or intermediate 
 
 Further reading:
 https://wiki.duraspace.org/display/DSDOC6x/DSpace+6.x+Documentation
+
 About SARA:
 https://sara-service.org
 
