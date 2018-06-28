@@ -205,9 +205,9 @@ This will perform an automatic reboot 30 seconds after a kernel panic has occurr
 
 ### Free up disk space
 ```
-du -hs /tmp/dspace-6.2-src-release
-#4,2G	dspace-6.2-src-release
-sudo rm -rf /tmp/dspace-6.2-src-release
+du -hs /tmp/dspace-6.?-src-release
+#4,2G	dspace-6.3-src-release
+sudo rm -rf /tmp/dspace-6.?-src-release
 ```
 
 ## Misc
