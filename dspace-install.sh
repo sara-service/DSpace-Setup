@@ -207,9 +207,6 @@ echo "[DSpace-Install] Create DSpace admininistrator user (use $ADMIN_EMAIL)."
 sleep 5
 sudo -u dspace /dspace/bin/dspace create-administrator
 
-# Create DSpace initial communities/collections structure
-sudo -u dspace /dspace/bin/dspace structure-builder -f $CONFIGDIR/DSpace_Import_Structure.xml -o /tmp/DSpace_Export_Structure.xml -e "$ADMIN_EMAIL"
-
 # Configure dspace to show the last submittion
 # see here: https://www.google.de/url?sa=t&rct=j&q=&esrc=s&source=web&cd=2&ved=0ahUKEwjm5sP-hfDUAhVBnBQKHUdODI0QFggvMAE&url=https%3A%2F%2Fjira.duraspace.org%2Fsecure%2Fattachment%2F10776%2Fconfigure.html&usg=AFQjCNECZU0fIxiEU41zfXWkzfZP6NirdQ&cad=rja
 

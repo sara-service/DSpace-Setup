@@ -17,4 +17,9 @@ sudo /dspace/bin/dspace user --add --email demo-user@sara-service.org --password
 # generic SARA test user, no submit rights
 sudo /dspace/bin/dspace user --add --email demo-user-noaccess@sara-service.org --password SaraTest --givenname Demo --surname Loser
 
+echo "creating initial community/collection structure..."
+# Create DSpace initial communities/collections structure
+sudo -u dspace /dspace/bin/dspace structure-builder -f config/DSpace_Import_Structure.xml -o /tmp/DSpace_Export_Structure.xml -e "$ADMIN_EMAIL"
+
+
 echo "done"
