@@ -92,9 +92,11 @@ After that, we need to configure permissions. You will need to login as admin us
 * create a group called `Submitter`
 * create a group called `SARA User`
 * add `project-sara@uni-konstanz.de` to `Submitter` 
-* add some users to `SARA Users`
-* for all collections: allow submissions for `Submitter`
-* for some selected collections: allow submissions for `SARA User`
+* add some users to `SARA User`
+* for all collections: 
+  * allow submissions for `Submitter`
+  * if `Publikationen`: allow submissions for `SARA User`
+  * if `(Workflow)`: add a role -> `Accept/Reject/Edit Metadata Step` -> add `SARA User`
 
 `project-sara@uni-konstanz.de` is the dedicated SARA Service user and needs to have permissions to submit to any collection!
 
