@@ -27,7 +27,7 @@
 ##
 
 # DSpace version
-DSVERSION="6.2"
+DSVERSION="6.3"
 
 echo "[DSpace-Install] Set local variables."
 
