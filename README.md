@@ -2,26 +2,24 @@
 
 ## Intro
 
-This manual provides some steps, after that you can have installed and already
-configured instance of the DSpace-6 server. The configuration includes:
+This manual provides a step-by-step setup for a fully
+configured instance of DSpace6 server. The configuration includes:
 * REST
-* SWORD
 * SWORDv2
 * xmlui with Mirage-2 theme
-* mailing functionality via "bwfdm.dspacetest@gmail.com"
- 
-This manual was tested with Ubuntu Server 16.04, the image was 
-provided by bwCloud. The installation process can take up to 20 min, 
-it works fully automatically up to the finishing part, where you will be 
-prompted to create an admin user for DSpace.
+* SMTP mailing functionality
 
-Further DSpace-configuration can be done according the documentation:
+It is based on Ubuntu Server 16.04 and was performed in a bwCloud VM. 
+The main installation script can take up to 1/2hr, but it runs fully 
+automated til the end, where you will be prompted to create an admin user for DSpace.
+It is advised to walk through this manual without interruptions or intermediate reboots.
+
+Further reading:
 https://wiki.duraspace.org/display/DSDOC6x/DSpace+6.x+Documentation
 
 In case of questions please contact:
 * Stefan Kombrink, Ulm University, Germany / e-mail: stefan.kombrink[at]uni-ulm.de
 * Volodymyr Kushnarenko, Ulm University, Germany / e-mail: volodymyr.kushnarenko[at]uni-ulm.de
-
 
 ## Setup 
 
@@ -74,7 +72,7 @@ At the end of the installation you will be asked to create an admin user.
 Please type the mail address, name, surname and password.
 It will send no email as the admin user is written to the DB directly.
 
-### Adapt dspace configuration to alternate host name
+### Adapt dspace configuration to an alternate host name
 
 The prepared dspace configuration files use `devel-dspace.sara-service.org` in `local.cfg`. 
 Replace it:
