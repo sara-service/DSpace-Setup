@@ -211,9 +211,8 @@ sudo -u dspace /dspace/bin/dspace create-administrator
 # see here: https://www.google.de/url?sa=t&rct=j&q=&esrc=s&source=web&cd=2&ved=0ahUKEwjm5sP-hfDUAhVBnBQKHUdODI0QFggvMAE&url=https%3A%2F%2Fjira.duraspace.org%2Fsecure%2Fattachment%2F10776%2Fconfigure.html&usg=AFQjCNECZU0fIxiEU41zfXWkzfZP6NirdQ&cad=rja
 
 # Restart tomcat, to start the DSpace.
-echo "[DSpace-Install] Restart Tomcat. Please wait a bit."
+echo "[DSpace-Install] Restart Tomcat. This might take a while..." 
 sudo systemctl restart tomcat
-sleep 30
 echo "######################################################"
 echo "##"
 echo "## DSpace is ready to work. Please use a web address:"
