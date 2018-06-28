@@ -89,12 +89,12 @@ Now create a bunch of default users and a community/collection structure:
 ```
 
 After that, we need to configure permissions. You will need to login as admin using the DSpace UI: 
-* create a group called `Submit Users`
-* create a group called `SARA Users`
-* add `project-sara@uni-konstanz.de` to `Submit Users` 
+* create a group called `Submitter`
+* create a group called `SARA User`
+* add `project-sara@uni-konstanz.de` to `Submitter` 
 * add some users to `SARA Users`
-* for all collections: allow submissions for `Submit Users`
-* for some selected collections: allow submissions for `SARA Users`
+* for all collections: allow submissions for `Submitter`
+* for some selected collections: allow submissions for `SARA User`
 
 `project-sara@uni-konstanz.de` is the dedicated SARA Service user and needs to have permissions to submit to any collection!
 
