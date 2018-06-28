@@ -1,6 +1,6 @@
 # How to Install DSpace-6 on your virtual machine
 
-## Setup 
+## Intro
 
 This manual provides some steps, after that you can have installed and already
 configured instance of the DSpace-6 server. The configuration includes:
@@ -21,6 +21,9 @@ https://wiki.duraspace.org/display/DSDOC6x/DSpace+6.x+Documentation
 In case of questions please contact:
 * Stefan Kombrink, Ulm University, Germany / e-mail: stefan.kombrink[at]uni-ulm.de
 * Volodymyr Kushnarenko, Ulm University, Germany / e-mail: volodymyr.kushnarenko[at]uni-ulm.de
+
+
+## Setup 
 
 ### Create a virtual machine (e.g. an instance on the bwCloud):
 
@@ -100,11 +103,11 @@ After that, we need to configure permissions. You will need to login as admin us
 * for all collections: 
   * allow submissions for `Submitter`
   * if `Publikationen`: allow submissions for `SARA User`
-  * if `(Workflow)`: add a role -> `Accept/Reject/Edit Metadata Step` -> add `SARA User`
+  * if `(reviewed)`: add a role -> `Accept/Reject/Edit Metadata Step` -> add `SARA User`
 
 `project-sara@uni-konstanz.de` is the dedicated SARA Service user and needs to have permissions to submit to any collection!
 
-### Validate rest/swordv2 functionality
+### Validate rest/swordv2 functionality (HTTP)
 
 ```
 DSPACE_SERVER="$(hostname):8080"
@@ -123,7 +126,7 @@ curl -H "on-behalf-of: $USER2" -i $DSPACE_SERVER/swordv2/servicedocument --user 
 curl -H "on-behalf-of: $USER3" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => HTML Error Status 403: Forbidden
 ```
 
-### Install and configure apache httpd
+### Install apache httpd
 ```
 sudo apt-get install apache2
 sudo a2enmod ssl proxy_ajp
@@ -140,7 +143,7 @@ sudo letsencrypt --authenticator standalone --installer apache --domains demo-ds
 ```
 Choose `secure redirect` . Now you should be able to access via https only: http://demo-dspace.sara-service.org
 
-### Adapt dspace config
+### Configure apache httpd
 Append the following section to your virtual server config under `/etc/apache2/sites-enabled/000-default-le-ssl.conf` :
 ```
         ProxyPass /xmlui ajp://localhost:8009/xmlui
@@ -162,13 +165,15 @@ Restart apache:
 sudo service apache2 restart
 ```
 
+### Update DSpace local.cfg
+
 Now you need to remove the local port 8080 and the http in the dspace config:
 ```
 sudo sed -i 's#dspace.baseUrl = http://${dspace.hostname}:8080#dspace.baseUrl = https://${dspace.hostname}#' /dspace/config/local.cfg
 sudo service tomcat restart
 ```
 
-### Validate rest/swordv2 functionality
+### Validate rest/swordv2 functionality (HTTPS)
 
 ```
 DSPACE_SERVER="https://$(hostname)"
