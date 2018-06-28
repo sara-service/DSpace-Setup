@@ -1,5 +1,7 @@
 #!/bin/sh
 
+ADMIN_EMAIL="katakombi@gmail.com"
+
 echo "creating users..."
 
 # sara submit user
@@ -20,6 +22,5 @@ sudo /dspace/bin/dspace user --add --email demo-user-noaccess@sara-service.org -
 echo "creating initial community/collection structure..."
 # Create DSpace initial communities/collections structure
 sudo -u dspace /dspace/bin/dspace structure-builder -f config/DSpace_Import_Structure.xml -o /tmp/DSpace_Export_Structure.xml -e "$ADMIN_EMAIL"
-
 
 echo "done"
