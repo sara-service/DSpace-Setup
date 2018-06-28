@@ -2,7 +2,7 @@
 
 WORKDIR=$PWD
 CONFIGDIR=$WORKDIR/config
-SRCDIR=/home/dspace/DSpace-Sources
+SRCDIR=/tmp/DSpace_build
 
 echo "delete last src dump"
 sudo -u dspace rm -rf $SRCDIR && echo "OK"
@@ -31,4 +31,5 @@ cd $SRCDIR && sudo -u dspace mvn -e package -Dmirage2.on=true && \
  cd $SRCDIR/dspace/target/dspace-installer/ && sudo -u dspace ant update && \
  sudo cp -R -p /dspace/webapps/* /opt/tomcat/webapps/ && \
  sudo -u dspace rm -rf /dspace/*bak*
+
 echo "OK"
