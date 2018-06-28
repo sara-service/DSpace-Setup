@@ -11,4 +11,4 @@ else
     cd $WORKDIR/DSpace;
 fi
 
-echo "checkout / pull complete, now select branch: e.g. ``git checkout -b origin/dspace-6.2_OboFixVariant1``"
+echo "checkout / pull complete, now select branch: e.g. ``git checkout -b origin/dspace-6.3_OboFixVariant1``"
