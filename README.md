@@ -3,12 +3,15 @@
 ## Intro
 
 This manual provides a step-by-step setup for a fully
-configured instance of DSpace6 server. The configuration includes:
+configured instance of DSpace6 server. 
+The final instance can be used as institutional repository to receive automated deposit from SARA Service via swordv2.
+
+Contents:
 * REST
 * SWORDv2
 * xmlui with Mirage-2 theme
 * SMTP mailing functionality
-* Initial configuration
+* Initial configuration (Groups, Users, Communities, Collections, Permissions...)
 
 It is based on Ubuntu Server 16.04 and was performed in a bwCloud VM. 
 The main installation script can take up to 1/2hr, but it runs fully 
@@ -17,6 +20,8 @@ It is advised to walk through this manual without interruptions or intermediate 
 
 Further reading:
 https://wiki.duraspace.org/display/DSDOC6x/DSpace+6.x+Documentation
+About SARA:
+https://sara-service.org
 
 In case of questions please contact:
 * Stefan Kombrink, Ulm University, Germany / e-mail: stefan.kombrink[at]uni-ulm.de
