@@ -1,5 +1,7 @@
 # How to Install DSpace-6 on your virtual machine
 
+## Setup 
+
 This manual provides some steps, after that you can have installed and already
 configured instance of the DSpace-6 server. The configuration includes:
 * REST
@@ -82,6 +84,8 @@ sudo service tomcat restart
 Please visit a web page of the DSpace server: http://demo-dspace.sara-service.org:8080/xmlui .
 You should be able to login with your admin account.
 
+## Configuration
+
 ### Create an initial configuration
 Now create a bunch of default users and a community/collection structure:
 ```
@@ -99,6 +103,27 @@ After that, we need to configure permissions. You will need to login as admin us
   * if `(Workflow)`: add a role -> `Accept/Reject/Edit Metadata Step` -> add `SARA User`
 
 `project-sara@uni-konstanz.de` is the dedicated SARA Service user and needs to have permissions to submit to any collection!
+
+### Validate rest/swordv2 functionality
+
+```
+DSPACE_SERVER="$(hostname):8080"
+curl -s -H "Accept: application/json" $DSPACE_SERVER/rest/hierarchy | python -m json.tool
+
+```
+This should dump the bibliography structure. In case of `No JSON object could be decoded` something is wrong.
+
+```
+SARA_USER="project-sara@uni-konstanz.de"
+SARA_PWD="SaraTest"
+USER1="stefan.kombrink@uni-ulm.de" # set existing SARA User
+USER2="demo-user@sara-service.org" # set existing user without any permissions
+USER2="daniel.duesentrieb@uni-entenhausen.de" # set nonexisting user
+
+curl -H "on-behalf-of: $USER1" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => downloads TermsOfServices for all available collections
+curl -H "on-behalf-of: $USER2" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => downloads empty service document
+curl -H "on-behalf-of: $USER3" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => HTML Error Status 403
+```
 
 ### Dump your active config
 This is useful for debugging. DSpace has a `read` command to perform a sequence of commands in a single call but it does not work. Hence this solution which is very slow:
