@@ -129,7 +129,7 @@ curl -H "on-behalf-of: $USER3" -i $DSPACE_SERVER/swordv2/servicedocument --user 
 ### Install apache httpd
 ```
 sudo apt-get install apache2
-sudo a2enmod ssl proxy_ajp
+sudo a2enmod ssl proxy proxy_http proxy_ajp
 sudo service apache2 restart
 ```
 
