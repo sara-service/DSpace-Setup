@@ -8,6 +8,7 @@ configured instance of DSpace6 server. The configuration includes:
 * SWORDv2
 * xmlui with Mirage-2 theme
 * SMTP mailing functionality
+* Initial configuration
 
 It is based on Ubuntu Server 16.04 and was performed in a bwCloud VM. 
 The main installation script can take up to 1/2hr, but it runs fully 
