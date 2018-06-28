@@ -108,12 +108,10 @@ After that, we need to configure permissions. You will need to login as admin us
 
 ```
 DSPACE_SERVER="$(hostname):8080"
+
 curl -s -H "Accept: application/json" $DSPACE_SERVER/rest/hierarchy | python -m json.tool
+# This should dump the bibliography structure. In case of `No JSON object could be decoded` something is wrong.
 
-```
-This should dump the bibliography structure. In case of `No JSON object could be decoded` something is wrong.
-
-```
 SARA_USER="project-sara@uni-konstanz.de"
 SARA_PWD="SaraTest"
 USER1="stefan.kombrink@uni-ulm.de" # set existing SARA User
@@ -170,11 +168,48 @@ sudo sed -i 's#dspace.baseUrl = http://${dspace.hostname}:8080#dspace.baseUrl = 
 sudo service tomcat restart
 ```
 
+### Validate rest/swordv2 functionality
+
+```
+DSPACE_SERVER="https://$(hostname)"
+
+curl -s -H "Accept: application/json" $DSPACE_SERVER/rest/hierarchy | python -m json.tool
+# This should dump the bibliography structure. In case of `No JSON object could be decoded` something is wrong.
+
+SARA_USER="project-sara@uni-konstanz.de"
+SARA_PWD="SaraTest"
+USER1="stefan.kombrink@uni-ulm.de" # set existing SARA User
+USER2="demo-user@sara-service.org" # set existing user without any permissions
+USER3="daniel.duesentrieb@uni-entenhausen.de" # set nonexisting user
+
+curl -H "on-behalf-of: $USER1" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => downloads TermsOfServices for all available collections
+curl -H "on-behalf-of: $USER2" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => downloads empty service document
+curl -H "on-behalf-of: $USER3" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => HTML Error Status 403: Forbidden
+```
+
+## Final steps
+
+### Stability optimizations
+Append `kernel.panic = 30` to `/etc/sysctl.conf`
+
+```
+sudo sysctl -p /etc/sysctl.conf
+```
+
+This will perform an automatic reboot 30 seconds after a kernel panic has occurred.
+
+### Free up disk space
+```
+du -hs /tmp/dspace-6.2-src-release
+#4,2G	dspace-6.2-src-release
+sudo rm -rf /tmp/dspace-6.2-src-release
+```
+
+## Misc
+
 ### Close ports
 
 Now you can login the bwCloud user interface and disable the tomcat ports 8080/8443 for better security!
-
-## Misc
 
 ### Dump your active config
 This is useful for debugging. DSpace has a `read` command to perform a sequence of commands in a single call but it does not work. Hence this solution which is very slow:
@@ -197,22 +232,6 @@ in
 Restart TomCat
 ```
 sudo service tomcat restart
-```
-
-### Stability optimizations
-Append `kernel.panic = 30` to `/etc/sysctl.conf`
-
-```
-sudo sysctl -p /etc/sysctl.conf
-```
-
-This will perform an automatic reboot 30 seconds after a kernel panic has occurred.
-
-### Free up disk space
-```
-du -hs /tmp/dspace-6.2-src-release
-#4,2G	dspace-6.2-src-release
-sudo rm -rf /tmp/dspace-6.2-src-release
 ```
 
 ### Rebuild dspace from sources (OPTIONAL) - TODO test it!
