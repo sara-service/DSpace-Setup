@@ -7,7 +7,7 @@
     <copyright>Special copyright notice</copyright>
     <sidebar>Sidebar text</sidebar>
     <collection>
-      <name>Publikationen (Workflow)</name>
+      <name>Publikationen (workspace)</name>
       <description>Descriptive text</description>
       <intro>Introductory text</intro>
       <copyright>Special copyright notice</copyright>
@@ -16,28 +16,28 @@
       <provenance>Provenance information</provenance>
     </collection>
     <collection>
-      <name>Forschungsdaten (Workspace)</name>
+      <name>Forschungsdaten</name>
     </collection>
   </community>
   <community>
     <name>Fakultät für Psychologie</name>
     <collection>
-      <name>Publikationen (Workflow)</name>
+      <name>Publikationen (workspace)</name>
     </collection>
     <collection>
-      <name>Forschungsdaten (Workspace)</name>
+      <name>Forschungsdaten</name>
     </collection>
   </community>
   <community>
     <name>Fakultät für Elektrotechnik</name>
     <collection>
-      <name>Publikationen (Workflow)</name>
+      <name>Publikationen (reviewed)</name>
     </collection>
     <collection>
-      <name>Forschungsdaten (Workspace)</name>
+      <name>Forschungsdaten</name>
     </collection>
     <collection>
-      <name>Testreihen (Workspace)</name>
+      <name>Testreihen</name>
     </collection>
   </community>
 </import_structure>
