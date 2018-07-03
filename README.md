@@ -1,26 +1,34 @@
 # How to Install DSpace-6 on your virtual machine
 
-## Setup 
+## Intro
 
-This manual provides some steps, after that you can have installed and already
-configured instance of the DSpace-6 server. The configuration includes:
+This manual provides a step-by-step setup for a fully
+configured instance of DSpace6 server. 
+The final instance can be used as institutional repository to receive automated deposit from SARA Service via swordv2.
+
+Contents:
 * REST
-* SWORD
 * SWORDv2
 * xmlui with Mirage-2 theme
-* mailing functionality via "bwfdm.dspacetest@gmail.com"
- 
-This manual was tested with Ubuntu Server 16.04, the image was 
-provided by bwCloud. The installation process can take up to 20 min, 
-it works fully automatically up to the finishing part, where you will be 
-prompted to create an admin user for DSpace.
+* SMTP mailing functionality
+* Initial configuration (Groups, Users, Communities, Collections, Permissions...)
 
-Further DSpace-configuration can be done according the documentation:
+It is based on Ubuntu Server 16.04 and was performed in a bwCloud VM. 
+The main installation script can take up to 1/2hr, but it runs fully 
+automated til the end, where you will be prompted to create an admin user for DSpace.
+It is advised to walk through this manual without interruptions or intermediate reboots.
+
+Further reading:
 https://wiki.duraspace.org/display/DSDOC6x/DSpace+6.x+Documentation
+
+About SARA:
+https://sara-service.org
 
 In case of questions please contact:
 * Stefan Kombrink, Ulm University, Germany / e-mail: stefan.kombrink[at]uni-ulm.de
 * Volodymyr Kushnarenko, Ulm University, Germany / e-mail: volodymyr.kushnarenko[at]uni-ulm.de
+
+## Setup 
 
 ### Create a virtual machine (e.g. an instance on the bwCloud):
 
@@ -71,7 +79,7 @@ At the end of the installation you will be asked to create an admin user.
 Please type the mail address, name, surname and password.
 It will send no email as the admin user is written to the DB directly.
 
-### Adapt dspace configuration to alternate host name
+### Adapt dspace configuration to an alternate host name
 
 The prepared dspace configuration files use `devel-dspace.sara-service.org` in `local.cfg`. 
 Replace it:
@@ -100,11 +108,11 @@ After that, we need to configure permissions. You will need to login as admin us
 * for all collections: 
   * allow submissions for `Submitter`
   * if `Publikationen`: allow submissions for `SARA User`
-  * if `(Workflow)`: add a role -> `Accept/Reject/Edit Metadata Step` -> add `SARA User`
+  * if `(reviewed)`: add a role -> `Accept/Reject/Edit Metadata Step` -> add `SARA User`
 
 `project-sara@uni-konstanz.de` is the dedicated SARA Service user and needs to have permissions to submit to any collection!
 
-### Validate rest/swordv2 functionality
+### Validate rest/swordv2 functionality (HTTP)
 
 ```
 DSPACE_SERVER="$(hostname):8080"
@@ -123,10 +131,10 @@ curl -H "on-behalf-of: $USER2" -i $DSPACE_SERVER/swordv2/servicedocument --user 
 curl -H "on-behalf-of: $USER3" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => HTML Error Status 403: Forbidden
 ```
 
-### Install and configure apache httpd
+### Install apache httpd
 ```
 sudo apt-get install apache2
-sudo a2enmod ssl proxy_ajp
+sudo a2enmod ssl proxy proxy_http proxy_ajp
 sudo service apache2 restart
 ```
 
@@ -140,7 +148,7 @@ sudo letsencrypt --authenticator standalone --installer apache --domains demo-ds
 ```
 Choose `secure redirect` . Now you should be able to access via https only: http://demo-dspace.sara-service.org
 
-### Adapt dspace config
+### Configure apache httpd
 Append the following section to your virtual server config under `/etc/apache2/sites-enabled/000-default-le-ssl.conf` :
 ```
         ProxyPass /xmlui ajp://localhost:8009/xmlui
@@ -162,13 +170,15 @@ Restart apache:
 sudo service apache2 restart
 ```
 
+### Update DSpace local.cfg
+
 Now you need to remove the local port 8080 and the http in the dspace config:
 ```
 sudo sed -i 's#dspace.baseUrl = http://${dspace.hostname}:8080#dspace.baseUrl = https://${dspace.hostname}#' /dspace/config/local.cfg
 sudo service tomcat restart
 ```
 
-### Validate rest/swordv2 functionality
+### Validate rest/swordv2 functionality (HTTPS)
 
 ```
 DSPACE_SERVER="https://$(hostname)"
@@ -200,9 +210,9 @@ This will perform an automatic reboot 30 seconds after a kernel panic has occurr
 
 ### Free up disk space
 ```
-du -hs /tmp/dspace-6.2-src-release
-#4,2G	dspace-6.2-src-release
-sudo rm -rf /tmp/dspace-6.2-src-release
+du -hs /tmp/dspace-6.?-src-release
+#4,2G	dspace-6.3-src-release
+sudo rm -rf /tmp/dspace-6.?-src-release
 ```
 
 ## Misc
