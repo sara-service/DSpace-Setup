@@ -51,6 +51,17 @@
 
        <field>
          <dc-schema>dc</dc-schema>
+         <dc-element>contributor</dc-element>
+         <dc-qualifier>other</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Submitter</label>
+         <input-type>name</input-type>
+         <hint>Enter the name of the submitter of this item.</hint>
+         <required></required>
+       </field>
+
+       <field>
+         <dc-schema>dc</dc-schema>
          <dc-element>title</dc-element>
          <dc-qualifier></dc-qualifier>
          <repeatable>false</repeatable>
@@ -60,16 +71,16 @@
          <required>You must enter a main title for this item.</required>
        </field>
 
-       <!--field>
+       <field>
          <dc-schema>dc</dc-schema>
          <dc-element>title</dc-element>
          <dc-qualifier>alternative</dc-qualifier>
-         <repeatable>true</repeatable>
-         <label>Other Titles</label>
+         <repeatable>false</repeatable>
+         <label>Version</label>
          <input-type>onebox</input-type>
-         <hint>If the item has any alternative titles, please enter them here.</hint>
+         <hint>You must enter version information for this item</hint>
          <required></required>
-       </field-->
+       </field>
 
        <!--field>
          <dc-schema>dc</dc-schema>
@@ -151,9 +162,7 @@ it, please enter the types and the actual numbers or codes.</hint>
          <hint>Select and add any programming language of the main content of the item.  If the language does not appear in the list, please select 'Others'.</hint>
          <required></required>
        </field>
-     </page>
 
-     <page number="2">
        <field>
          <dc-schema>dc</dc-schema>
          <dc-element>subject</dc-element>
