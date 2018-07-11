@@ -109,7 +109,7 @@ Now create a bunch of default users and a community/collection structure:
 
 After that, we need to configure permissions. You will need to login as admin using the DSpace UI: 
 * create a group called `Submitter` and add `project-sara@uni-konstanz.de`<sup>1</sup>
-* create a group called `SARA User` and add some users
+* create a group called `SARA User` and add some users. Exclude `demo-user-noaccess@sara-service.org`.
 * create a group called `Reviewer` and add just a few selected power users
 * for each collection: 
   * allow submissions for `Submitter` <sup>2</sup>
@@ -131,11 +131,11 @@ curl -s -H "Accept: application/json" $DSPACE_SERVER/rest/hierarchy | python -m 
 SARA_USER="project-sara@uni-konstanz.de"
 SARA_PWD="SaraTest"
 USER1="stefan.kombrink@uni-ulm.de" # set existing SARA User
-USER2="demo-user@sara-service.org" # set existing user without any permissions
+USER2="demo-user-noaccess@sara-service.org" # set existing user without any permissions
 USER3="daniel.duesentrieb@uni-entenhausen.de" # set nonexisting user
 
 curl -H "on-behalf-of: $USER1" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => downloads TermsOfServices for all available collections
-curl -H "on-behalf-of: $USER2" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => downloads TermsOfServices for all collections where submissions are allowed
+curl -H "on-behalf-of: $USER2" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => downloads empty service document
 curl -H "on-behalf-of: $USER3" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => HTML Error Status 403: Forbidden
 ```
 
@@ -197,7 +197,7 @@ curl -s -H "Accept: application/json" $DSPACE_SERVER/rest/hierarchy | python -m 
 SARA_USER="project-sara@uni-konstanz.de"
 SARA_PWD="SaraTest"
 USER1="stefan.kombrink@uni-ulm.de" # set existing SARA User
-USER2="demo-user@sara-service.org" # set existing user without any permissions
+USER2="demo-user-noaccess@sara-service.org" # set existing user without any permissions
 USER3="daniel.duesentrieb@uni-entenhausen.de" # set nonexisting user
 
 curl -H "on-behalf-of: $USER1" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => downloads TermsOfServices for all available collections
