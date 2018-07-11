@@ -71,8 +71,10 @@ sudo dpkg-reconfigure locales # generate en_EN@UTF8 and de_DE@UTF8, set en_EN as
 ```
 
 ### System Upgrade
+```
 sudo apt update
 sudo apt upgrade
+```
 
 ### Install DSpace
 *FIXME this throws errors when not executed as root... for now use sudo*
