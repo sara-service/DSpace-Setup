@@ -101,15 +101,16 @@ Now create a bunch of default users and a community/collection structure:
 ```
 
 After that, we need to configure permissions. You will need to login as admin using the DSpace UI: 
-* create a group called `Submitter` and add `project-sara@uni-konstanz.de`
-* create a group called `SARA User` and add some users to `SARA User`
-* create a group called `Reviewer` and add just a few power users
+* create a group called `Submitter` and add `project-sara@uni-konstanz.de` (*)
+* create a group called `SARA User` and add some users
+* create a group called `Reviewer` and add just a few selected power users
 * for each collection: 
-  * allow submissions for `Submitter` (*)
+  * allow submissions for `Submitter` (**)
   * if `Publikationen`: allow submissions for `SARA User`
   * if `(reviewed)`: add a role -> `Accept/Reject/Edit Metadata Step` -> add `Reviewer`
 
-(*) `project-sara@uni-konstanz.de` is the dedicated SARA Service user and needs to have permissions to submit to any collection!
+(*) `project-sara@uni-konstanz.de` is the dedicated SARA Service user and needs to have permissions to submit to any collection a SARA user has access to!
+(**) you may exclude a few collections but SARA will not be able to submit to them even when a SARA user owns submit rights on them!
 
 ### Validate rest/swordv2 functionality (HTTP)
 
