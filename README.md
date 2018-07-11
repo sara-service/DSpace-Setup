@@ -63,15 +63,20 @@ git clone git@git.uni-konstanz.de:sara/DSpace-Setup.git
 sudo sed -i.orig '41,+1s/^# //' /etc/inputrc
 ```
 
-### Start the installation script "dspace-install.sh". 
-*FIXME this throws errors when not executed as root... for now use sudo*
-
+### Adapt hostname and locale
 ```
 cd ~/DSpace-Setup
 sudo hostname demo-dspace.sara-service.org
 sudo dpkg-reconfigure locales # generate en_EN@UTF8 and de_DE@UTF8, set en_EN as default
+```
+
+### System Upgrade
 sudo apt update
 sudo apt upgrade
+
+### Install DSpace
+*FIXME this throws errors when not executed as root... for now use sudo*
+```
 sudo ./dspace-install.sh
 ```
 
@@ -79,7 +84,7 @@ At the end of the installation you will be asked to create an admin user.
 Please type the mail address, name, surname and password.
 It will send no email as the admin user is written to the DB directly.
 
-### Adapt dspace configuration to an alternate host name
+### Adapt DSpace Configuration to an alternate host name
 
 The prepared dspace configuration files use `devel-dspace.sara-service.org` in `local.cfg`. 
 Replace it:
@@ -88,7 +93,7 @@ sudo sed -i 's/devel-dspace.sara-service.org/your-host-name/g' /dspace/config/lo
 sudo service tomcat restart
 ``` 
 
-### Test your instance
+### Test your Instance
 Please visit a web page of the DSpace server: http://demo-dspace.sara-service.org:8080/xmlui .
 You should be able to login with your admin account.
 
