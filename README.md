@@ -224,7 +224,25 @@ Here we use DSpace with SwordV2 and on-behalf-of enabled. Without further config
 We propose two solutions to prevent these scenarios:
 
 1) Block requests except for SARA Service in Apache
-*TODO*
+
+Do `a2enmod authn_anon` and replace `ProxyPass /swordv2 ajp://localhost:8009/swordv2` by
+
+```apache
+<Location /swordv2>
+    ProxyPass ajp://localhost:8009/swordv2
+    # allow only whitelisted usernames
+    AuthType Basic
+    AuthName "SWORD v2 endpoint"
+    Require user project-sara@uni-konstanz.de
+    # but don't actually check the password:
+    # DSpace does that anyway, and storing passwords twice is silly
+    AuthBasicProvider anon
+    Anonymous *
+</Location>
+```
+
+This has Apache do authZ (the username whitelisting) only, and lets DSpace do authN (checking the password)
+so the password doesn't have to be kept in sync between Apache and DSpace config.
 
 2) Patch Source for DSpace & rebuild
 We provide two patches that restrict the on-Behalf-of submission on a list of well-defined users.
