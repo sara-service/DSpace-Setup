@@ -77,7 +77,7 @@ sudo apt upgrade
 ```
 
 ### Install DSpace
-*FIXME this throws errors when not executed as root... for now use sudo*
+*TODO redo script to work without sudo*
 ```
 sudo ./dspace-install.sh
 ```
@@ -213,8 +213,28 @@ Append `kernel.panic = 30` to `/etc/sysctl.conf`
 ```
 sudo sysctl -p /etc/sysctl.conf
 ```
-
 This will perform an automatic reboot 30 seconds after a kernel panic has occurred.
+
+### Securing SwordV2 Interface
+Here we use DSpace with SwordV2 and on-behalf-of enabled. Without further configuration the following scenarios are possible:
+* A registered user can submit items on-behalf-of others users if he knows their email addresses used for registration. Items can be submitted to collections where both users have submit rights to.
+* In case the SARA Service users name and password get leaked even no registration is needed.
+* The interface can be flooded with automated requests leading to high server load.
+
+We propose two solutions to prevent these scenarios:
+
+1) Block requests except for SARA Service in Apache
+*TODO*
+
+2) Patch Source for DSpace & rebuild
+We provide two patches that restrict the on-Behalf-of submission on a list of well-defined users.
+
+https://github.com/54r4/DSpace/tree/dspace-6.3_OboFixVariant1
+https://github.com/54r4/DSpace/tree/dspace-6.3_OboFixVariant2
+
+*TODO Source build and install*
+
+It is preferrable to adapt 1) or 1) and 2).
 
 ### Free up disk space
 ```
@@ -223,11 +243,12 @@ du -hs /tmp/dspace-6.?-src-release
 sudo rm -rf /tmp/dspace-6.?-src-release
 ```
 
-## Misc
-
 ### Close ports
 
 Now you can login the bwCloud user interface and disable the tomcat ports 8080/8443 for better security!
+
+
+## Misc
 
 ### Dump your active config
 This is useful for debugging. DSpace has a `read` command to perform a sequence of commands in a single call but it does not work. Hence this solution which is very slow:
@@ -245,12 +266,10 @@ CATALINA_OPTS="-Xmx2048M -Xms2048M  -XX:MaxPermSize=512m -XX:+UseG1GC -Dfile.enc
 in
 ```
 /opt/tomcat/bin/catalina.sh
-```
-
-Restart TomCat
-```
+# Restart TomCat
 sudo service tomcat restart
 ```
+*TODO needs more testing*
 
 ### Rebuild dspace from sources (OPTIONAL) - TODO test it!
 ```
