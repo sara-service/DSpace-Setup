@@ -270,6 +270,7 @@ sudo rm -rf /tmp/dspace-6.?-src-release
 
 Now you can login the bwCloud user interface and disable the tomcat ports 8080/8443 for better security!
 
+Also, in Tomcat's `server.xml`, change all `<Connector>`s to add `address="127.0.0.1"`. Better safe than sorry.
 
 ## Troubleshoot
 
