@@ -244,6 +244,11 @@ Do `a2enmod authn_anon` and replace `ProxyPass /swordv2 ajp://localhost:8009/swo
 This has Apache do authZ (the username whitelisting) only, and lets DSpace do authN (checking the password)
 so the password doesn't have to be kept in sync between Apache and DSpace config.
 
+If you need to whitelist extra users, add them to the end of the `Require user` line.
+To whitelist entire hosts (not recommended except for 127.0.0.1), add something like
+`Require host 127.0.0.1` to the `<Location>` block
+(`Require` rules are implicitly ORed unless they are in a `<RequireAll>` block).
+
 2) Patch Source for DSpace & rebuild
 We provide two patches that restrict the on-Behalf-of submission on a list of well-defined users.
 
