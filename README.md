@@ -266,7 +266,12 @@ sudo rm -rf /tmp/dspace-6.?-src-release
 Now you can login the bwCloud user interface and disable the tomcat ports 8080/8443 for better security!
 
 
-## Misc
+## Troubleshoot
+
+### Fix hostname
+
+bwCloud ALT has a bug and an altered hostname will be reset to its inital one after a reboot.
+Edit `/etc/rc.local` and add `sudo hostname dspace-devel.sara-service.org` to fix the hostname permanently.
 
 ### Dump your active config
 This is useful for debugging. DSpace has a `read` command to perform a sequence of commands in a single call but it does not work. Hence this solution which is very slow:
