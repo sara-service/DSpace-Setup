@@ -76,7 +76,7 @@ git clone git@git.uni-konstanz.de:sara/DSpace-Setup.git
 
 ### Install DSpace
 ```
-apt-get -y install python openjdk-8-jdk maven postgresql postgresql-contrib curl wget
+sudo apt-get -y install python openjdk-8-jdk maven postgresql postgresql-contrib curl wget
 
 service postgresql start
 sudo groupadd dspace
@@ -86,7 +86,7 @@ sudo psql --username=postgres -c "ALTER USER dspace WITH PASSWORD 'dspace';"
 sudo createdb --username=postgres --owner=dspace --encoding=UNICODE dspace
 sudo psql --username=postgres dspace -c "CREATE EXTENSION pgcrypto;"
 
-
+ ... TODO ...
 ```
 
 At the end of the installation you will be asked to create an admin user. 
