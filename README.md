@@ -48,34 +48,44 @@ Point your subdomain to the IP of the bwCloud VM. Here, we use:
 
      demo-dspace.sara-service.org
 
-### Clone this setup from git
 ```
 ssh -A ubuntu@demo-dspace.sara-service.org
-sudo apt update
-sudo apt install vim git locales
-sudo localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
-git clone git@git.uni-konstanz.de:sara/DSpace-Setup.git
 ```
 
-### Enable history search (pgup,pgdn)
+### Prerequisites
 ```
+# Enable history search (pgdn/pgup)
 sudo sed -i.orig '41,+1s/^# //' /etc/inputrc
-```
 
-### Adapt hostname and locale
-```
-cd ~/DSpace-Setup
+# Adapt host name
 sudo hostname demo-dspace.sara-service.org
-sudo dpkg-reconfigure locales # generate en_EN@UTF8 and de_DE@UTF8, set en_EN as default
-```
 
-### System Upgrade
-```
+# Fetch latest updates
+sudo apt update
 sudo apt upgrade
+
+# Install some packages
+sudo apt install vim git locales
+
+# Fix locales
+sudo localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+
+# Clone this setup from git
+git clone git@git.uni-konstanz.de:sara/DSpace-Setup.git
 ```
 
 ### Install DSpace
 ```
+apt-get -y install python openjdk-8-jdk maven postgresql postgresql-contrib curl wget
+
+service postgresql start
+sudo groupadd dspace
+sudo useradd -m -g dspace dspace
+sudo createuser --username=postgres --no-superuser dspace
+sudo psql --username=postgres -c "ALTER USER dspace WITH PASSWORD 'dspace';"
+sudo createdb --username=postgres --owner=dspace --encoding=UNICODE dspace
+sudo psql --username=postgres dspace -c "CREATE EXTENSION pgcrypto;"
+
 
 ```
 
