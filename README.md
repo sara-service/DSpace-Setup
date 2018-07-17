@@ -41,6 +41,7 @@ In case of questions please contact:
 
  * https://bwcloud.ruf.uni-freiburg.de
  * Compute -> Instances -> "dspace-6.2" -> [Rebuild Instance]
+ * You might need to remove your old SSH key from ~/.ssh/known_hosts
 
 ### Setup subdomain
 Point your subdomain to the IP of the bwCloud VM. Here, we use: 
