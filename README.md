@@ -1,4 +1,4 @@
-# How to Install DSpace-6 on your virtual machine
+# How to Install DSpace-6 on bwCloud Scope
 
 ## Intro
 
@@ -13,9 +13,9 @@ Contents:
 * SMTP mailing functionality
 * Initial configuration (Groups, Users, Communities, Collections, Permissions...)
 
-It is based on Ubuntu Server 16.04 and was performed in a bwCloud VM. 
+It is based on the "Ubuntu Server 18.04 minimal image" and was performed in a bwCloud SCOPE VM. 
 The main installation script can take up to 1/2hr, but it runs fully 
-automated til the end, where you will be prompted to create an admin user for DSpace.
+automated until the end, where you will be prompted to create an admin user for DSpace.
 It is advised to walk through this manual without interruptions or intermediate reboots.
 
 Further reading:
@@ -32,20 +32,15 @@ In case of questions please contact:
 
 ### Create a virtual machine (e.g. an instance on the bwCloud):
 
-  * https://bwcloud.ruf.uni-freiburg.de
-  * Compute -> Instances -> Start new insatance
-  * Use "Ubuntu Server 16.04" image from the image
-  * RAM be at least 4GB, better 8GB+
-  * A default hard-drive capacity 10 GB is enough at least for the installation.
+  * https://portal.bwcloud.org
+  * Compute -> Instances -> Start new instance
+  * Use "Ubuntu Server 18.04 Minimal" image
+  * Use flavor "m1.medium" with 12GB disk space and 4GB RAM
 
 ### In case you have an running instance already which you would like to replace
 
  * https://bwcloud.ruf.uni-freiburg.de
  * Compute -> Instances -> "dspace-6.2" -> [Rebuild Instance]
- * Use "Ubuntu Server 16.04" image from the image, Partitioning "Automatic"
- * The IP address will be unchanged!
-   remove the host key from SSH known hosts:
-   ssh-keygen -f "/home/stefan/.ssh/known_hosts" -R BWCLOUD_IP
 
 ### Setup subdomain
 Point your subdomain to the IP of the bwCloud VM. Here, we use: 
@@ -55,6 +50,9 @@ Point your subdomain to the IP of the bwCloud VM. Here, we use:
 ### Clone this setup from git
 ```
 ssh -A ubuntu@demo-dspace.sara-service.org
+sudo apt update
+sudo apt install vim git locales
+sudo localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 git clone git@git.uni-konstanz.de:sara/DSpace-Setup.git
 ```
 
@@ -72,14 +70,12 @@ sudo dpkg-reconfigure locales # generate en_EN@UTF8 and de_DE@UTF8, set en_EN as
 
 ### System Upgrade
 ```
-sudo apt update
 sudo apt upgrade
 ```
 
 ### Install DSpace
-*TODO redo script to work without sudo*
 ```
-sudo ./dspace-install.sh
+
 ```
 
 At the end of the installation you will be asked to create an admin user. 
