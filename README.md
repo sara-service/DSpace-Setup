@@ -47,7 +47,7 @@ In case of questions please contact:
 ### Setup subdomain
 Point your subdomain to the IP of the bwCloud VM. Here, we use: 
 
-     demo-dspace.sara-service.org
+     vm-152-020.bwcloud.uni-ulm.de
 
 ```
 ssh -A ubuntu@demo-dspace.sara-service.org
@@ -108,6 +108,8 @@ sudo cp /home/ubuntu/DSpace-Setup/config/tomcat/server.xml /opt/tomcat/conf/serv
 sudo systemctl daemon-reload
 sudo systemctl start tomcat
 ```
+
+Now you should be able to find your tomcat running at http://vm-152-020.bwcloud.uni-ulm.de:8080
 
 ### DSpace
 
