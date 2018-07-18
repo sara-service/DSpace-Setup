@@ -136,12 +136,10 @@ At the end of the installation you will be asked to create an admin user.
 Please type the mail address, name, surname and password.
 It will send no email as the admin user is written to the DB directly.
 
-### Adapt DSpace Configuration to an alternate host name
+### Apply custom local configurations
 
-The prepared dspace configuration files use `devel-dspace.sara-service.org` in `local.cfg`. 
-Replace it:
 ```
-sudo sed -i 's/devel-dspace.sara-service.org/your-host-name/g' /dspace/config/local.cfg
+sudo cat /home/ubuntu/DSpace-Setup/config/local.cfg | sed 's/devel-dspace.sara-service.org/'$(hostname)'/g' | sudo -u dspace tee /dspace/config/local.cfg
 sudo service tomcat restart
 ``` 
 
