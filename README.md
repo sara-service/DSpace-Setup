@@ -72,9 +72,7 @@ sudo locale-gen de_DE.UTF-8 en_US.UTF-8
 sudo localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 
 # Fix timezone
-DEBIAN_FRONTEND=noninteractive apt-get install tzdata
-sudo ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime
-DEBIAN_FRONTEND=noninteractive sudo dpkg-reconfigure tzdata
+sudo apt-get install tzdata (8, 7 for /Europe/Berlin)
 
 # Clone this setup from git
 git clone git@git.uni-konstanz.de:sara/DSpace-Setup.git
@@ -85,9 +83,10 @@ git clone git@git.uni-konstanz.de:sara/DSpace-Setup.git
 ### Postgres
 
 ```
+sudo apt-mark hold openjdk-11-jre-headless
 sudo apt-get -y install python openjdk-8-jdk maven postgresql postgresql-contrib curl wget
 
-service postgresql start
+systemctl start postgresql
 sudo groupadd dspace
 sudo useradd -m -g dspace dspace
 sudo -u postgres createuser --no-superuser dspace
