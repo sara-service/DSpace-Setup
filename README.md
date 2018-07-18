@@ -211,15 +211,15 @@ sudo a2enmod ssl proxy proxy_http proxy_ajp
 sudo service apache2 restart
 ```
 
-Now you will see the standard apache index page: http://demo-dspace.sara-service.org
+Now you will see the standard apache index page: http://$(hostname)
 
 ### Install letsencrypt, create and configure SSL cert
 ```
 sudo apt-get install letsencrypt python-letsencrypt-apache
 sudo service apache2 stop
-sudo letsencrypt --authenticator standalone --installer apache --domains demo-dspace.sara-service.org
+sudo letsencrypt --authenticator standalone --installer apache --domains $(hostname)
 ```
-Choose `secure redirect` . Now you should be able to access via https only: http://demo-dspace.sara-service.org
+Choose `secure redirect` . Now you should be able to access via https only: http://$(hostname)
 
 ### Configure apache httpd
 Append the following section to your virtual server config under `/etc/apache2/sites-enabled/000-default-le-ssl.conf` :
