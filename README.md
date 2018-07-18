@@ -169,7 +169,7 @@ You should be able to login with your admin account.
 ### Create an initial configuration
 Now create a bunch of default users and a community/collection structure:
 ```
-/home/ubuntu/DSpace-Setup/dspace-init.sh
+cd /home/ubuntu/DSpace-Setup && ./dspace-init.sh
 ```
 
 After that, we need to configure permissions. You will need to login as admin using the DSpace UI: 
