@@ -85,7 +85,7 @@ git clone git@git.uni-konstanz.de:sara/DSpace-Setup.git
 
 ```
 sudo apt-mark hold openjdk-11-jre-headless
-sudo apt-get -y install python openjdk-8-jdk maven postgresql postgresql-contrib curl wget
+sudo apt-get -y install python openjdk-8-jdk maven ant postgresql postgresql-contrib curl wget
 
 systemctl start postgresql
 sudo groupadd dspace
