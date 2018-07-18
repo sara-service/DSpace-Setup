@@ -99,8 +99,15 @@ sudo -u postgres psql dspace -c "CREATE EXTENSION pgcrypto;"
 ### Tomcat
 
 ```
-sudo apt-get -y install tomcat8
-sudo service tomcat8 start
+wget http://archive.apache.org/dist/tomcat/tomcat-8/v8.5.32/bin/apache-tomcat-8.5.32.tar.gz -O /tmp/tomcat.tgz
+sudo mkdir /opt/tomcat
+sudo tar xzvf apache-tomcat-8*tar.gz -C /opt/tomcat --strip-components=1
+sudo chgrp -R dspace /opt/tomcat
+sudo chmod -R g+r conf
+sudo cp /home/ubuntu/DSpace-Setup/config/tomcat/tomcat.service /etc/systemd/system/tomcat.service
+sudo cp /home/ubuntu/DSpace-Setup/config/tomcat/server.xml /opt/tomcat/conf/server.xml
+sudo systemctl daemon-reload
+sudo systemctl start tomcat
 ```
 
 ### DSpace
@@ -115,12 +122,12 @@ sudo chgrp dspace /dspace
 
 cd /tmp/dspace-6.3-src-release
 sudo -u dspace mvn -e package -Dmirage2.on=true
-sudo -i -u dspace -- sh -c 'cd /tmp/dspace/dspace/target/dspace-installer; ant fresh_install'
-sudo cp -R -p /dspace/webapps/* /var/lib/tomcat8/webapps/
+sudo -i -u dspace -- sh -c 'cd /tmp/dspace-6.3-src-release/dspace/target/dspace-installer; ant fresh_install'
+sudo cp -R -p /dspace/webapps/* /opt/tomcat/webapps/
 sudo -u dspace /dspace/bin/dspace create-administrator
-sudo service tomcat8 restart
-sudo service postgresql enable
-sudo service tomcat8 enable
+sudo systemctl restart tomcat
+sudo systemctl enable postgresql
+sudo systemctl enable tomcat
 ```
 
 At the end of the installation you will be asked to create an admin user. 
