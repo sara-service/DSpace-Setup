@@ -125,8 +125,25 @@ cd /tmp/dspace-6.3-src-release
 sudo -u dspace mvn -e package -Dmirage2.on=true
 # FIXME build error in mirage2 module, log is in: /tmp/dspace-6.3-src-release/dspace/modules/xmlui-mirage2/target/themes/Mirage2/npm-debug.log
 sudo -i -u dspace -- sh -c 'cd /tmp/dspace-6.3-src-release/dspace/target/dspace-installer; ant fresh_install'
+
+# Enable REST
+sudo cat /home/ubuntu/DSpace-Setup/config/rest/web.xml | sudo -u dspace tee /dspace/webapps/rest/WEB-INF/web.xml
+# Enable Mirage2 Themes
+sudo cat /home/ubuntu/DSpace-Setup/config/xmlui.xconf | sudo -u dspace tee /dspace/config/xmlui.xconf
+# Enable customized item submission form
+sudo cat /home/ubuntu/DSpace-Setup/config/item-submission.xml | sudo -u dspace tee /dspace/config/item-submission.xml
+sudo cat /home/ubuntu/DSpace-Setup/config/input-forms.xml | sudo -u dspace tee /dspace/config/input-forms.xml
+# Copy email templates
+sudo cp /home/ubuntu/DSpace-Setup/config/emails/* /dspace/config/emails/
+sudo chown -R dspace /dspace/config/emails
+sudo chgrp -R dspace /dspace/config/emails
+
+# Copy all webapps from dspace to tomcat
 sudo cp -R -p /dspace/webapps/* /opt/tomcat/webapps/
+
+# Create dspace admin (non-interactive)
 sudo -u dspace /dspace/bin/dspace create-administrator
+
 sudo systemctl restart tomcat
 sudo systemctl enable postgresql
 sudo systemctl enable tomcat
