@@ -2,8 +2,7 @@
 
 ## Intro
 
-This manual provides a step-by-step setup for a fully
-configured instance of DSpace6 server. 
+This manual provides a step-by-step setup for a fully configured instance of DSpace6 server. 
 The final instance can be used as institutional repository to receive automated deposit from SARA Service via swordv2.
 
 Contents:
@@ -37,6 +36,7 @@ In case of questions please contact:
   * Use "Ubuntu Server 18.04 Minimal" image
   * Use flavor "m1.medium" with 12GB disk space and 4GB RAM
   * Enable port 8080 egress/ingress by creating and enabling a new Security Group 'tomcat'
+  * Enable port 80/443 egress/ingress by creating and enabling a new Security Group 'apache'
 
 ### In case you have an running instance already which you would like to replace
 
