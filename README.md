@@ -36,6 +36,7 @@ In case of questions please contact:
   * Compute -> Instances -> Start new instance
   * Use "Ubuntu Server 18.04 Minimal" image
   * Use flavor "m1.medium" with 12GB disk space and 4GB RAM
+  * Enable port 8080 egress/ingress by creating and enabling a new Security Group 'tomcat'
 
 ### In case you have an running instance already which you would like to replace
 
