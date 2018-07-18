@@ -68,8 +68,8 @@ sudo apt upgrade
 sudo apt install vim git locales
 
 # Fix locales
-sudo localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
-sudo localegen de_DE.UTF-8
+#sudo localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+sudo locale-gen de_DE.UTF-8
 
 # Clone this setup from git
 git clone git@git.uni-konstanz.de:sara/DSpace-Setup.git
