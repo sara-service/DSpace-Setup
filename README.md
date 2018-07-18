@@ -69,6 +69,7 @@ sudo apt install vim git locales
 
 # Fix locales
 sudo localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+sudo localegen de_DE.UTF-8
 
 # Clone this setup from git
 git clone git@git.uni-konstanz.de:sara/DSpace-Setup.git
@@ -81,10 +82,10 @@ sudo apt-get -y install python openjdk-8-jdk maven postgresql postgresql-contrib
 service postgresql start
 sudo groupadd dspace
 sudo useradd -m -g dspace dspace
-sudo createuser --username=postgres --no-superuser dspace
-sudo psql --username=postgres -c "ALTER USER dspace WITH PASSWORD 'dspace';"
-sudo createdb --username=postgres --owner=dspace --encoding=UNICODE dspace
-sudo psql --username=postgres dspace -c "CREATE EXTENSION pgcrypto;"
+sudo -u postgres createuser --no-superuser dspace
+sudo -u postgres psql -c "ALTER USER dspace WITH PASSWORD 'dspace';"
+sudo -u postgres createdb --owner=dspace --encoding=UNICODE dspace
+sudo -u postgres psql dspace -c "CREATE EXTENSION pgcrypto;"
 
  ... TODO ...
 ```
