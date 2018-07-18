@@ -108,10 +108,13 @@ sudo service tomcat8 start
 ```
 wget https://github.com/DSpace/DSpace/releases/download/dspace-6.3/dspace-6.3-src-release.tar.gz -O /tmp/dspace.tgz
 sudo -u dspace tar -xzvf /tmp/dspace.tgz -C /tmp
+
 sudo mkdir /dspace
 sudo chown dspace /dspace
 sudo chgrp dspace /dspace
-sudo -u dspace mvn -e -gs $CONFIGDIR/maven-settings.xml package -Dmirage2.on=true
+
+cd /tmp/dspace-6.3-src-release
+sudo -u dspace mvn -e package -Dmirage2.on=true
 sudo -i -u dspace -- sh -c 'cd /tmp/dspace/dspace/target/dspace-installer; ant fresh_install'
 sudo cp -R -p /dspace/webapps/* /var/lib/tomcat8/webapps/
 sudo -u dspace /dspace/bin/dspace create-administrator
