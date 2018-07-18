@@ -52,7 +52,7 @@ Point your subdomain to the IP of the bwCloud VM. Here, we use:
 ssh -A ubuntu@demo-dspace.sara-service.org
 ```
 
-### Prerequisites
+## Prerequisites
 ```
 # Enable history search (pgdn/pgup)
 sudo sed -i.orig '41,+1s/^# //' /etc/inputrc
@@ -80,7 +80,10 @@ DEBIAN_FRONTEND=noninteractive sudo dpkg-reconfigure tzdata
 git clone git@git.uni-konstanz.de:sara/DSpace-Setup.git
 ```
 
-### Install DSpace
+## Installation
+
+### Postgres
+
 ```
 sudo apt-get -y install python openjdk-8-jdk maven postgresql postgresql-contrib curl wget
 
@@ -91,8 +94,30 @@ sudo -u postgres createuser --no-superuser dspace
 sudo -u postgres psql -c "ALTER USER dspace WITH PASSWORD 'dspace';"
 sudo -u postgres createdb --owner=dspace --encoding=UNICODE dspace
 sudo -u postgres psql dspace -c "CREATE EXTENSION pgcrypto;"
+```
 
- ... TODO ...
+### Tomcat
+
+```
+sudo apt-get -y install tomcat8
+sudo service tomcat8 start
+```
+
+### DSpace
+
+```
+wget https://github.com/DSpace/DSpace/releases/download/dspace-6.3/dspace-6.3-src-release.tar.gz -O /tmp/dspace.tgz
+sudo -u dspace tar -xzvf /tmp/dspace.tgz -C /tmp
+sudo mkdir /dspace
+sudo chown dspace /dspace
+sudo chgrp dspace /dspace
+sudo -u dspace mvn -e -gs $CONFIGDIR/maven-settings.xml package -Dmirage2.on=true
+sudo -i -u dspace -- sh -c 'cd /tmp/dspace/dspace/target/dspace-installer; ant fresh_install'
+sudo cp -R -p /dspace/webapps/* /var/lib/tomcat8/webapps/
+sudo -u dspace /dspace/bin/dspace create-administrator
+sudo service tomcat8 restart
+sudo service postgresql enable
+sudo service tomcat8 enable
 ```
 
 At the end of the installation you will be asked to create an admin user. 
