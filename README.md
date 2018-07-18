@@ -123,6 +123,7 @@ sudo chgrp dspace /dspace
 
 cd /tmp/dspace-6.3-src-release
 sudo -u dspace mvn -e package -Dmirage2.on=true
+# FIXME build error in mirage2 module, log is in: /tmp/dspace-6.3-src-release/dspace/modules/xmlui-mirage2/target/themes/Mirage2/npm-debug.log
 sudo -i -u dspace -- sh -c 'cd /tmp/dspace-6.3-src-release/dspace/target/dspace-installer; ant fresh_install'
 sudo cp -R -p /dspace/webapps/* /opt/tomcat/webapps/
 sudo -u dspace /dspace/bin/dspace create-administrator
