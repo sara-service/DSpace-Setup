@@ -215,7 +215,7 @@ Now you will see the standard apache index page: http://$(hostname)
 
 ### Install letsencrypt, create and configure SSL cert
 ```
-sudo apt-get install letsencrypt python-letsencrypt-apache
+sudo apt -y install python3-certbot-apache
 sudo service apache2 stop
 sudo letsencrypt --authenticator standalone --installer apache --domains $(hostname)
 ```
