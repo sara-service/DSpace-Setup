@@ -208,7 +208,7 @@ curl -H "on-behalf-of: $USER3" -i $DSPACE_SERVER/swordv2/servicedocument --user 
 ```
 sudo apt-get install apache2
 sudo a2enmod ssl proxy proxy_http proxy_ajp
-sudo service apache2 restart
+sudo systemctl restart apache2
 ```
 
 Now you will see the standard apache index page: http://$(hostname)
@@ -216,7 +216,7 @@ Now you will see the standard apache index page: http://$(hostname)
 ### Install letsencrypt, create and configure SSL cert
 ```
 sudo apt -y install python3-certbot-apache
-sudo service apache2 stop
+sudo systemctl stop apache2
 sudo letsencrypt --authenticator standalone --installer apache --domains $(hostname)
 ```
 Choose `secure redirect` . Now you should be able to access via https only: http://$(hostname)
@@ -240,7 +240,7 @@ Append the following section to your virtual server config under `/etc/apache2/s
 ```
 Restart apache:
 ```
-sudo service apache2 restart
+sudo systemctl restart apache2
 ```
 
 ### Update DSpace local.cfg
@@ -290,7 +290,7 @@ We propose two solutions to prevent these scenarios:
 
 1) Block requests except for SARA Service in Apache
 
-Do `a2enmod authn_anon` and replace `ProxyPass /swordv2 ajp://localhost:8009/swordv2` by
+Do `sudo a2enmod authn_anon` and replace `ProxyPass /swordv2 ajp://localhost:8009/swordv2` by
 
 ```apache
 <Location /swordv2>
