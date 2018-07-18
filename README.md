@@ -1,9 +1,8 @@
-# How to Install DSpace-6 on your virtual machine
+# How to Install DSpace-6 on bwCloud Scope
 
 ## Intro
 
-This manual provides a step-by-step setup for a fully
-configured instance of DSpace6 server. 
+This manual provides a step-by-step setup for a fully configured instance of DSpace6 server. 
 The final instance can be used as institutional repository to receive automated deposit from SARA Service via swordv2.
 
 Contents:
@@ -13,9 +12,9 @@ Contents:
 * SMTP mailing functionality
 * Initial configuration (Groups, Users, Communities, Collections, Permissions...)
 
-It is based on Ubuntu Server 16.04 and was performed in a bwCloud VM. 
+It is based on the "Ubuntu Server 18.04 minimal image" and was performed in a bwCloud SCOPE VM. 
 The main installation script can take up to 1/2hr, but it runs fully 
-automated til the end, where you will be prompted to create an admin user for DSpace.
+automated until the end, where you will be prompted to create an admin user for DSpace.
 It is advised to walk through this manual without interruptions or intermediate reboots.
 
 Further reading:
@@ -32,71 +31,137 @@ In case of questions please contact:
 
 ### Create a virtual machine (e.g. an instance on the bwCloud):
 
-  * https://bwcloud.ruf.uni-freiburg.de
-  * Compute -> Instances -> Start new insatance
-  * Use "Ubuntu Server 16.04" image from the image
-  * RAM be at least 4GB, better 8GB+
-  * A default hard-drive capacity 10 GB is enough at least for the installation.
+  * https://portal.bwcloud.org
+  * Compute -> Instances -> Start new instance
+  * Use "Ubuntu Server 18.04 Minimal" image
+  * Use flavor "m1.medium" with 12GB disk space and 4GB RAM
+  * Enable port 8080 egress/ingress by creating and enabling a new Security Group 'tomcat'
+  * Enable port 80/443 egress/ingress by creating and enabling a new Security Group 'apache'
 
 ### In case you have an running instance already which you would like to replace
 
  * https://bwcloud.ruf.uni-freiburg.de
  * Compute -> Instances -> "dspace-6.2" -> [Rebuild Instance]
- * Use "Ubuntu Server 16.04" image from the image, Partitioning "Automatic"
- * The IP address will be unchanged!
-   remove the host key from SSH known hosts:
-   ssh-keygen -f "/home/stefan/.ssh/known_hosts" -R BWCLOUD_IP
+ * You might need to remove your old SSH key from ~/.ssh/known_hosts
 
 ### Setup subdomain
 Point your subdomain to the IP of the bwCloud VM. Here, we use: 
 
-     demo-dspace.sara-service.org
+     vm-152-020.bwcloud.uni-ulm.de
 
-### Clone this setup from git
 ```
 ssh -A ubuntu@demo-dspace.sara-service.org
+```
+
+## Prerequisites
+```
+# Enable history search (pgdn/pgup)
+sudo sed -i.orig '41,+1s/^# //' /etc/inputrc
+
+# Adapt host name
+sudo hostname demo-dspace.sara-service.org
+
+# Fetch latest updates
+sudo apt update
+sudo apt upgrade
+
+# Install some packages
+sudo apt install vim git locales
+
+# Fix locales
+sudo locale-gen de_DE.UTF-8 en_US.UTF-8
+sudo localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+
+# Fix timezone
+sudo apt-get install tzdata (8, 7 for /Europe/Berlin)
+
+# Clone this setup from git
 git clone git@git.uni-konstanz.de:sara/DSpace-Setup.git
 ```
 
-### Enable history search (pgup,pgdn)
+## Installation
+
+### Postgres
+
 ```
-sudo sed -i.orig '41,+1s/^# //' /etc/inputrc
+sudo apt-mark hold openjdk-11-jre-headless
+sudo apt-get -y install python openjdk-8-jdk maven ant postgresql postgresql-contrib curl wget
+
+systemctl start postgresql
+sudo groupadd dspace
+sudo useradd -m -g dspace dspace
+sudo -u postgres createuser --no-superuser dspace
+sudo -u postgres psql -c "ALTER USER dspace WITH PASSWORD 'dspace';"
+sudo -u postgres createdb --owner=dspace --encoding=UNICODE dspace
+sudo -u postgres psql dspace -c "CREATE EXTENSION pgcrypto;"
 ```
 
-### Adapt hostname and locale
+### Tomcat
+
 ```
-cd ~/DSpace-Setup
-sudo hostname demo-dspace.sara-service.org
-sudo dpkg-reconfigure locales # generate en_EN@UTF8 and de_DE@UTF8, set en_EN as default
+wget http://archive.apache.org/dist/tomcat/tomcat-8/v8.5.32/bin/apache-tomcat-8.5.32.tar.gz -O /tmp/tomcat.tgz
+sudo mkdir /opt/tomcat
+sudo tar xzvf /tmp/tomcat.tgz -C /opt/tomcat --strip-components=1
+sudo chown -R dspace.dspace /opt/tomcat
+sudo cp /home/ubuntu/DSpace-Setup/config/tomcat/tomcat.service /etc/systemd/system/tomcat.service
+sudo cp /home/ubuntu/DSpace-Setup/config/tomcat/server.xml /opt/tomcat/conf/server.xml
+sudo systemctl daemon-reload
+sudo systemctl start tomcat
 ```
 
-### System Upgrade
-```
-sudo apt update
-sudo apt upgrade
-```
+Now you should be able to find your tomcat running at http://vm-152-020.bwcloud.uni-ulm.de:8080
 
-### Install DSpace
-*TODO redo script to work without sudo*
+### DSpace
+
 ```
-sudo ./dspace-install.sh
+wget https://github.com/DSpace/DSpace/releases/download/dspace-6.3/dspace-6.3-src-release.tar.gz -O /tmp/dspace.tgz
+sudo -u dspace tar -xzvf /tmp/dspace.tgz -C /tmp
+
+sudo mkdir /dspace
+sudo chown dspace /dspace
+sudo chgrp dspace /dspace
+
+cd /tmp/dspace-6.3-src-release
+sudo -u dspace mvn -e package -Dmirage2.on=true
+# FIXME build error in mirage2 module, log is in: /tmp/dspace-6.3-src-release/dspace/modules/xmlui-mirage2/target/themes/Mirage2/npm-debug.log
+sudo -i -u dspace -- sh -c 'cd /tmp/dspace-6.3-src-release/dspace/target/dspace-installer; ant fresh_install'
+
+# Create dspace admin (non-interactive)
+sudo -u dspace /dspace/bin/dspace create-administrator
 ```
 
 At the end of the installation you will be asked to create an admin user. 
 Please type the mail address, name, surname and password.
 It will send no email as the admin user is written to the DB directly.
 
-### Adapt DSpace Configuration to an alternate host name
+### Apply presets
 
-The prepared dspace configuration files use `devel-dspace.sara-service.org` in `local.cfg`. 
-Replace it:
 ```
-sudo sed -i 's/devel-dspace.sara-service.org/your-host-name/g' /dspace/config/local.cfg
-sudo service tomcat restart
-``` 
+# Enable REST
+sudo cat /home/ubuntu/DSpace-Setup/config/rest/web.xml | sudo -u dspace tee /dspace/webapps/rest/WEB-INF/web.xml
+# Enable Mirage2 Themes
+sudo cat /home/ubuntu/DSpace-Setup/config/xmlui.xconf | sudo -u dspace tee /dspace/config/xmlui.xconf
+# Enable customized item submission form
+sudo cat /home/ubuntu/DSpace-Setup/config/item-submission.xml | sudo -u dspace tee /dspace/config/item-submission.xml
+sudo cat /home/ubuntu/DSpace-Setup/config/input-forms.xml | sudo -u dspace tee /dspace/config/input-forms.xml
+# Copy email templates
+sudo cp /home/ubuntu/DSpace-Setup/config/emails/* /dspace/config/emails/
+sudo chown -R dspace /dspace/config/emails
+sudo chgrp -R dspace /dspace/config/emails
 
-### Test your Instance
-Please visit a web page of the DSpace server: http://demo-dspace.sara-service.org:8080/xmlui .
+# Copy all webapps from dspace to tomcat
+sudo cp -R -p /dspace/webapps/* /opt/tomcat/webapps/
+
+# Apply custom local configurations
+sudo cat /home/ubuntu/DSpace-Setup/config/local.cfg | sed 's/devel-dspace.sara-service.org/'$(hostname)'/g' | sudo -u dspace tee /dspace/config/local.cfg
+
+sudo systemctl restart tomcat
+sudo systemctl enable postgresql
+sudo systemctl enable tomcat
+```
+
+### Test your instance
+Please visit a web page of the DSpace server: http://$(hostname):8080/xmlui
 You should be able to login with your admin account.
 
 ## Configuration
@@ -104,7 +169,7 @@ You should be able to login with your admin account.
 ### Create an initial configuration
 Now create a bunch of default users and a community/collection structure:
 ```
-./dspace-init.sh
+cd /home/ubuntu/DSpace-Setup && ./dspace-init.sh
 ```
 
 After that, we need to configure permissions. You will need to login as admin using the DSpace UI: 
@@ -146,15 +211,15 @@ sudo a2enmod ssl proxy proxy_http proxy_ajp
 sudo service apache2 restart
 ```
 
-Now you will see the standard apache index page: http://demo-dspace.sara-service.org
+Now you will see the standard apache index page: http://$(hostname)
 
 ### Install letsencrypt, create and configure SSL cert
 ```
-sudo apt-get install letsencrypt python-letsencrypt-apache
+sudo apt -y install python3-certbot-apache
 sudo service apache2 stop
-sudo letsencrypt --authenticator standalone --installer apache --domains demo-dspace.sara-service.org
+sudo letsencrypt --authenticator standalone --installer apache --domains $(hostname)
 ```
-Choose `secure redirect` . Now you should be able to access via https only: http://demo-dspace.sara-service.org
+Choose `secure redirect` . Now you should be able to access via https only: http://$(hostname)
 
 ### Configure apache httpd
 Append the following section to your virtual server config under `/etc/apache2/sites-enabled/000-default-le-ssl.conf` :
@@ -269,42 +334,4 @@ sudo rm -rf /tmp/dspace-6.?-src-release
 ### Close ports
 
 Now you can login the bwCloud user interface and disable the tomcat ports 8080/8443 for better security!
-
-Also, in Tomcat's `server.xml`, change all `<Connector>`s to add `address="127.0.0.1"`. Better safe than sorry.
-
-## Troubleshoot
-
-### Fix hostname
-
-bwCloud ALT has a bug and an altered hostname will be reset to its inital one after a reboot.
-Edit `/etc/rc.local` and add `sudo hostname dspace-devel.sara-service.org` to fix the hostname permanently.
-
-### Dump your active config
-This is useful for debugging. DSpace has a `read` command to perform a sequence of commands in a single call but it does not work. Hence this solution which is very slow:
-```
-for prop in `cat ~/DSpace-Setup/config/local.cfg | awk '/^\S\S*\s*=/{if (split($0,a,"=")>0) {print a[1]}}'`; do 
-    echo "$prop = "; sudo /dspace/bin/dspace dsprop -p $prop; echo; 
-done
-```
-
-### Performance optimizations
-Prepend
-```
-CATALINA_OPTS="-Xmx2048M -Xms2048M  -XX:MaxPermSize=512m -XX:+UseG1GC -Dfile.encoding=UTF-8"
-```
-in
-```
-/opt/tomcat/bin/catalina.sh
-# Restart TomCat
-sudo service tomcat restart
-```
-*TODO needs more testing*
-
-### Rebuild dspace from sources (OPTIONAL) - TODO test it!
-```
-./dspace-checkout.sh
-```
-then select your desired branch
-```
-./dspace-rebuild.sh
-```
+Also, in Tomcat's `server.xml`, change all `<Connector>`s to add `address="127.0.0.1"`. Better save than sorry.
