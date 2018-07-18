@@ -101,9 +101,7 @@ sudo -u postgres psql dspace -c "CREATE EXTENSION pgcrypto;"
 wget http://archive.apache.org/dist/tomcat/tomcat-8/v8.5.32/bin/apache-tomcat-8.5.32.tar.gz -O /tmp/tomcat.tgz
 sudo mkdir /opt/tomcat
 sudo tar xzvf /tmp/tomcat.tgz -C /opt/tomcat --strip-components=1
-sudo chgrp -R dspace /opt/tomcat
-sudo chmod -R g+r /opt/tomcat/conf
-sudo chown -R dspace /opt/tomcat/{webapps,work,temp,logs}
+sudo chown -R dspace.dspace /opt/tomcat
 sudo cp /home/ubuntu/DSpace-Setup/config/tomcat/tomcat.service /etc/systemd/system/tomcat.service
 sudo cp /home/ubuntu/DSpace-Setup/config/tomcat/server.xml /opt/tomcat/conf/server.xml
 sudo systemctl daemon-reload
