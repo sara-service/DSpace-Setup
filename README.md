@@ -126,6 +126,17 @@ sudo -u dspace mvn -e package -Dmirage2.on=true
 # FIXME build error in mirage2 module, log is in: /tmp/dspace-6.3-src-release/dspace/modules/xmlui-mirage2/target/themes/Mirage2/npm-debug.log
 sudo -i -u dspace -- sh -c 'cd /tmp/dspace-6.3-src-release/dspace/target/dspace-installer; ant fresh_install'
 
+# Create dspace admin (non-interactive)
+sudo -u dspace /dspace/bin/dspace create-administrator
+```
+
+At the end of the installation you will be asked to create an admin user. 
+Please type the mail address, name, surname and password.
+It will send no email as the admin user is written to the DB directly.
+
+### Apply presets
+
+```
 # Enable REST
 sudo cat /home/ubuntu/DSpace-Setup/config/rest/web.xml | sudo -u dspace tee /dspace/webapps/rest/WEB-INF/web.xml
 # Enable Mirage2 Themes
@@ -141,27 +152,16 @@ sudo chgrp -R dspace /dspace/config/emails
 # Copy all webapps from dspace to tomcat
 sudo cp -R -p /dspace/webapps/* /opt/tomcat/webapps/
 
-# Create dspace admin (non-interactive)
-sudo -u dspace /dspace/bin/dspace create-administrator
+# Apply custom local configurations
+sudo cat /home/ubuntu/DSpace-Setup/config/local.cfg | sed 's/devel-dspace.sara-service.org/'$(hostname)'/g' | sudo -u dspace tee /dspace/config/local.cfg
 
 sudo systemctl restart tomcat
 sudo systemctl enable postgresql
 sudo systemctl enable tomcat
 ```
 
-At the end of the installation you will be asked to create an admin user. 
-Please type the mail address, name, surname and password.
-It will send no email as the admin user is written to the DB directly.
-
-### Apply custom local configurations
-
-```
-sudo cat /home/ubuntu/DSpace-Setup/config/local.cfg | sed 's/devel-dspace.sara-service.org/'$(hostname)'/g' | sudo -u dspace tee /dspace/config/local.cfg
-sudo service tomcat restart
-``` 
-
-### Test your Instance
-Please visit a web page of the DSpace server: http://demo-dspace.sara-service.org:8080/xmlui .
+### Test your instance
+Please visit a web page of the DSpace server: http://$(hostname):8080/xmlui
 You should be able to login with your admin account.
 
 ## Configuration
@@ -334,42 +334,4 @@ sudo rm -rf /tmp/dspace-6.?-src-release
 ### Close ports
 
 Now you can login the bwCloud user interface and disable the tomcat ports 8080/8443 for better security!
-
-Also, in Tomcat's `server.xml`, change all `<Connector>`s to add `address="127.0.0.1"`. Better safe than sorry.
-
-## Troubleshoot
-
-### Fix hostname
-
-bwCloud ALT has a bug and an altered hostname will be reset to its inital one after a reboot.
-Edit `/etc/rc.local` and add `sudo hostname dspace-devel.sara-service.org` to fix the hostname permanently.
-
-### Dump your active config
-This is useful for debugging. DSpace has a `read` command to perform a sequence of commands in a single call but it does not work. Hence this solution which is very slow:
-```
-for prop in `cat ~/DSpace-Setup/config/local.cfg | awk '/^\S\S*\s*=/{if (split($0,a,"=")>0) {print a[1]}}'`; do 
-    echo "$prop = "; sudo /dspace/bin/dspace dsprop -p $prop; echo; 
-done
-```
-
-### Performance optimizations
-Prepend
-```
-CATALINA_OPTS="-Xmx2048M -Xms2048M  -XX:MaxPermSize=512m -XX:+UseG1GC -Dfile.encoding=UTF-8"
-```
-in
-```
-/opt/tomcat/bin/catalina.sh
-# Restart TomCat
-sudo service tomcat restart
-```
-*TODO needs more testing*
-
-### Rebuild dspace from sources (OPTIONAL) - TODO test it!
-```
-./dspace-checkout.sh
-```
-then select your desired branch
-```
-./dspace-rebuild.sh
-```
+Also, in Tomcat's `server.xml`, change all `<Connector>`s to add `address="127.0.0.1"`. Better save than sorry.
