@@ -208,7 +208,7 @@ sudo a2enmod ssl proxy proxy_http proxy_ajp
 sudo systemctl restart apache2
 ```
 
-Now you will see the standard apache index page: http://$(hostname)
+Now you will see the standard apache index page: http://vm-152-020.bwcloud.uni-ulm.de
 
 ### Install letsencrypt, create and configure SSL cert
 ```
@@ -216,7 +216,7 @@ sudo apt -y install python3-certbot-apache
 sudo systemctl stop apache2
 sudo letsencrypt --authenticator standalone --installer apache --domains $(hostname)
 ```
-Choose `secure redirect` . Now you should be able to access via https only: http://$(hostname)
+Choose `secure redirect` . Now you should be able to access via https only: http://vm-152-020.bwcloud.uni-ulm.de
 
 ### Configure apache httpd
 Append the following section to your virtual server config under `/etc/apache2/sites-enabled/000-default-le-ssl.conf` :
