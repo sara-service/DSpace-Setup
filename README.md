@@ -44,13 +44,9 @@ In case of questions please contact:
  * Compute -> Instances -> "dspace-6.2" -> [Rebuild Instance]
  * You might need to remove your old SSH key from ~/.ssh/known_hosts
 
-### Setup subdomain
-Point your subdomain to the IP of the bwCloud VM. Here, we use: 
-
-     vm-152-020.bwcloud.uni-ulm.de
-
+### Connect to the machine
 ```
-ssh -A ubuntu@demo-dspace.sara-service.org
+ssh -A ubuntu@vm-152-020.bwcloud.uni-ulm.de
 ```
 
 ## Prerequisites
