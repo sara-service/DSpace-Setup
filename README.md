@@ -158,7 +158,7 @@ sudo systemctl enable tomcat
 ```
 
 ### Test your instance
-Please visit a web page of the DSpace server: http://$(hostname):8080/xmlui
+Please visit a web page of the DSpace server: http://vm-152-020.bwcloud.uni-ulm.de:8080/xmlui
 You should be able to login with your admin account.
 
 ## Configuration
