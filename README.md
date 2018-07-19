@@ -55,7 +55,7 @@ ssh -A ubuntu@vm-152-020.bwcloud.uni-ulm.de
 sudo sed -i.orig '41,+1s/^# //' /etc/inputrc
 
 # Adapt host name
-sudo hostname demo-dspace.sara-service.org
+sudo hostname vm-152-020.bwcloud.uni-ulm.de
 
 # Fetch latest updates
 sudo apt update
