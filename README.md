@@ -119,8 +119,8 @@ sudo chown dspace /dspace
 sudo chgrp dspace /dspace
 
 cd /tmp/dspace-6.3-src-release
-sudo -u dspace mvn -e package -Dmirage2.on=true
-# FIXME build error in mirage2 module, log is in: /tmp/dspace-6.3-src-release/dspace/modules/xmlui-mirage2/target/themes/Mirage2/npm-debug.log
+# NOTE needs sudo interactive or else build fails for Mirage2(xmlui)
+sudo -i -u dspace sh -c 'cd /tmp/dspace-6.3-src-release && mvn -e package -Dmirage2.on=true'
 sudo -i -u dspace -- sh -c 'cd /tmp/dspace-6.3-src-release/dspace/target/dspace-installer; ant fresh_install'
 
 # Create dspace admin (non-interactive)
