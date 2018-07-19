@@ -69,7 +69,8 @@ sudo locale-gen de_DE.UTF-8 en_US.UTF-8
 sudo localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 
 # Fix timezone
-sudo apt-get install tzdata (8, 7 for /Europe/Berlin)
+sudo sh -c 'echo "Europe/Berlin" > /etc/timezone'
+sudo DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true apt-get install tzdata
 
 # Clone this setup from git
 git clone git@git.uni-konstanz.de:sara/DSpace-Setup.git
