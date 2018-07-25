@@ -120,10 +120,10 @@ sudo chgrp dspace /dspace
 
 cd /tmp/dspace-6.3-src-release
 # NOTE needs sudo interactive or else build fails for Mirage2(xmlui)
-sudo -i -u dspace sh -c 'cd /tmp/dspace-6.3-src-release && mvn -e package -Dmirage2.on=true'
-sudo -i -u dspace -- sh -c 'cd /tmp/dspace-6.3-src-release/dspace/target/dspace-installer; ant fresh_install'
+sudo -H -u dspace sh -c 'cd /tmp/dspace-6.3-src-release && mvn -e package -Dmirage2.on=true'
+sudo -H -u dspace -- sh -c 'cd /tmp/dspace-6.3-src-release/dspace/target/dspace-installer; ant fresh_install'
 
-# Create dspace admin (non-interactive)
+# Create dspace admin (interactive)
 sudo -u dspace /dspace/bin/dspace create-administrator
 ```
 
