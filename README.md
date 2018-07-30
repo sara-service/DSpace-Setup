@@ -45,12 +45,12 @@ In case of questions please contact:
  * You might need to remove your old SSH key from ~/.ssh/known_hosts
 
 ### Connect to the machine
-```
+```bash
 ssh -A ubuntu@vm-152-020.bwcloud.uni-ulm.de
 ```
 
 ## Prerequisites
-```
+```bash
 # Enable history search (pgdn/pgup)
 sudo sed -i.orig '41,+1s/^# //' /etc/inputrc
 
@@ -63,7 +63,8 @@ sudo apt-get -y upgrade
 
 # Install some packages
 sudo apt-get -y install vim git locales
-
+```
+```bash
 # Fix locales
 sudo locale-gen de_DE.UTF-8 en_US.UTF-8
 sudo localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
@@ -71,7 +72,8 @@ sudo localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-
 # Fix timezone
 sudo sh -c 'echo "Europe/Berlin" > /etc/timezone'
 sudo DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true apt-get install tzdata
-
+```
+```bash
 # Clone this setup from git
 git clone git@git.uni-konstanz.de:sara/DSpace-Setup.git
 ```
@@ -80,10 +82,11 @@ git clone git@git.uni-konstanz.de:sara/DSpace-Setup.git
 
 ### Postgres
 
-```
+```bash
 sudo apt-mark hold openjdk-11-jre-headless
 sudo apt-get -y install python openjdk-8-jdk maven ant postgresql postgresql-contrib curl wget
-
+```
+```bash
 sudo systemctl start postgresql
 sudo groupadd dspace
 sudo useradd -m -g dspace dspace
@@ -95,7 +98,7 @@ sudo -u postgres psql dspace -c "CREATE EXTENSION pgcrypto;"
 
 ### Tomcat
 
-```
+```bash
 wget http://archive.apache.org/dist/tomcat/tomcat-8/v8.5.32/bin/apache-tomcat-8.5.32.tar.gz -O /tmp/tomcat.tgz
 sudo mkdir /opt/tomcat
 sudo tar xzvf /tmp/tomcat.tgz -C /opt/tomcat --strip-components=1
@@ -110,18 +113,21 @@ Now you should be able to find your tomcat running at http://vm-152-020.bwcloud.
 
 ### DSpace
 
-```
+```bash
 wget https://github.com/DSpace/DSpace/releases/download/dspace-6.3/dspace-6.3-src-release.tar.gz -O /tmp/dspace.tgz
 sudo -u dspace tar -xzvf /tmp/dspace.tgz -C /tmp
-
+```
+```bash
 sudo mkdir /dspace
 sudo chown dspace /dspace
 sudo chgrp dspace /dspace
-
+```
+```bash
 # NOTE needs sudo interactive or else build fails for Mirage2(xmlui)
 sudo -H -u dspace sh -c 'cd /tmp/dspace-6.3-src-release && mvn -e package -Dmirage2.on=true'
 sudo -H -u dspace -- sh -c 'cd /tmp/dspace-6.3-src-release/dspace/target/dspace-installer; ant fresh_install'
-
+```
+```bash
 # Create dspace admin (interactive)
 sudo -u dspace /dspace/bin/dspace create-administrator
 ```
@@ -132,7 +138,7 @@ It will send no email as the admin user is written to the DB directly.
 
 ### Apply presets
 
-```
+```bash
 # Enable REST
 sudo cat /home/ubuntu/DSpace-Setup/config/rest/web.xml | sudo -u dspace tee /dspace/webapps/rest/WEB-INF/web.xml
 # Enable Mirage2 Themes
@@ -144,13 +150,14 @@ sudo cat /home/ubuntu/DSpace-Setup/config/input-forms.xml | sudo -u dspace tee /
 sudo cp /home/ubuntu/DSpace-Setup/config/emails/* /dspace/config/emails/
 sudo chown -R dspace /dspace/config/emails
 sudo chgrp -R dspace /dspace/config/emails
-
-# Copy all webapps from dspace to tomcat
-sudo cp -R -p /dspace/webapps/* /opt/tomcat/webapps/
-
 # Apply custom local configurations
 sudo cat /home/ubuntu/DSpace-Setup/config/local.cfg | sed 's/devel-dspace.sara-service.org/'$(hostname)'/g' | sudo -u dspace tee /dspace/config/local.cfg
-
+```
+```bash
+# Copy all webapps from dspace to tomcat
+sudo cp -R -p /dspace/webapps/* /opt/tomcat/webapps/
+```
+```bash
 sudo systemctl restart tomcat
 sudo systemctl enable postgresql
 sudo systemctl enable tomcat
@@ -164,7 +171,7 @@ You should be able to login with your admin account.
 
 ### Create an initial configuration
 Now create a bunch of default users and a community/collection structure:
-```
+```bash
 cd /home/ubuntu/DSpace-Setup && ./dspace-init.sh
 ```
 
@@ -181,13 +188,10 @@ After that, we need to configure permissions. You will need to login as admin us
 
 <sup>2</sup>you may exclude a few collections but SARA will not be able to submit to them even when a SARA user owns submit rights on them!
 
-### Validate rest/swordv2 functionality (HTTP)
+### Validate Swordv2/Rest functionality (HTTP)
 
-```
+```bash
 DSPACE_SERVER="$(hostname):8080"
-
-curl -s -H "Accept: application/json" $DSPACE_SERVER/rest/hierarchy | python -m json.tool
-# This should dump the bibliography structure. In case of `No JSON object could be decoded` something is wrong.
 
 SARA_USER="project-sara@uni-konstanz.de"
 SARA_PWD="SaraTest"
@@ -200,8 +204,13 @@ curl -H "on-behalf-of: $USER2" -i $DSPACE_SERVER/swordv2/servicedocument --user 
 curl -H "on-behalf-of: $USER3" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => HTML Error Status 403: Forbidden
 ```
 
-### Install apache httpd
+```bash
+curl -s -H "Accept: application/json" $DSPACE_SERVER/rest/hierarchy | python -m json.tool
+# This should dump the bibliography structure. In case of `No JSON object could be decoded` something is wrong.
 ```
+
+### Install apache httpd
+```bash
 sudo apt-get install apache2
 sudo a2enmod ssl proxy proxy_http proxy_ajp
 sudo systemctl restart apache2
@@ -210,7 +219,7 @@ sudo systemctl restart apache2
 Now you will see the standard apache index page: http://vm-152-020.bwcloud.uni-ulm.de
 
 ### Install letsencrypt, create and configure SSL cert
-```
+```bash
 sudo apt -y install python3-certbot-apache
 sudo systemctl stop apache2
 sudo letsencrypt --authenticator standalone --installer apache --domains $(hostname)
@@ -219,7 +228,10 @@ Choose `secure redirect` . Now you should be able to access via https only: http
 
 ### Configure apache httpd
 Append the following section to your virtual server config under `/etc/apache2/sites-enabled/000-default-le-ssl.conf` :
+```bash
+sudo vim /etc/apache2/sites-enabled/000-default-le-ssl.conf
 ```
+```apache
         ProxyPass /xmlui ajp://localhost:8009/xmlui
         ProxyPassReverse /xmlui ajp://localhost:8009/xmlui
 
@@ -235,25 +247,22 @@ Append the following section to your virtual server config under `/etc/apache2/s
         ProxyPassReverse / ajp://localhost:8009/xmlui
 ```
 Restart apache:
-```
+```bash
 sudo systemctl restart apache2
 ```
 
 ### Update DSpace local.cfg
 
 Now you need to remove the local port 8080 and the http in the dspace config:
-```
+```bash
 sudo sed -i 's#dspace.baseUrl = http://${dspace.hostname}:8080#dspace.baseUrl = https://${dspace.hostname}#' /dspace/config/local.cfg
 sudo service tomcat restart
 ```
 
-### Validate rest/swordv2 functionality (HTTPS)
+### Validate Swordv2/Rest functionality (HTTPS)
 
-```
+```bash
 DSPACE_SERVER="https://$(hostname)"
-
-curl -s -H "Accept: application/json" $DSPACE_SERVER/rest/hierarchy | python -m json.tool
-# This should dump the bibliography structure. In case of `No JSON object could be decoded` something is wrong.
 
 SARA_USER="project-sara@uni-konstanz.de"
 SARA_PWD="SaraTest"
@@ -264,6 +273,10 @@ USER3="daniel.duesentrieb@uni-entenhausen.de" # set nonexisting user
 curl -H "on-behalf-of: $USER1" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => downloads TermsOfServices for all available collections
 curl -H "on-behalf-of: $USER2" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => downloads empty service document
 curl -H "on-behalf-of: $USER3" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => HTML Error Status 403: Forbidden
+```
+```bash
+curl -s -H "Accept: application/json" $DSPACE_SERVER/rest/hierarchy | python -m json.tool
+# This should dump the bibliography structure. In case of `No JSON object could be decoded` something is wrong.
 ```
 
 ## Final steps
@@ -286,7 +299,11 @@ We propose two solutions to prevent these scenarios:
 
 1) Block requests except for SARA Service in Apache
 
-Do `sudo a2enmod authn_anon` and replace `ProxyPass /swordv2 ajp://localhost:8009/swordv2` by
+Do `sudo a2enmod authn_anon` and replace `ProxyPass /swordv2 ajp://localhost:8009/swordv2` by the following code snippet:
+
+```bash
+sudo vim /etc/apache2/sites-enabled/000-default-le-ssl.conf
+```
 
 ```apache
 <Location /swordv2>
@@ -301,6 +318,8 @@ Do `sudo a2enmod authn_anon` and replace `ProxyPass /swordv2 ajp://localhost:800
     Anonymous *
 </Location>
 ```
+
+**IMPORTANT: double check that the ProxyPass and ProxyPassReverse with `/xmlui` occur at the very end or else the `/swordv2` rule is not going to be applied!**
 
 This has Apache do authZ (the username whitelisting) only, and lets DSpace do authN (checking the password)
 so the password doesn't have to be kept in sync between Apache and DSpace config.
@@ -321,7 +340,7 @@ https://github.com/54r4/DSpace/tree/dspace-6.3_OboFixVariant2
 It is preferrable to adapt 1) or 1) and 2).
 
 ### Free up disk space
-```
+```bash
 du -hs /tmp/dspace-6.?-src-release
 #4,2G	dspace-6.3-src-release
 sudo rm -rf /tmp/dspace-6.?-src-release
