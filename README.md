@@ -118,7 +118,6 @@ sudo mkdir /dspace
 sudo chown dspace /dspace
 sudo chgrp dspace /dspace
 
-cd /tmp/dspace-6.3-src-release
 # NOTE needs sudo interactive or else build fails for Mirage2(xmlui)
 sudo -H -u dspace sh -c 'cd /tmp/dspace-6.3-src-release && mvn -e package -Dmirage2.on=true'
 sudo -H -u dspace -- sh -c 'cd /tmp/dspace-6.3-src-release/dspace/target/dspace-installer; ant fresh_install'
