@@ -126,6 +126,7 @@ sudo chgrp dspace /dspace
 sudo -H -u dspace sh -c 'cd /tmp/dspace-6.3-src-release && mvn -e package -Dmirage2.on=true'
 sudo -H -u dspace -- sh -c 'cd /tmp/dspace-6.3-src-release/dspace/target/dspace-installer; ant fresh_install'
 ```
+**TODO: automate this!**
 ```bash
 # Create dspace admin (interactive)
 sudo -u dspace /dspace/bin/dspace create-administrator
@@ -173,6 +174,7 @@ Now create a bunch of default users and a community/collection structure:
 ```bash
 cd /home/ubuntu/DSpace-Setup && ./dspace-init.sh
 ```
+**TODO: automate this!**
 
 After that, we need to configure permissions. You will need to login as admin using the DSpace UI: 
 * create a group called `Submitter` and add `project-sara@uni-konstanz.de`<sup>1</sup>
