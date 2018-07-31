@@ -80,12 +80,11 @@ sudo cp ~/DSpace-Setup/config/vimrc.local /etc/vim/vimrc.local
 
 ## Installation
 
-### Postgres
-
 ```bash
 sudo apt-mark hold openjdk-11-jre-headless
 sudo apt-get -y install python openjdk-8-jdk maven ant postgresql postgresql-contrib curl wget
 ```
+### Postgres
 ```bash
 sudo systemctl start postgresql
 sudo groupadd dspace
