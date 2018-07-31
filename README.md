@@ -40,7 +40,7 @@ In case of questions please contact:
 
 ### In case you have an running instance already which you would like to replace
 
- * https://bwcloud.ruf.uni-freiburg.de
+ * https://portal.bwcloud.org
  * Compute -> Instances -> "dspace-6.2" -> [Rebuild Instance]
  * You might need to remove your old SSH key from ~/.ssh/known_hosts
 
