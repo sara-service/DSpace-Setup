@@ -1,9 +1,9 @@
 filetype plugin indent on
 autocmd FileType make setlocal noexpandtab
 " makes the spaces feel like real tabs
-set softtabstop=4
 set tabstop=4
 set shiftwidth=4
+set softtabstop=4
 set expandtab
 " use shift-tab for real tabs
 inoremap <S-Tab> <C-V><Tab> 
@@ -11,3 +11,5 @@ inoremap <S-Tab> <C-V><Tab>
 if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
+" to reformat existing tabs into spaces type
+" :retab
