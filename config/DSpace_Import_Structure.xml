@@ -7,7 +7,7 @@
     <copyright>Special copyright notice</copyright>
     <sidebar>Sidebar text</sidebar>
     <collection>
-      <name>Publikationen (workspace)</name>
+      <name>Publikationen (not reviewed)</name>
       <description>Descriptive text</description>
       <intro>Introductory text</intro>
       <copyright>Special copyright notice</copyright>
@@ -22,7 +22,7 @@
   <community>
     <name>Fakultät für Psychologie</name>
     <collection>
-      <name>Publikationen (workspace)</name>
+      <name>Publikationen (not reviewed)</name>
     </collection>
     <collection>
       <name>Forschungsdaten</name>
