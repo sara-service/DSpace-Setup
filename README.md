@@ -31,7 +31,7 @@ In case of questions please contact:
 
 ### Create a virtual machine (e.g. an instance on the bwCloud):
 
-  * https://portal.bwcloud.org
+  * https://portal.bw-cloud.org
   * Compute -> Instances -> Start new instance
   * Use "Ubuntu Server 18.04 Minimal" image
   * Use flavor "m1.medium" with 12GB disk space and 4GB RAM
@@ -40,7 +40,7 @@ In case of questions please contact:
 
 ### In case you have an running instance already which you would like to replace
 
- * https://portal.bwcloud.org
+ * https://portal.bw-cloud.org
  * Compute -> Instances -> "dspace-6.2" -> [Rebuild Instance]
  * You might need to remove your old SSH key from ~/.ssh/known_hosts
 
