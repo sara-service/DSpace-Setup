@@ -210,7 +210,7 @@ curl -s -H "Accept: application/json" $DSPACE_SERVER/rest/hierarchy | python -m 
 
 ### Install apache httpd
 ```bash
-sudo apt-get install apache2
+sudo apt-get -y install apache2
 sudo a2enmod ssl proxy proxy_http proxy_ajp
 sudo systemctl restart apache2
 ```
