@@ -52,7 +52,10 @@ ssh -A ubuntu@vm-152-020.bwcloud.uni-ulm.de
 ## Prerequisites
 ```bash
 # Enable history search (pgdn/pgup)
-sudo sed -i.orig '41,+1s/^# //' /etc/inputrc && source ~/.bashrc
+sudo sed -i.orig '41,+1s/^# //' /etc/inputrc
+
+# start a new bash to apply modified inputrc
+bash
 
 # Adapt host name
 sudo hostname vm-152-020.bwcloud.uni-ulm.de
