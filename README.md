@@ -61,7 +61,7 @@ sudo hostname vm-152-020.bwcloud.uni-ulm.de
 sudo apt-get update && sudo apt-get -y upgrade
 
 # Install some packages
-sudo apt-get -y install vim git locales && sudo cp ~/DSpace-Setup/config/vimrc.local /etc/vim/vimrc.local
+sudo apt-get -y install vim git locales
 ```
 ```bash
 # Fix locales
@@ -75,6 +75,7 @@ sudo DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true apt-get ins
 ```bash
 # Clone this setup from git
 git clone git@git.uni-konstanz.de:sara/DSpace-Setup.git
+sudo cp ~/DSpace-Setup/config/vimrc.local /etc/vim/vimrc.local
 ```
 
 ## Installation
