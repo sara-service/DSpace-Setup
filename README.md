@@ -210,7 +210,7 @@ curl -s -H "Accept: application/json" $DSPACE_SERVER/rest/hierarchy | python -m 
 
 ### Install apache httpd
 ```bash
-sudo apt-get install apache2
+sudo apt-get -y install apache2
 sudo a2enmod ssl proxy proxy_http proxy_ajp
 sudo systemctl restart apache2
 ```
@@ -247,7 +247,7 @@ sudo vim /etc/apache2/sites-enabled/000-default-le-ssl.conf
 ```
 Restart apache:
 ```bash
-sudo systemctl restart apache2
+sudo systemctl stop apache2 && sudo systemctl start apache2
 ```
 
 ### Update DSpace local.cfg
@@ -283,7 +283,8 @@ curl -s -H "Accept: application/json" $DSPACE_SERVER/rest/hierarchy | python -m 
 ### Stability optimizations
 Append `kernel.panic = 30` to `/etc/sysctl.conf`
 
-```
+```bash
+sudo vim /etc/sysctl.conf
 sudo sysctl -p /etc/sysctl.conf
 ```
 This will perform an automatic reboot 30 seconds after a kernel panic has occurred.
@@ -319,6 +320,7 @@ sudo vim /etc/apache2/sites-enabled/000-default-le-ssl.conf
 ```
 
 **IMPORTANT: double check that the ProxyPass and ProxyPassReverse with `/xmlui` occur at the very end or else the `/swordv2` rule is not going to be applied!**
+**Best thing is to re-test SwordV2 using the curl commands from the previous sections!**
 
 This has Apache do authZ (the username whitelisting) only, and lets DSpace do authN (checking the password)
 so the password doesn't have to be kept in sync between Apache and DSpace config.
@@ -334,9 +336,9 @@ We provide two patches that restrict the on-Behalf-of submission on a list of we
 https://github.com/54r4/DSpace/tree/dspace-6.3_OboFixVariant1
 https://github.com/54r4/DSpace/tree/dspace-6.3_OboFixVariant2
 
-*TODO Source build and install*
-
 It is preferrable to adapt 1) or 1) and 2).
+
+*TODO Source build and install*
 
 ### Free up disk space
 ```bash
