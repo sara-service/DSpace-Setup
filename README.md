@@ -58,8 +58,7 @@ sudo sed -i.orig '41,+1s/^# //' /etc/inputrc
 sudo hostname vm-152-020.bwcloud.uni-ulm.de
 
 # Fetch latest updates
-sudo apt-get update
-sudo apt-get -y upgrade
+sudo apt-get update && sudo apt-get -y upgrade
 
 # Install some packages
 sudo apt-get -y install vim git locales
