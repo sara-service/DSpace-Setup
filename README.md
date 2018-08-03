@@ -260,7 +260,7 @@ sudo vim /etc/apache2/sites-enabled/000-default-le-ssl.conf
 ```
 Restart apache:
 ```bash
-sudo systemctl stop apache2 && sudo systemctl start apache2
+sudo systemctl restart apache2
 ```
 
 ### Update DSpace local.cfg
