@@ -1,4 +1,4 @@
-# How to Install DSpace-6 on bwCloud Scope
+# How to Install Oparu-Beta on bwCloud Scope
 
 ## Intro
 
