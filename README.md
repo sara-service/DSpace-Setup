@@ -235,7 +235,11 @@ sudo letsencrypt --authenticator standalone --installer apache --domains $(hostn
 Choose `secure redirect` . Now you should be able to access via https only: http://oparu-beta.sara-service.org
 
 ### Configure apache httpd
-Append the following section to your virtual server config under `/etc/apache2/sites-enabled/000-default-le-ssl.conf` :
+First stop tomcat:
+```bash
+sudo systemctl stop tomcat
+```
+Then append the following section to your virtual server config under `/etc/apache2/sites-enabled/000-default-le-ssl.conf` :
 ```bash
 sudo vim /etc/apache2/sites-enabled/000-default-le-ssl.conf
 ```
