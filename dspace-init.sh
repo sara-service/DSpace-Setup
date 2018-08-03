@@ -1,7 +1,5 @@
 #!/bin/sh
 
-ADMIN_EMAIL="katakombi@gmail.com"
-
 echo "creating users..."
 
 # sara submit user
