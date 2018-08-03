@@ -130,15 +130,11 @@ sudo chgrp dspace /dspace
 sudo -H -u dspace sh -c 'cd /tmp/dspace-6.3-src-release && mvn -e package -Dmirage2.on=true'
 sudo -H -u dspace -- sh -c 'cd /tmp/dspace-6.3-src-release/dspace/target/dspace-installer; ant fresh_install'
 ```
-
-Now you will be asked to create an admin user. 
-Please type the mail address, name, surname and password.
-It will send no email as the admin user is written to the DB directly.
-
-**TODO: automate this!**
 ```bash
-# Create dspace admin (interactive)
-sudo -u dspace /dspace/bin/dspace create-administrator
+# export admins email = it is used by the script to create the bibliography, too
+export ADMIN_EMAIL="katakombi@gmail.com"
+# Create dspace admin
+sudo -u dspace /dspace/bin/dspace create-administrator -e $ADMIN_EMAIL -f "kata" -l "kombi" -p "iamthebest" -c en
 ```
 
 ### Apply presets
