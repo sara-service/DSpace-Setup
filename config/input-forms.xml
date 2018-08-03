@@ -51,13 +51,13 @@
 
        <field>
          <dc-schema>dc</dc-schema>
-         <dc-element>contributor</dc-element>
-         <dc-qualifier>other</dc-qualifier>
+         <dc-element>creator</dc-element>
+         <dc-qualifier></dc-qualifier>
          <repeatable>false</repeatable>
          <label>Submitter</label>
          <input-type>name</input-type>
          <hint>Enter the name of the submitter of this item.</hint>
-         <required></required>
+         <required>You must enter a submitter for this item.</required>
        </field>
 
        <field>
@@ -73,8 +73,8 @@
 
        <field>
          <dc-schema>dc</dc-schema>
-         <dc-element>title</dc-element>
-         <dc-qualifier>alternative</dc-qualifier>
+         <dc-element>description</dc-element>
+         <dc-qualifier></dc-qualifier>
          <repeatable>false</repeatable>
          <label>Version</label>
          <input-type>onebox</input-type>
@@ -176,7 +176,7 @@ it, please enter the types and the actual numbers or codes.</hint>
          <vocabulary>srsc</vocabulary>
        </field>
 
-       <field>
+       <!--field>
          <dc-schema>dc</dc-schema>
          <dc-element>description</dc-element>
          <dc-qualifier>abstract</dc-qualifier>
@@ -185,9 +185,9 @@ it, please enter the types and the actual numbers or codes.</hint>
          <input-type>textarea</input-type>
          <hint>Enter the abstract of the item. </hint>
          <required></required>
-       </field>
+       </field-->
 
-       <field>
+       <!--field>
          <dc-schema>dc</dc-schema>
          <dc-element>description</dc-element>
          <dc-qualifier>sponsorship</dc-qualifier>
@@ -196,7 +196,7 @@ it, please enter the types and the actual numbers or codes.</hint>
          <input-type>textarea</input-type>
          <hint>Enter the names of any sponsors and/or funding codes in the box. </hint>
          <required></required>
-       </field>
+       </field-->
 
        <!--field>
          <dc-schema>dc</dc-schema>
