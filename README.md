@@ -141,26 +141,26 @@ sudo -u dspace /dspace/bin/dspace create-administrator -e $ADMIN_EMAIL -f "kata"
 
 ```bash
 # Enable REST
-sudo cat /home/ubuntu/DSpace-Setup/config/rest/web.xml | sudo -u dspace tee /dspace/webapps/rest/WEB-INF/web.xml
+cat /home/ubuntu/DSpace-Setup/config/rest/web.xml            | sudo -u dspace sh -c 'cat > /dspace/webapps/rest/WEB-INF/web.xml'
 # Enable Mirage2 Themes
-sudo cat /home/ubuntu/DSpace-Setup/config/xmlui.xconf | sudo -u dspace tee /dspace/config/xmlui.xconf
+cat /home/ubuntu/DSpace-Setup/config/xmlui.xconf             | sudo -u dspace sh -c 'cat > /dspace/config/xmlui.xconf'
 # Apply customized item submission form
-sudo cat /home/ubuntu/DSpace-Setup/config/item-submission.xml | sudo -u dspace tee /dspace/config/item-submission.xml
-sudo cat /home/ubuntu/DSpace-Setup/config/input-forms.xml | sudo -u dspace tee /dspace/config/input-forms.xml
+cat /home/ubuntu/DSpace-Setup/config/item-submission.xml     | sudo -u dspace sh -c 'cat > /dspace/config/item-submission.xml'
+cat /home/ubuntu/DSpace-Setup/config/input-forms.xml         | sudo -u dspace sh -c 'cat > /dspace/config/input-forms.xml'
 # Custom item view
-sudo cat /home/ubuntu/DSpace-Setup/config/xmlui/item-view.xsl /dspace/webapps/xmlui/themes/Mirage2/xsl/aspect/artifactbrowser/item-view.xsl
+cat /home/ubuntu/DSpace-Setup/config/xmlui/item-view.xsl     | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/themes/Mirage2/xsl/aspect/artifactbrowser/item-view.xsl'
 # Custom messages
-sudo cat /home/ubuntu/DSpace-Setup/config/xmlui/messages.xml /dspace/webapps/xmlui/i18n/messages.xml
+cat /home/ubuntu/DSpace-Setup/config/xmlui/messages.xml      | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/i18n/messages.xml'
 # Custom landing page
-sudo cat /home/ubuntu/DSpace-Setup/config/xmlui/news-xmlui.xml /dspace/config/news-xmlui.xml
+cat /home/ubuntu/DSpace-Setup/config/xmlui/news-xmlui.xml    | sudo -u dspace sh -c 'cat > /dspace/config/news-xmlui.xml'
 # Custom thumbnail
-sudo cat /home/ubuntu/DSpace-Setup/config/xmlui/Logo_SARA_RGB.png /dspace/webapps/xmlui/themes/Mirage2/images/Logo_SARA_RGB.png
+cat /home/ubuntu/DSpace-Setup/config/xmlui/Logo_SARA_RGB.png | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/themes/Mirage2/images/Logo_SARA_RGB.png'
 # Copy email templates
 sudo cp /home/ubuntu/DSpace-Setup/config/emails/* /dspace/config/emails/
 sudo chown -R dspace /dspace/config/emails
 sudo chgrp -R dspace /dspace/config/emails
 # Apply custom local configurations
-sudo cat /home/ubuntu/DSpace-Setup/config/local.cfg | sed 's/devel-dspace.sara-service.org/'$(hostname)'/g' | sudo -u dspace tee /dspace/config/local.cfg
+cat /home/ubuntu/DSpace-Setup/config/local.cfg | sed 's/devel-dspace.sara-service.org/'$(hostname)'/g' | sudo -u dspace tee /dspace/config/local.cfg
 ```
 ```bash
 # Copy all webapps from dspace to tomcat
