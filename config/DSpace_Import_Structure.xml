@@ -1,43 +1,31 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <import_structure>
   <community>
-    <name>Fakultät für Informatik</name>
-    <description>Descriptive text</description>
-    <intro>Introductory text</intro>
-    <copyright>Special copyright notice</copyright>
-    <sidebar>Sidebar text</sidebar>
+    <name>Faculty of Education</name>
+    <description></description>
+    <intro></intro>
+    <copyright></copyright>
+    <sidebar></sidebar>
     <collection>
-      <name>Publikationen (not reviewed)</name>
-      <description>Descriptive text</description>
-      <intro>Introductory text</intro>
-      <copyright>Special copyright notice</copyright>
-      <sidebar>Sidebar text</sidebar>
-      <license>Special licence</license>
-      <provenance>Provenance information</provenance>
+      <name>Publications</name>
+      <description></description>
+      <intro></intro>
+      <copyright></copyright>
+      <sidebar></sidebar>
+      <license></license>
+      <provenance></provenance>
     </collection>
     <collection>
-      <name>Forschungsdaten</name>
-    </collection>
-  </community>
-  <community>
-    <name>Fakultät für Psychologie</name>
-    <collection>
-      <name>Publikationen (not reviewed)</name>
-    </collection>
-    <collection>
-      <name>Forschungsdaten</name>
+      <name>Research data</name>
     </collection>
   </community>
   <community>
-    <name>Fakultät für Elektrotechnik</name>
+    <name>Faculty of Science and Technology</name>
     <collection>
-      <name>Publikationen (reviewed)</name>
+      <name>Publications</name>
     </collection>
     <collection>
-      <name>Forschungsdaten</name>
-    </collection>
-    <collection>
-      <name>Testreihen</name>
+      <name>Research data</name>
     </collection>
   </community>
 </import_structure>
