@@ -186,17 +186,15 @@ cd /home/ubuntu/DSpace-Setup && ./dspace-init.sh
 **TODO: automate this!**
 
 After that, we need to configure permissions. You will need to login as admin using the DSpace UI: 
-* create a group called `Submitter` and add `project-sara@uni-konstanz.de`<sup>1</sup>
-* create a group called `SARA User` and add some users. Exclude `demo-user-noaccess@sara-service.org`.
+* create a group called `SARA User` and add `project-sara@uni-konstanz.de`<sup>1</sup>
+* create a group called `DSpace User` and add some users. Exclude `demo-user-noaccess@sara-service.org`.
 * create a group called `Reviewer` and add just a few selected power users
 * for each collection: 
-  * allow submissions for `Submitter` <sup>2</sup>
-  * if `Publikationen`: allow submissions for `SARA User`
-  * if `(reviewed)`: add a role -> `Accept/Reject/Edit Metadata Step` -> add `Reviewer`
+  * allow submissions for `DSpace User`
+  * if `Research Data`: allow submissions for `SARA User`
+  * Add a role -> `Accept/Reject/Edit Metadata Step` -> add `Reviewer`
 
 <sup>1</sup>this is the dedicated SARA Service user and needs to have permissions to submit to any collection a SARA user has access to!
-
-<sup>2</sup>you may exclude a few collections but SARA will not be able to submit to them even when a SARA user owns submit rights on them!
 
 ### Validate Swordv2/Rest functionality (HTTP)
 
