@@ -144,9 +144,17 @@ sudo -u dspace /dspace/bin/dspace create-administrator -e $ADMIN_EMAIL -f "kata"
 sudo cat /home/ubuntu/DSpace-Setup/config/rest/web.xml | sudo -u dspace tee /dspace/webapps/rest/WEB-INF/web.xml
 # Enable Mirage2 Themes
 sudo cat /home/ubuntu/DSpace-Setup/config/xmlui.xconf | sudo -u dspace tee /dspace/config/xmlui.xconf
-# Enable customized item submission form
+# Apply customized item submission form
 sudo cat /home/ubuntu/DSpace-Setup/config/item-submission.xml | sudo -u dspace tee /dspace/config/item-submission.xml
 sudo cat /home/ubuntu/DSpace-Setup/config/input-forms.xml | sudo -u dspace tee /dspace/config/input-forms.xml
+# Custom item view
+sudo cat /home/ubuntu/DSpace-Setup/config/xmlui/item-view.xsl /dspace/webapps/xmlui/themes/Mirage2/xsl/aspect/artifactbrowser/item-view.xsl
+# Custom messages
+sudo cat /home/ubuntu/DSpace-Setup/config/xmlui/messages.xml /dspace/webapps/xmlui/i18n/messages.xml
+# Custom landing page
+sudo cat /home/ubuntu/DSpace-Setup/config/xmlui/news-xmlui.xml /dspace/config/news-xmlui.xml
+# Custom thumbnail
+sudo cat /home/ubuntu/DSpace-Setup/config/xmlui/Logo_SARA_RGB.png /dspace/webapps/xmlui/themes/Mirage2/images/Logo_SARA_RGB.png
 # Copy email templates
 sudo cp /home/ubuntu/DSpace-Setup/config/emails/* /dspace/config/emails/
 sudo chown -R dspace /dspace/config/emails
