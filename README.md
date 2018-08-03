@@ -47,7 +47,7 @@ In case of questions please contact:
 
 ### Connect to the machine
 ```bash
-ssh -A ubuntu@vm-152-020.bwcloud.uni-ulm.de
+ssh -A ubuntu@oparu-beta.sara-service.org
 ```
 
 ## Prerequisites
@@ -59,7 +59,7 @@ sudo sed -i.orig '41,+1s/^# //' /etc/inputrc
 bash
 
 # Adapt host name
-sudo hostname vm-152-020.bwcloud.uni-ulm.de
+sudo hostname oparu-beta.sara-service.org
 
 # Fetch latest updates
 sudo apt-get update && sudo apt-get -y upgrade
@@ -112,7 +112,7 @@ sudo systemctl daemon-reload
 sudo systemctl start tomcat
 ```
 
-Now you should be able to find your tomcat running at http://vm-152-020.bwcloud.uni-ulm.de:8080
+Now you should be able to find your tomcat running at http://oparu-beta.sara-service.org:8080
 
 ### DSpace
 
@@ -169,7 +169,7 @@ sudo systemctl enable tomcat
 ```
 
 ### Test your instance
-Please visit a web page of the DSpace server: http://vm-152-020.bwcloud.uni-ulm.de:8080/xmlui
+Please visit a web page of the DSpace server: http://oparu-beta.sara-service.org:8080/xmlui
 You should be able to login with your admin account.
 
 ## Configuration
@@ -222,7 +222,7 @@ sudo a2enmod ssl proxy proxy_http proxy_ajp
 sudo systemctl restart apache2
 ```
 
-Now you will see the standard apache index page: http://vm-152-020.bwcloud.uni-ulm.de
+Now you will see the standard apache index page: http://oparu-beta.sara-service.org
 
 ### Install letsencrypt, create and configure SSL cert
 ```bash
@@ -230,7 +230,7 @@ sudo apt -y install python3-certbot-apache
 sudo systemctl stop apache2
 sudo letsencrypt --authenticator standalone --installer apache --domains $(hostname)
 ```
-Choose `secure redirect` . Now you should be able to access via https only: http://vm-152-020.bwcloud.uni-ulm.de
+Choose `secure redirect` . Now you should be able to access via https only: http://oparu-beta.sara-service.org
 
 ### Configure apache httpd
 Append the following section to your virtual server config under `/etc/apache2/sites-enabled/000-default-le-ssl.conf` :
