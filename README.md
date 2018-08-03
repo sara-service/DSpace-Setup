@@ -26,6 +26,7 @@ https://sara-service.org
 In case of questions please contact:
 * Stefan Kombrink, Ulm University, Germany / e-mail: stefan.kombrink[at]uni-ulm.de
 * Volodymyr Kushnarenko, Ulm University, Germany / e-mail: volodymyr.kushnarenko[at]uni-ulm.de
+* Franziska Rapp, Ulm University, Germany / e-mail: franziska.rapp[at]uni-ulm.de
 
 ## Setup 
 
