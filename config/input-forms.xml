@@ -79,7 +79,7 @@
          <label>Version</label>
          <input-type>onebox</input-type>
          <hint>You must enter version information for this item</hint>
-         <required></required>
+         <required>You must enter version information for this item</required>
        </field>
 
        <!--field>
