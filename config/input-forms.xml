@@ -40,24 +40,24 @@
      <page number="1">
        <field>
          <dc-schema>dc</dc-schema>
+         <dc-element>creator</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>GitLab User</label>
+         <input-type>name</input-type>
+         <hint>Full name of the person who triggered the archiving process on SARA-Service.</hint>
+         <required>required field</required>
+       </field>
+
+       <field>
+         <dc-schema>dc</dc-schema>
          <dc-element>contributor</dc-element>
          <dc-qualifier>author</dc-qualifier>
          <repeatable>true</repeatable>
          <label>Authors</label>
          <input-type>name</input-type>
-         <hint>Enter the names of the authors of this item.</hint>
-         <required></required>
-       </field>
-
-       <field>
-         <dc-schema>dc</dc-schema>
-         <dc-element>creator</dc-element>
-         <dc-qualifier></dc-qualifier>
-         <repeatable>false</repeatable>
-         <label>Submitter</label>
-         <input-type>name</input-type>
-         <hint>Enter the name of the submitter of this item.</hint>
-         <required>You must enter a submitter for this item.</required>
+         <hint>Full names of the authors of this item.</hint>
+         <required>required field</required>
        </field>
 
        <field>
@@ -67,8 +67,8 @@
          <repeatable>false</repeatable>
          <label>Title</label>
          <input-type>onebox</input-type>
-         <hint>Enter the main title of the item.</hint>
-         <required>You must enter a main title for this item.</required>
+         <hint>Main title of the item.</hint>
+         <required>required field</required>
        </field>
 
        <field>
@@ -78,8 +78,8 @@
          <repeatable>false</repeatable>
          <label>Version</label>
          <input-type>onebox</input-type>
-         <hint>You must enter version information for this item</hint>
-         <required>You must enter version information for this item</required>
+         <hint>Version information for this item.</hint>
+         <required>required field</required>
        </field>
 
        <!--field>
@@ -141,40 +141,50 @@ it, please enter the types and the actual numbers or codes.</hint>
          <required></required>
        </field-->
 
-       <!--field>
+       <field>
          <dc-schema>dc</dc-schema>
          <dc-element>type</dc-element>
          <dc-qualifier></dc-qualifier>
-         <repeatable>true</repeatable>
+         <repeatable>false</repeatable>
          <label>Type</label>
          <input-type value-pairs-name="common_types">dropdown</input-type>
-         <hint>Select the type(s) of content of the item. To select more than one value in the list, you may have to hold down the "CTRL" or "Shift" key.</hint>
-         <required></required>
-       </field-->
+         <hint>Select the type of content of the item.</hint>
+         <required>required field</required>
+       </field>
 
        <field>
-         <dc-schema>dc</dc-schema>
-         <dc-element>language</dc-element>
-         <dc-qualifier>iso</dc-qualifier>
-         <repeatable>true</repeatable>
-         <label>Languages</label>
-         <input-type value-pairs-name="common_src_languages">dropdown</input-type>
-         <hint>Select and add any programming language of the main content of the item.  If the language does not appear in the list, please select 'Others'.</hint>
-         <required></required>
+        <dc-schema>dc</dc-schema>
+        <dc-element>description</dc-element>
+        <dc-qualifier>abstract</dc-qualifier>
+        <repeatable>false</repeatable>
+        <label>Abstract</label>
+        <input-type>textarea</input-type>
+        <hint>Abstract of the item.</hint>
+        <required>required field</required>
        </field>
 
        <field>
          <dc-schema>dc</dc-schema>
-         <dc-element>subject</dc-element>
-         <dc-qualifier></dc-qualifier>
-         <!-- An input-type of twobox MUST be marked as repeatable -->
+         <dc-element>language</dc-element>
          <repeatable>true</repeatable>
+         <label>Programming Languages</label>
+         <input-type value-pairs-name="programminglanguages">dropdown</input-type>
+         <hint>Select and add any programming language of the main content of the item using CTRL. If the language does not appear in the list, please select 'Others'.</hint>
+         <required></required>
+       </field>
+
+       <!--field>
+         <dc-schema>dc</dc-schema>
+         <dc-element>subject</dc-element>
+         <dc-qualifier></dc-qualifier-->
+         <!-- An input-type of twobox MUST be marked as repeatable -->
+         <!--repeatable>true</repeatable>
          <label>Subject Keywords</label>
          <input-type>twobox</input-type>
          <hint>Enter appropriate subject keywords or phrases. </hint>
          <required></required>
          <vocabulary>srsc</vocabulary>
-       </field>
+       </field-->
 
        <!--field>
          <dc-schema>dc</dc-schema>
@@ -410,10 +420,10 @@ it, please enter the types and the actual numbers or codes.</hint>
      </pair>
    </value-pairs>
 
-   <value-pairs value-pairs-name="common_src_languages" dc-term="language_src">
+   <value-pairs value-pairs-name="programminglanguages" dc-term="type">
      <pair>
        <displayed-value>Other</displayed-value>
-       <stored-value></stored-value>
+       <stored-value>Other</stored-value>
      </pair>
      <pair>
        <displayed-value>Java</displayed-value>
@@ -421,7 +431,7 @@ it, please enter the types and the actual numbers or codes.</hint>
      </pair>
      <pair>
        <displayed-value>C/C++</displayed-value>
-       <stored-value>CCPP</stored-value>
+       <stored-value>C/C++</stored-value>
      </pair>
      <pair>
        <displayed-value>Python</displayed-value>
