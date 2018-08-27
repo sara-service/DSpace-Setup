@@ -175,7 +175,7 @@
             <xsl:when test="count(dim:field[@element='title'][not(@qualifier)]) = 1">
                 <h2 class="page-header first-page-header">
                     <xsl:value-of select="dim:field[@element='title'][not(@qualifier)][1]/node()"/>
-                </h2>				
+                </h2>
             </xsl:when>
             <xsl:otherwise>
                 <h2 class="page-header first-page-header">
@@ -235,12 +235,12 @@
     </xsl:template>
 
     <xsl:template name="itemSummaryView-DIM-created-by-sara">
-        <xsl:if test="dim:field[@element='creator' and not(@qualifier)]">
+        <xsl:if test="dim:field[@element='source' and not(@qualifier)]">
             <div class="simple-item-view-description item-page-field-wrapper table">
                 <!--h5 class="visible-xs"><i18n:text>xmlui.dri2xhtml.METS-1.0.item-abstract</i18n:text></h5-->
 				<i18n:text>xmlui.dri2xhtml.METS-1.0.item-note</i18n:text>
 				<br />
-				<i18n:text>xmlui.dri2xhtml.METS-1.0.item-created-by-sara</i18n:text>
+                <i18n:text>xmlui.dri2xhtml.METS-1.0.item-created-by-sara</i18n:text>
 				<i18n:text>xmlui.dri2xhtml.METS-1.0.item-created-by</i18n:text>
                 <!-- <div> -->
                     <xsl:for-each select="dim:field[@element='creator' and not(@qualifier)]">
@@ -272,7 +272,6 @@
             </div>
         </xsl:if>
     </xsl:template>
-
     
     <xsl:template name="itemSummaryView-DIM-abstract">
         <xsl:if test="dim:field[@element='description' and @qualifier='abstract']">
