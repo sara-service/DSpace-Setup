@@ -103,7 +103,7 @@
         <div class="item-summary-view-metadata">
             <xsl:call-template name="itemSummaryView-DIM-title"/> 
             <div class="row">
-                <!-- linke spalte -->
+                <!-- linke Spalte -->
                 <div class="col-sm-4">
                     <div class="row">
                         <div class="col-xs-6 col-sm-12">
@@ -114,18 +114,24 @@
                         </div>
                     </div>
                     <xsl:call-template name="itemSummaryView-DIM-identifier"/>
-                    <xsl:call-template name="itemSummaryView-DIM-description"/> 
-                    <xsl:call-template name="itemSummaryView-DIM-date-created"/>
-                    <xsl:if test="$ds_item_view_toggle_url != ''">
+                    <!-- <xsl:call-template name="itemSummaryView-DIM-date-created"/> -->
+                    <!--
+					<xsl:if test="$ds_item_view_toggle_url != ''">
                         <xsl:call-template name="itemSummaryView-show-full"/>
                     </xsl:if>
+					-->
                 </div>
                 <div class="col-sm-8">
-                    <!-- rechte spalte -->
+                    <!-- rechte Spalte -->
                     <xsl:call-template name="itemSummaryView-DIM-type"/>
-                    <xsl:call-template name="itemSummaryView-DIM-creator"/>
                     <xsl:call-template name="itemSummaryView-DIM-authors"/>
                     <xsl:call-template name="itemSummaryView-DIM-abstract"/>
+					<xsl:call-template name="itemSummaryView-DIM-description"/>
+					<xsl:call-template name="itemSummaryView-DIM-created-by-sara"/>
+					<hr />
+					<xsl:if test="$ds_item_view_toggle_url != ''">
+                        <xsl:call-template name="itemSummaryView-show-full"/>
+                    </xsl:if>
                 </div>
             </div>
         </div>
@@ -162,15 +168,14 @@
                                     <br/>
                                 </xsl:if>
                             </xsl:if>
-
-                        </xsl:for-each>
-                    </p>
+                        </xsl:for-each>					
+                    </p>		
                 </div>
             </xsl:when>
             <xsl:when test="count(dim:field[@element='title'][not(@qualifier)]) = 1">
                 <h2 class="page-header first-page-header">
                     <xsl:value-of select="dim:field[@element='title'][not(@qualifier)][1]/node()"/>
-                </h2>
+                </h2>				
             </xsl:when>
             <xsl:otherwise>
                 <h2 class="page-header first-page-header">
@@ -184,13 +189,12 @@
 	<xsl:template name="itemSummaryView-DIM-description">
         <xsl:if test="dim:field[@mdschema='dc' and @element='description' and not(@qualifier)]">
             <div class="simple-item-view-itemSummaryView-DIM-description-version item-page-field-wrapper table">
-                <h5>
-                    <i18n:text>xmlui.dri2xhtml.METS-1.0.item-description</i18n:text>
-                    <br/>
-                    <xsl:for-each select="dim:field[@mdschema='dc' and @element='description' and not(@qualifier)]">
-                        <xsl:value-of select="."/>
-                    </xsl:for-each>					
-                </h5>
+            <h5><i18n:text>xmlui.dri2xhtml.METS-1.0.item-description</i18n:text></h5>
+				<div>
+					<xsl:for-each select="dim:field[@mdschema='dc' and @element='description' and not(@qualifier)]">
+						<xsl:value-of select="."/>
+					</xsl:for-each>					
+				</div>
             </div>
         </xsl:if>
     </xsl:template>
@@ -230,16 +234,19 @@
         </div>
     </xsl:template>
 
-    <xsl:template name="itemSummaryView-DIM-creator">
+    <xsl:template name="itemSummaryView-DIM-created-by-sara">
         <xsl:if test="dim:field[@element='creator' and not(@qualifier)]">
             <div class="simple-item-view-description item-page-field-wrapper table">
                 <!--h5 class="visible-xs"><i18n:text>xmlui.dri2xhtml.METS-1.0.item-abstract</i18n:text></h5-->
-                <h5><i18n:text>xmlui.dri2xhtml.METS-1.0.item-creator</i18n:text></h5>
-                <div>
+				<i18n:text>xmlui.dri2xhtml.METS-1.0.item-note</i18n:text>
+				<br />
+				<i18n:text>xmlui.dri2xhtml.METS-1.0.item-created-by-sara</i18n:text>
+				<i18n:text>xmlui.dri2xhtml.METS-1.0.item-created-by</i18n:text>
+                <!-- <div> -->
                     <xsl:for-each select="dim:field[@element='creator' and not(@qualifier)]">
                         <xsl:choose>
                             <xsl:when test="node()">
-                                <xsl:copy-of select="node()"/>
+								<xsl:copy-of select="node()"/>
                             </xsl:when>
                             <xsl:otherwise>
                                 <xsl:text>&#160;</xsl:text>
@@ -252,10 +259,20 @@
                     <!--xsl:if test="count(dim:field[@element='creator' and not(@qualifier)] &gt; 1">
                         <br/>
                     </xsl:if-->
-                </div>
+                <!-- </div> -->
+				<xsl:if test="dim:field[@element='date' and @qualifier='created' and descendant::text()]">
+					<i18n:text>xmlui.dri2xhtml.METS-1.0.item-date-created</i18n:text>
+					<xsl:for-each select="dim:field[@element='date' and @qualifier='created']">
+						<xsl:copy-of select="substring(./node(),1,10)"/>
+						<!--xsl:if test="count(following-sibling::dim:field[@element='date' and @qualifier='issued']) != 0">
+							<br/>
+						</xsl:if-->
+					</xsl:for-each>
+				</xsl:if>			
             </div>
         </xsl:if>
     </xsl:template>
+
     
     <xsl:template name="itemSummaryView-DIM-abstract">
         <xsl:if test="dim:field[@element='description' and @qualifier='abstract']">
@@ -363,16 +380,20 @@
             <div class="simple-item-view-identifier word-break item-page-field-wrapper table">
 				<xsl:for-each select="dim:field[@element='identifier' and not(@qualifier)]">
                     <h5>
-                        <i18n:text>xmlui.dri2xhtml.METS-1.0.item-identifier</i18n:text>
+                        <!--
+						<i18n:text>xmlui.dri2xhtml.METS-1.0.item-identifier</i18n:text>
                         <br/>
-					    <a>
+						-->
+						<a>
 							<xsl:attribute name="href">
 								<xsl:value-of select="."/>
 							</xsl:attribute>
 						
 							<xsl:attribute name="target">_blank</xsl:attribute>
-
-                            <xsl:text>browse...</xsl:text>
+							
+							<img alt="[Go to]" style="border: 0px" width="9%" src="{concat($theme-path, 'images/arrow.png')}"/>
+							<xsl:text> </xsl:text>
+							<i18n:text>xmlui.dri2xhtml.METS-1.0.item-sara-linktoarchive</i18n:text>
 						</a>
 					</h5>
 					<!--xsl:if test="count(following-sibling::dim:field[@element='identifier' and not(@qualifier)]) != 0">

@@ -2199,17 +2199,6 @@
         whatever profile you use.
     </message>
 
-    <message key="xmlui.dri2xhtml.METS-1.0.item-creator"><b>Creator</b></message>
-    <message key="xmlui.dri2xhtml.METS-1.0.item-preview"><b>Preview</b></message>
-    <message key="xmlui.dri2xhtml.METS-1.0.item-title"><b>Title</b></message>
-    <message key="xmlui.dri2xhtml.METS-1.0.item-author"><b>Author</b></message>
-    <message key="xmlui.dri2xhtml.METS-1.0.item-abstract"><b>Abstract</b></message>
-    <message key="xmlui.dri2xhtml.METS-1.0.item-uri"><b>URI</b></message>
-    <message key="xmlui.dri2xhtml.METS-1.0.item-date"><b>Date</b></message>
-    <message key="xmlui.dri2xhtml.METS-1.0.item-publisher"><b>Publisher</b></message>
-    <message key="xmlui.dri2xhtml.METS-1.0.item-subject"><b>Subject</b></message>
-    <message key="xmlui.dri2xhtml.METS-1.0.item-description"><b>Version</b></message>
-    <message key="xmlui.dri2xhtml.METS-1.0.item-identifier"><b>Data</b></message>
 
 	<message key="xmlui.dri2xhtml.METS-1.0.item-files-head">Files in this item</message>
 	<message key="xmlui.dri2xhtml.METS-1.0.item-files-file">Files</message>
@@ -2505,6 +2494,25 @@
     <message key="xmlui.Submission.submit.StartSubmissionLookupStep.submit_publication_item">Imported publication Record</message>
     <message key="xmlui.Submission.submit.progressbar.lookup">Lookup</message>
 
+	
+	<!-- Changed and new messages -->
+	
+	<message key="xmlui.dri2xhtml.METS-1.0.item-sara-linktoarchive">Explore data</message>
+	<message key="xmlui.dri2xhtml.METS-1.0.item-note">Note</message>
+	<message key="xmlui.dri2xhtml.METS-1.0.item-created-by-sara">Archived via SARA-Service</message>
+	<message key="xmlui.dri2xhtml.METS-1.0.item-created-by-sara-bold"><b>Archived via SARA-Service</b></message>
+	<message key="xmlui.dri2xhtml.METS-1.0.item-created-by"> by </message>
+	<message key="xmlui.dri2xhtml.METS-1.0.item-date-created"> at </message>
+    <message key="xmlui.dri2xhtml.METS-1.0.item-title"><b>Title</b></message>
+    <message key="xmlui.dri2xhtml.METS-1.0.item-author"><b>Author</b></message>
+    <message key="xmlui.dri2xhtml.METS-1.0.item-abstract"><b>Abstract</b></message>
+    <message key="xmlui.dri2xhtml.METS-1.0.item-uri"><b>URI</b></message>
+    <message key="xmlui.dri2xhtml.METS-1.0.item-date"><b>Archived</b></message>
+    <message key="xmlui.dri2xhtml.METS-1.0.item-publisher"><b>Publisher</b></message>
+    <message key="xmlui.dri2xhtml.METS-1.0.item-subject"><b>Subject</b></message>
+    <message key="xmlui.dri2xhtml.METS-1.0.item-description"><b>Version</b></message>
+    <message key="xmlui.dri2xhtml.METS-1.0.item-identifier"><b>Data</b></message>
+	
     <message key="myuni.repo.title">Institutional repository of Demo University</message>
 
 	<message key="myuni.repo.intro">
@@ -2513,7 +2521,7 @@
         </p>
         <p>
             <em>Brand new:</em> Our GitLab / GitHub integration via SARA-Service.
-            Archive your software from <em>GitLab</em> &amp; <em>GitHub</em> in our Demo Archive and publish it via this repository on <a href="https://demo.sara-service.org/" target="_blank">SARA-Service</a>!
+            Archive your software from <em>GitLab</em> &amp; <em>GitHub</em> in our Demo Archive and create a citable record on this repository via <a href="https://demo.sara-service.org/" target="_blank">SARA-Service</a>!
             <br/>
             <br/>
             <em>Demo credentials:</em> demo-user@sara-service.org / SaraTest

@@ -2508,6 +2508,37 @@
   <message key="xmlui.XMLWorkflow.scoreReview.scoreReviewStep">Score review</message>
   <!-- End XMLWorkflow -->  
   
+	<!-- Changed and new messages -->
+	
+	<message key="xmlui.dri2xhtml.METS-1.0.item-sara-linktoarchive">Daten betrachten</message>
+	<message key="xmlui.dri2xhtml.METS-1.0.item-note">Bemerkung</message>
+	<message key="xmlui.dri2xhtml.METS-1.0.item-created-by-sara">Via SARA-Service archiviert</message>
+	<message key="xmlui.dri2xhtml.METS-1.0.item-created-by"> von </message>
+	<message key="xmlui.dri2xhtml.METS-1.0.item-date-created"> am </message>
+    <message key="xmlui.dri2xhtml.METS-1.0.item-title"><b>Titel</b></message>
+    <message key="xmlui.dri2xhtml.METS-1.0.item-author"><b>Autor</b></message>
+    <message key="xmlui.dri2xhtml.METS-1.0.item-abstract"><b>Zusammenfassung</b></message>
+    <message key="xmlui.dri2xhtml.METS-1.0.item-uri"><b>URI</b></message>
+    <message key="xmlui.dri2xhtml.METS-1.0.item-date"><b>Archiviert</b></message>
+    <message key="xmlui.dri2xhtml.METS-1.0.item-publisher"><b>Publisher</b></message>
+    <message key="xmlui.dri2xhtml.METS-1.0.item-subject"><b>Subject</b></message>
+    <message key="xmlui.dri2xhtml.METS-1.0.item-description"><b>Version</b></message>
+    <message key="xmlui.dri2xhtml.METS-1.0.item-identifier"><b>Data</b></message>
+
+	<message key="myuni.repo.title">Institutionelles Repositorium der Universität Demo</message>
+
+	<message key="myuni.repo.intro">
+		<p>
+			Willkommen beim institutionellen Repositorium der Universität Demo. Mitglieder und Angehörige der Universität Demo und föderierter Einrichtungen können ihre Publikationen und Forschungsdaten auf dieser Plattform veröffentlichen.
+		</p>
+		<p>
+			<em>Aktuelle Meldung:</em> Unsere GitLab / GitHub Integration via SARA-Service.
+			Archiviere deine Software aus <em>GitLab</em> &amp; <em>GitHub</em> in unserem Demo-Archiv und erstelle einen zitierbaren Nachweis in diesem Repositorium über den <a href="https://demo.sara-service.org/" target="_blank">SARA-Service</a>!
+			<br/>
+			<br/>
+			<em>Demo Zugangsdaten:</em> demo-user@sara-service.org / SaraTest
+		</p>
+	</message>
   
   
 </catalogue>
