@@ -2521,9 +2521,10 @@
     <message key="xmlui.dri2xhtml.METS-1.0.item-uri"><b>URI</b></message>
     <message key="xmlui.dri2xhtml.METS-1.0.item-date"><b>Archiviert</b></message>
     <message key="xmlui.dri2xhtml.METS-1.0.item-publisher"><b>Publisher</b></message>
-    <message key="xmlui.dri2xhtml.METS-1.0.item-subject"><b>Subject</b></message>
     <message key="xmlui.dri2xhtml.METS-1.0.item-description"><b>Version</b></message>
     <message key="xmlui.dri2xhtml.METS-1.0.item-identifier"><b>Data</b></message>
+	<message key="xmlui.dri2xhtml.METS-1.0.item-doi">Zitierbare URL: </message>
+	<message key="xmlui.dri2xhtml.METS-1.0.item-language"><b>Programmiersprache</b></message>
 
 	<message key="myuni.repo.title">Institutionelles Repositorium der Universität Demo</message>
 

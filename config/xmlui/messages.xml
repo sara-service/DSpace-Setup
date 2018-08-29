@@ -2512,6 +2512,8 @@
     <message key="xmlui.dri2xhtml.METS-1.0.item-subject"><b>Subject</b></message>
     <message key="xmlui.dri2xhtml.METS-1.0.item-description"><b>Version</b></message>
     <message key="xmlui.dri2xhtml.METS-1.0.item-identifier"><b>Data</b></message>
+	<message key="xmlui.dri2xhtml.METS-1.0.item-doi">Citable URL: </message>
+	<message key="xmlui.dri2xhtml.METS-1.0.item-language"><b>Programming language</b></message>
 	
     <message key="myuni.repo.title">Institutional repository of Demo University</message>
 

@@ -123,10 +123,12 @@
                 </div>
                 <div class="col-sm-8">
                     <!-- rechte Spalte -->
-                    <xsl:call-template name="itemSummaryView-DIM-type"/>
+					<xsl:call-template name="itemSummaryView-DIM-type"/>
+					<xsl:call-template name="itemSummaryView-DIM-doi"/>
                     <xsl:call-template name="itemSummaryView-DIM-authors"/>
                     <xsl:call-template name="itemSummaryView-DIM-abstract"/>
 					<xsl:call-template name="itemSummaryView-DIM-description"/>
+					<xsl:call-template name="itemSummaryView-DIM-programminglanguage"/>
 					<xsl:call-template name="itemSummaryView-DIM-created-by-sara"/>
 					<hr />
 					<xsl:if test="$ds_item_view_toggle_url != ''">
@@ -185,7 +187,7 @@
         </xsl:choose>
     </xsl:template>
 
-	<!-- dc.description.version -->
+	<!-- dc.description -->
 	<xsl:template name="itemSummaryView-DIM-description">
         <xsl:if test="dim:field[@mdschema='dc' and @element='description' and not(@qualifier)]">
             <div class="simple-item-view-itemSummaryView-DIM-description-version item-page-field-wrapper table">
@@ -198,6 +200,48 @@
             </div>
         </xsl:if>
     </xsl:template>
+	
+	<!-- dc.language -->
+	<xsl:template name="itemSummaryView-DIM-programminglanguage">
+        <xsl:if test="dim:field[@mdschema='dc' and @element='language' and not(@qualifier)]">
+            <div class="simple-item-view-itemSummaryView-DIM-language item-page-field-wrapper table">
+            <h5><i18n:text>xmlui.dri2xhtml.METS-1.0.item-language</i18n:text></h5>
+				<div>
+					<xsl:for-each select="dim:field[@mdschema='dc' and @element='language' and not(@qualifier)]">
+						<xsl:value-of select="."/>
+					</xsl:for-each>					
+				</div>
+            </div>
+        </xsl:if>
+    </xsl:template>
+	
+	<!-- dc.identifier.doi -->
+	<xsl:template name="itemSummaryView-DIM-doi">
+        <xsl:if test="dim:field[@mdschema='dc' and @element='identifier' and @qualifier='citation']">
+            <div class="simple-item-view-itemSummaryView-DIM-citation item-page-field-wrapper table">
+			<i18n:text>xmlui.dri2xhtml.METS-1.0.item-doi</i18n:text>
+				<!-- <p style="color:#000; text-align:left; padding: 5px; background-color:#c3cdd7; display:inline-block; border:#eee 1px solid"> -->
+				<xsl:for-each select="dim:field[@mdschema='dc'][@element='identifier' and @qualifier='citation']">
+					<a>
+						<xsl:attribute name="href">
+							<xsl:text>https://doi.org/</xsl:text>
+							<xsl:value-of select="."/>
+						</xsl:attribute>
+					
+						<xsl:attribute name="target">_blank</xsl:attribute>
+					
+						<xsl:text>https://doi.org/</xsl:text>
+						<xsl:value-of select="."/>
+						
+						<xsl:if test="count(following-sibling::dim:field[@mdschema='dc'][@element='identifier'][@qualifier='citation']) != 0">
+							<br />
+                        </xsl:if>
+					</a>
+				</xsl:for-each>
+            </div>
+        </xsl:if>
+    </xsl:template>
+
 
     <xsl:template name="itemSummaryView-DIM-thumbnail">
         <div class="thumbnail">
