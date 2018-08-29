@@ -209,6 +209,9 @@
 				<div>
 					<xsl:for-each select="dim:field[@mdschema='dc' and @element='language' and not(@qualifier)]">
 						<xsl:value-of select="."/>
+						<xsl:if test="count(following-sibling::dim:field[@mdschema='dc' and @element='language' and not(@qualifier)]) != 0">
+                        <xsl:text>; </xsl:text>
+                    </xsl:if>
 					</xsl:for-each>					
 				</div>
             </div>
