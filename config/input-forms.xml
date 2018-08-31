@@ -430,12 +430,80 @@ it, please enter the types and the actual numbers or codes.</hint>
        <stored-value>Java</stored-value>
      </pair>
      <pair>
-       <displayed-value>C/C++</displayed-value>
-       <stored-value>C/C++</stored-value>
+       <displayed-value>C</displayed-value>
+       <stored-value>C</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>C++</displayed-value>
+       <stored-value>C++</stored-value>
      </pair>
      <pair>
        <displayed-value>Python</displayed-value>
        <stored-value>Python</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Visual Basic .NET</displayed-value>
+       <stored-value>Visual Basic .NET</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>C#</displayed-value>
+       <stored-value>C#</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>PHP</displayed-value>
+       <stored-value>PHP</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>JavaScript</displayed-value>
+       <stored-value>JavaScript</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>SQL</displayed-value>
+       <stored-value>SQL</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Assembler</displayed-value>
+       <stored-value>Assembler</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Swift</displayed-value>
+       <stored-value>Swift</stored-value>
+     </pair>
+     <pair>
+         <displayed-value>Delphi/Object Pascal</displayed-value>
+         <stored-value>Delphi/Object Pascal</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>MATLAB</displayed-value>
+       <stored-value>MATLAB</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Objective-C</displayed-value>
+       <stored-value>Objective-C</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Ruby</displayed-value>
+       <stored-value>Ruby</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Perl</displayed-value>
+       <stored-value>Perl</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Go</displayed-value>
+       <stored-value>Go</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>R</displayed-value>
+       <stored-value>R</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Visual Basic</displayed-value>
+       <stored-value>Visual Basic</stored-value>
+     </pair>
+     <pair>
+         <displayed-value>PL/SQL</displayed-value>
+         <stored-value>PL/SQL</stored-value>
      </pair>
    </value-pairs>
 
