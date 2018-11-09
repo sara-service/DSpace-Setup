@@ -496,9 +496,9 @@
 	<message key="xmlui.EPerson.PasswordLogin.title">Sign in</message>
 	<message key="xmlui.EPerson.PasswordLogin.trail">Sign in</message>
 	<message key="xmlui.EPerson.PasswordLogin.head1">Sign in to DSpace</message>
-	<message key="xmlui.EPerson.PasswordLogin.email_address">E-Mail Address</message>
+	<message key="xmlui.EPerson.PasswordLogin.email_address">E-Mail Address (demo-user@sara-service.org)</message>
 	<message key="xmlui.EPerson.PasswordLogin.error_bad_login">The email address and/or password supplied were not valid.</message>
-	<message key="xmlui.EPerson.PasswordLogin.password">Password</message>
+	<message key="xmlui.EPerson.PasswordLogin.password">Password (SaraTest)</message>
 	<message key="xmlui.EPerson.PasswordLogin.forgot_link"> Forgot your password?</message>
 	<message key="xmlui.EPerson.PasswordLogin.submit">Sign in</message>
 	<message key="xmlui.EPerson.PasswordLogin.head2">Register new user</message>
