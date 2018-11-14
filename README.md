@@ -78,7 +78,7 @@ sudo DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true apt-get ins
 ```
 ```bash
 # Clone this setup from git
-git clone -b oparu-beta git@git.uni-konstanz.de:sara/DSpace-Setup.git
+git clone git@git.uni-konstanz.de:sara/DSpace-Setup.git
 sudo cp ~/DSpace-Setup/config/vimrc.local /etc/vim/vimrc.local
 ```
 
@@ -86,7 +86,7 @@ sudo cp ~/DSpace-Setup/config/vimrc.local /etc/vim/vimrc.local
 
 ```bash
 sudo apt-mark hold openjdk-11-jre-headless
-sudo apt-get -y install python openjdk-8-jdk maven ant postgresql postgresql-contrib curl wget
+sudo apt-get -y install python openjdk-8-jdk maven ant postgresql postgresql-contrib curl wget haveged
 ```
 ### Postgres
 ```bash
