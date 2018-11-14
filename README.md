@@ -1,4 +1,4 @@
-# How to Install DSpace-6 on bwCloud Scope
+# How to Install Oparu-Beta on bwCloud Scope
 
 ## Intro
 
@@ -26,6 +26,7 @@ https://sara-service.org
 In case of questions please contact:
 * Stefan Kombrink, Ulm University, Germany / e-mail: stefan.kombrink[at]uni-ulm.de
 * Volodymyr Kushnarenko, Ulm University, Germany / e-mail: volodymyr.kushnarenko[at]uni-ulm.de
+* Franziska Rapp, Ulm University, Germany / e-mail: franziska.rapp[at]uni-ulm.de
 
 ## Setup 
 
@@ -46,7 +47,7 @@ In case of questions please contact:
 
 ### Connect to the machine
 ```bash
-ssh -A ubuntu@vm-152-020.bwcloud.uni-ulm.de
+ssh -A ubuntu@oparu-beta.sara-service.org
 ```
 
 ## Prerequisites
@@ -58,7 +59,7 @@ sudo sed -i.orig '41,+1s/^# //' /etc/inputrc
 bash
 
 # Adapt host name
-sudo hostname vm-152-020.bwcloud.uni-ulm.de
+sudo hostname oparu-beta.sara-service.org
 
 # Fetch latest updates
 sudo apt-get update && sudo apt-get -y upgrade
@@ -77,7 +78,7 @@ sudo DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true apt-get ins
 ```
 ```bash
 # Clone this setup from git
-git clone git@git.uni-konstanz.de:sara/DSpace-Setup.git
+git clone -b oparu-beta git@git.uni-konstanz.de:sara/DSpace-Setup.git
 sudo cp ~/DSpace-Setup/config/vimrc.local /etc/vim/vimrc.local
 ```
 
@@ -111,7 +112,7 @@ sudo systemctl daemon-reload
 sudo systemctl start tomcat
 ```
 
-Now you should be able to find your tomcat running at http://vm-152-020.bwcloud.uni-ulm.de:8080
+Now you should be able to find your tomcat running at http://oparu-beta.sara-service.org:8080
 
 ### DSpace
 
@@ -129,33 +130,42 @@ sudo chgrp dspace /dspace
 sudo -H -u dspace sh -c 'cd /tmp/dspace-6.3-src-release && mvn -e package -Dmirage2.on=true'
 sudo -H -u dspace -- sh -c 'cd /tmp/dspace-6.3-src-release/dspace/target/dspace-installer; ant fresh_install'
 ```
-
-Now you will be asked to create an admin user. 
-Please type the mail address, name, surname and password.
-It will send no email as the admin user is written to the DB directly.
-
-**TODO: automate this!**
 ```bash
-# Create dspace admin (interactive)
-sudo -u dspace /dspace/bin/dspace create-administrator
+# export admins email = it is used by the script to create the bibliography, too
+export ADMIN_EMAIL="katakombi@gmail.com"
+# Create dspace admin
+sudo -u dspace /dspace/bin/dspace create-administrator -e $ADMIN_EMAIL -f "kata" -l "kombi" -p "iamthebest" -c en
 ```
 
 ### Apply presets
 
 ```bash
 # Enable REST
-sudo cat /home/ubuntu/DSpace-Setup/config/rest/web.xml | sudo -u dspace tee /dspace/webapps/rest/WEB-INF/web.xml
+cat /home/ubuntu/DSpace-Setup/config/rest/web.xml            | sudo -u dspace sh -c 'cat > /dspace/webapps/rest/WEB-INF/web.xml'
 # Enable Mirage2 Themes
-sudo cat /home/ubuntu/DSpace-Setup/config/xmlui.xconf | sudo -u dspace tee /dspace/config/xmlui.xconf
-# Enable customized item submission form
-sudo cat /home/ubuntu/DSpace-Setup/config/item-submission.xml | sudo -u dspace tee /dspace/config/item-submission.xml
-sudo cat /home/ubuntu/DSpace-Setup/config/input-forms.xml | sudo -u dspace tee /dspace/config/input-forms.xml
+cat /home/ubuntu/DSpace-Setup/config/xmlui.xconf             | sudo -u dspace sh -c 'cat > /dspace/config/xmlui.xconf'
+# Apply customized item submission form
+cat /home/ubuntu/DSpace-Setup/config/item-submission.xml     | sudo -u dspace sh -c 'cat > /dspace/config/item-submission.xml'
+cat /home/ubuntu/DSpace-Setup/config/input-forms.xml         | sudo -u dspace sh -c 'cat > /dspace/config/input-forms.xml'
+# Custom item view
+cat /home/ubuntu/DSpace-Setup/config/xmlui/item-view.xsl     | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/themes/Mirage2/xsl/aspect/artifactbrowser/item-view.xsl'
+# Custom messages
+cat /home/ubuntu/DSpace-Setup/config/xmlui/messages.xml      | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/i18n/messages.xml'
+cat /home/ubuntu/DSpace-Setup/config/xmlui/messages_de.xml   | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/i18n/messages_de.xml'
+# Custom landing page
+cat /home/ubuntu/DSpace-Setup/config/xmlui/news-xmlui.xml    | sudo -u dspace sh -c 'cat > /dspace/config/news-xmlui.xml'
+# Custom thumbnails
+cat /home/ubuntu/DSpace-Setup/config/xmlui/Logo_SARA_RGB.png | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/themes/Mirage2/images/Logo_SARA_RGB.png'
+# Custom icons
+cat /home/ubuntu/DSpace-Setup/config/xmlui/arrow.png         | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/themes/Mirage2/images/arrow.png'
 # Copy email templates
 sudo cp /home/ubuntu/DSpace-Setup/config/emails/* /dspace/config/emails/
 sudo chown -R dspace /dspace/config/emails
 sudo chgrp -R dspace /dspace/config/emails
 # Apply custom local configurations
-sudo cat /home/ubuntu/DSpace-Setup/config/local.cfg | sed 's/devel-dspace.sara-service.org/'$(hostname)'/g' | sudo -u dspace tee /dspace/config/local.cfg
+cat /home/ubuntu/DSpace-Setup/config/local.cfg | sed 's/devel-dspace.sara-service.org/'$(hostname)'/g' | sudo -u dspace tee /dspace/config/local.cfg
+# Apply default deposit license
+cat /home/ubuntu/DSpace-Setup/config/default.license | sudo -u dspace tee /dspace/config/default.license
 ```
 ```bash
 # Copy all webapps from dspace to tomcat
@@ -168,7 +178,7 @@ sudo systemctl enable tomcat
 ```
 
 ### Test your instance
-Please visit a web page of the DSpace server: http://vm-152-020.bwcloud.uni-ulm.de:8080/xmlui
+Please visit a web page of the DSpace server: http://oparu-beta.sara-service.org:8080/xmlui
 You should be able to login with your admin account.
 
 ## Configuration
@@ -181,17 +191,15 @@ cd /home/ubuntu/DSpace-Setup && ./dspace-init.sh
 **TODO: automate this!**
 
 After that, we need to configure permissions. You will need to login as admin using the DSpace UI: 
-* create a group called `Submitter` and add `project-sara@uni-konstanz.de`<sup>1</sup>
-* create a group called `SARA User` and add some users. Exclude `demo-user-noaccess@sara-service.org`.
+* create a group called `SARA User` and add `project-sara@uni-konstanz.de`<sup>1</sup>
+* create a group called `DSpace User` and add some users. Exclude `demo-user-noaccess@sara-service.org`.
 * create a group called `Reviewer` and add just a few selected power users
 * for each collection: 
-  * allow submissions for `Submitter` <sup>2</sup>
-  * if `Publikationen`: allow submissions for `SARA User`
-  * if `(reviewed)`: add a role -> `Accept/Reject/Edit Metadata Step` -> add `Reviewer`
+  * allow submissions for `DSpace User`
+  * if `Research Data`: allow submissions for `SARA User`
+  * Add a role -> `Accept/Reject/Edit Metadata Step` -> add `Reviewer`
 
 <sup>1</sup>this is the dedicated SARA Service user and needs to have permissions to submit to any collection a SARA user has access to!
-
-<sup>2</sup>you may exclude a few collections but SARA will not be able to submit to them even when a SARA user owns submit rights on them!
 
 ### Validate Swordv2/Rest functionality (HTTP)
 
@@ -221,7 +229,7 @@ sudo a2enmod ssl proxy proxy_http proxy_ajp
 sudo systemctl restart apache2
 ```
 
-Now you will see the standard apache index page: http://vm-152-020.bwcloud.uni-ulm.de
+Now you will see the standard apache index page: http://oparu-beta.sara-service.org
 
 ### Install letsencrypt, create and configure SSL cert
 ```bash
@@ -229,10 +237,14 @@ sudo apt -y install python3-certbot-apache
 sudo systemctl stop apache2
 sudo letsencrypt --authenticator standalone --installer apache --domains $(hostname)
 ```
-Choose `secure redirect` . Now you should be able to access via https only: http://vm-152-020.bwcloud.uni-ulm.de
+Choose `secure redirect` . Now you should be able to access via https only: http://oparu-beta.sara-service.org
 
 ### Configure apache httpd
-Append the following section to your virtual server config under `/etc/apache2/sites-enabled/000-default-le-ssl.conf` :
+First stop tomcat:
+```bash
+sudo systemctl stop tomcat
+```
+Then append the following section to your virtual server config under `/etc/apache2/sites-enabled/000-default-le-ssl.conf` :
 ```bash
 sudo vim /etc/apache2/sites-enabled/000-default-le-ssl.conf
 ```
@@ -253,7 +265,7 @@ sudo vim /etc/apache2/sites-enabled/000-default-le-ssl.conf
 ```
 Restart apache:
 ```bash
-sudo systemctl stop apache2 && sudo systemctl start apache2
+sudo systemctl restart apache2
 ```
 
 ### Update DSpace local.cfg

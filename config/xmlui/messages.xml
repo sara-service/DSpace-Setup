@@ -496,9 +496,9 @@
 	<message key="xmlui.EPerson.PasswordLogin.title">Sign in</message>
 	<message key="xmlui.EPerson.PasswordLogin.trail">Sign in</message>
 	<message key="xmlui.EPerson.PasswordLogin.head1">Sign in to DSpace</message>
-	<message key="xmlui.EPerson.PasswordLogin.email_address">E-Mail Address</message>
+	<message key="xmlui.EPerson.PasswordLogin.email_address">E-Mail Address (demo-user@sara-service.org)</message>
 	<message key="xmlui.EPerson.PasswordLogin.error_bad_login">The email address and/or password supplied were not valid.</message>
-	<message key="xmlui.EPerson.PasswordLogin.password">Password</message>
+	<message key="xmlui.EPerson.PasswordLogin.password">Password (SaraTest)</message>
 	<message key="xmlui.EPerson.PasswordLogin.forgot_link"> Forgot your password?</message>
 	<message key="xmlui.EPerson.PasswordLogin.submit">Sign in</message>
 	<message key="xmlui.EPerson.PasswordLogin.head2">Register new user</message>
@@ -2199,17 +2199,6 @@
         whatever profile you use.
     </message>
 
-    <message key="xmlui.dri2xhtml.METS-1.0.item-creator"><b>Creator</b></message>
-    <message key="xmlui.dri2xhtml.METS-1.0.item-preview"><b>Preview</b></message>
-    <message key="xmlui.dri2xhtml.METS-1.0.item-title"><b>Title</b></message>
-    <message key="xmlui.dri2xhtml.METS-1.0.item-author"><b>Author</b></message>
-    <message key="xmlui.dri2xhtml.METS-1.0.item-abstract"><b>Abstract</b></message>
-    <message key="xmlui.dri2xhtml.METS-1.0.item-uri"><b>URI</b></message>
-    <message key="xmlui.dri2xhtml.METS-1.0.item-date"><b>Date</b></message>
-    <message key="xmlui.dri2xhtml.METS-1.0.item-publisher"><b>Publisher</b></message>
-    <message key="xmlui.dri2xhtml.METS-1.0.item-subject"><b>Subject</b></message>
-    <message key="xmlui.dri2xhtml.METS-1.0.item-description"><b>Version</b></message>
-    <message key="xmlui.dri2xhtml.METS-1.0.item-identifier"><b>Data</b></message>
 
 	<message key="xmlui.dri2xhtml.METS-1.0.item-files-head">Files in this item</message>
 	<message key="xmlui.dri2xhtml.METS-1.0.item-files-file">Files</message>
@@ -2505,6 +2494,27 @@
     <message key="xmlui.Submission.submit.StartSubmissionLookupStep.submit_publication_item">Imported publication Record</message>
     <message key="xmlui.Submission.submit.progressbar.lookup">Lookup</message>
 
+	
+	<!-- Changed and new messages -->
+	
+	<message key="xmlui.dri2xhtml.METS-1.0.item-sara-linktoarchive">Explore data</message>
+	<message key="xmlui.dri2xhtml.METS-1.0.item-note">Note</message>
+	<message key="xmlui.dri2xhtml.METS-1.0.item-created-by-sara">Archived via SARA-Service</message>
+	<message key="xmlui.dri2xhtml.METS-1.0.item-created-by-sara-bold"><b>Archived via SARA-Service</b></message>
+	<message key="xmlui.dri2xhtml.METS-1.0.item-created-by"> by </message>
+	<message key="xmlui.dri2xhtml.METS-1.0.item-date-created"> at </message>
+    <message key="xmlui.dri2xhtml.METS-1.0.item-title"><b>Title</b></message>
+    <message key="xmlui.dri2xhtml.METS-1.0.item-author"><b>Author</b></message>
+    <message key="xmlui.dri2xhtml.METS-1.0.item-abstract"><b>Abstract</b></message>
+    <message key="xmlui.dri2xhtml.METS-1.0.item-uri"><b>URI</b></message>
+    <message key="xmlui.dri2xhtml.METS-1.0.item-date"><b>Archived</b></message>
+    <message key="xmlui.dri2xhtml.METS-1.0.item-publisher"><b>Publisher</b></message>
+    <message key="xmlui.dri2xhtml.METS-1.0.item-subject"><b>Subject</b></message>
+    <message key="xmlui.dri2xhtml.METS-1.0.item-description"><b>Version</b></message>
+    <message key="xmlui.dri2xhtml.METS-1.0.item-identifier"><b>Data</b></message>
+	<message key="xmlui.dri2xhtml.METS-1.0.item-doi">Citable URL: </message>
+	<message key="xmlui.dri2xhtml.METS-1.0.item-language"><b>Programming language</b></message>
+	
     <message key="myuni.repo.title">Institutional repository of Demo University</message>
 
 	<message key="myuni.repo.intro">
@@ -2513,10 +2523,10 @@
         </p>
         <p>
             <em>Brand new:</em> Our GitLab / GitHub integration via SARA-Service.
-            Archive your software from <em>GitLab</em> &amp; <em>GitHub</em> in our Demo Archive and publish it via this repository on <a href="https://demo.sara-service.org/" target="_blank">SARA-Service</a>!
+            Archive your software from <em>GitLab</em> &amp; <em>GitHub</em> in our Demo Archive and create a citable record on this repository via <a href="https://demo.sara-service.org/" target="_blank">SARA-Service</a>!
             <br/>
             <br/>
-            <em>Demo credentials:</em> demo-user@uni-ulm.de / SaraTest
+            <em>Demo credentials:</em> demo-user@sara-service.org / SaraTest
         </p>
 	</message>
 </catalogue>
