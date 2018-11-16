@@ -99,11 +99,14 @@ sudo -u postgres psql dspace -c "CREATE EXTENSION pgcrypto;"
 
 ```bash
 sudo apt-get -y install tomcat8
-sudo chown -R dspace.dspace /usr/share/tomcat8
-sudo cp /home/ubuntu/DSpace-Setup/config/tomcat/tomcat.service /etc/systemd/system/tomcat.service
-sudo cp /home/ubuntu/DSpace-Setup/config/tomcat/server.xml /etc/server.xml
-sudo systemctl daemon-reload
-sudo systemctl start tomcat8
+sudo usermod -g tomcat8 dspace
+#sudo chown -R dspace.dspace /usr/share/tomcat8
+#sudo cp /home/ubuntu/DSpace-Setup/config/tomcat/tomcat.service /etc/systemd/system/tomcat.service
+#sudo cp /home/ubuntu/DSpace-Setup/config/tomcat/server.xml /etc/server.xml
+#sudo systemctl daemon-reload
+#sudo systemctl start tomcat8
+# TODO edit JAVA_OPTS...
+sudo service tomcat8 restart
 ```
 
 Now you should be able to find your tomcat running at http://$(hostname):8080
@@ -121,14 +124,14 @@ sudo chgrp dspace /dspace
 ```
 ```bash
 # NOTE needs sudo interactive or else build fails for Mirage2(xmlui)
-sudo -H -u dspace sh -c 'cd /tmp/dspace-6.3-src-release && mvn -e package -Dmirage2.on=true'
-sudo -H -u dspace -- sh -c 'cd /tmp/dspace-6.3-src-release/dspace/target/dspace-installer; ant fresh_install'
+sudo -H -u dspace sh -c 'cd /tmp/dspace-5.10-release && mvn -e package -Dmirage2.on=true'
+sudo -H -u dspace -- sh -c 'cd /tmp/dspace-5.10-release/dspace/target/dspace-installer; ant fresh_install'
 ```
 ```bash
 # export admins email = it is used by the script to create the bibliography, too
 export ADMIN_EMAIL="katakombi@gmail.com"
 # Create dspace admin
-sudo -u dspace /dspace/bin/dspace create-administrator -e $ADMIN_EMAIL -f "kata" -l "kombi" -p "iamthebest" -c en
+sudo -u dspace /dspace/bin/dspace create-administrator -e $ADMIN_EMAIL -f "kata" -l "kombi" -p "secret" -c en
 ```
 
 ### Apply presets
@@ -163,16 +166,16 @@ cat /home/ubuntu/DSpace-Setup/config/default.license | sudo -u dspace tee /dspac
 ```
 ```bash
 # Copy all webapps from dspace to tomcat
-sudo cp -R -p /dspace/webapps/* /opt/tomcat/webapps/
+sudo cp -R -p /dspace/webapps/* /var/lib/tomcat8/webapps/
 ```
 ```bash
-sudo systemctl restart tomcat
+sudo service tomcat8 restart
 sudo systemctl enable postgresql
-sudo systemctl enable tomcat
+sudo systemctl enable tomcat8
 ```
 
 ### Test your instance
-Please visit a web page of the DSpace server: http://oparu-beta.sara-service.org:8080/xmlui
+Please visit a web page of the DSpace server: http://dspace5-test.sara-service.org:8080/xmlui
 You should be able to login with your admin account.
 
 ## Configuration
