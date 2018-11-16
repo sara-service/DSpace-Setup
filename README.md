@@ -2,23 +2,20 @@
 
 ## Intro
 
-This manual provides a step-by-step setup for a fully configured instance of DSpace6 server. 
+This manual provides a step-by-step setup for a fully configured instance of DSpace5 server. 
 The final instance can be used as institutional repository to receive automated deposit from SARA Service via swordv2.
 
 Contents:
-* REST
 * SWORDv2
 * xmlui with Mirage-2 theme
 * SMTP mailing functionality
 * Initial configuration (Groups, Users, Communities, Collections, Permissions...)
 
-It is based on the "Ubuntu Server 18.04 minimal image" and was performed in a bwCloud SCOPE VM. 
-The main installation script can take up to 1/2hr, but it runs fully 
-automated until the end, where you will be prompted to create an admin user for DSpace.
+It is based on the "Ubuntu Server 16.04 image" and was performed in a bwCloud SCOPE VM. 
 It is advised to walk through this manual without interruptions or intermediate reboots.
 
 Further reading:
-https://wiki.duraspace.org/display/DSDOC6x/DSpace+6.x+Documentation
+https://wiki.duraspace.org/display/DSDOC6x/DSpace+5.x+Documentation
 
 About SARA:
 https://sara-service.org
@@ -34,7 +31,7 @@ In case of questions please contact:
 
   * https://portal.bw-cloud.org
   * Compute -> Instances -> Start new instance
-  * Use "Ubuntu Server 18.04 Minimal" image
+  * Use "Ubuntu Server 16.04" image
   * Use flavor "m1.medium" with 12GB disk space and 4GB RAM
   * Enable port 8080 egress/ingress by creating and enabling a new Security Group 'tomcat'
   * Enable port 80/443 egress/ingress by creating and enabling a new Security Group 'apache'
@@ -42,12 +39,12 @@ In case of questions please contact:
 ### In case you have an running instance already which you would like to replace
 
  * https://portal.bw-cloud.org
- * Compute -> Instances -> "dspace-6.2" -> [Rebuild Instance]
+ * Compute -> Instances -> "dspace5" -> [Rebuild Instance]
  * You might need to remove your old SSH key from ~/.ssh/known_hosts
 
 ### Connect to the machine
 ```bash
-ssh -A ubuntu@oparu-beta.sara-service.org
+ssh -A ubuntu@dspace5-test.sara-service.org
 ```
 
 ## Prerequisites
@@ -59,7 +56,7 @@ sudo sed -i.orig '41,+1s/^# //' /etc/inputrc
 bash
 
 # Adapt host name
-sudo hostname oparu-beta.sara-service.org
+sudo hostname dspace5-test.sara-service.org
 
 # Fetch latest updates
 sudo apt-get update && sudo apt-get -y upgrade
@@ -85,7 +82,6 @@ sudo cp ~/DSpace-Setup/config/vimrc.local /etc/vim/vimrc.local
 ## Installation
 
 ```bash
-sudo apt-mark hold openjdk-11-jre-headless
 sudo apt-get -y install python openjdk-8-jdk maven ant postgresql postgresql-contrib curl wget haveged
 ```
 ### Postgres
@@ -102,22 +98,20 @@ sudo -u postgres psql dspace -c "CREATE EXTENSION pgcrypto;"
 ### Tomcat
 
 ```bash
-wget http://archive.apache.org/dist/tomcat/tomcat-8/v8.5.32/bin/apache-tomcat-8.5.32.tar.gz -O /tmp/tomcat.tgz
-sudo mkdir /opt/tomcat
-sudo tar xzvf /tmp/tomcat.tgz -C /opt/tomcat --strip-components=1
-sudo chown -R dspace.dspace /opt/tomcat
+sudo apt-get -y install tomcat8
+sudo chown -R dspace.dspace /usr/share/tomcat8
 sudo cp /home/ubuntu/DSpace-Setup/config/tomcat/tomcat.service /etc/systemd/system/tomcat.service
-sudo cp /home/ubuntu/DSpace-Setup/config/tomcat/server.xml /opt/tomcat/conf/server.xml
+sudo cp /home/ubuntu/DSpace-Setup/config/tomcat/server.xml /etc/server.xml
 sudo systemctl daemon-reload
-sudo systemctl start tomcat
+sudo systemctl start tomcat8
 ```
 
-Now you should be able to find your tomcat running at http://oparu-beta.sara-service.org:8080
+Now you should be able to find your tomcat running at http://$(hostname):8080
 
 ### DSpace
 
 ```bash
-wget https://github.com/DSpace/DSpace/releases/download/dspace-6.3/dspace-6.3-src-release.tar.gz -O /tmp/dspace.tgz
+wget https://github.com/DSpace/DSpace/releases/download/dspace-5.10/dspace-5.10-release.tar.gz -O /tmp/dspace.tgz
 sudo -u dspace tar -xzvf /tmp/dspace.tgz -C /tmp
 ```
 ```bash
