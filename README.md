@@ -82,7 +82,10 @@ sudo cp ~/DSpace-Setup/config/vimrc.local /etc/vim/vimrc.local
 ## Installation
 
 ```bash
-sudo apt-get -y install python openjdk-8-jdk maven ant postgresql postgresql-contrib curl wget haveged
+sudo add-apt-repository -y ppa:openjdk-r/ppa
+sudo apt-get update
+sudo apt-get -y install python openjdk-7-jdk maven ant postgresql postgresql-contrib curl wget haveged
+sudo update-java-alternatives -s java-1.7.0-openjdk-amd64
 ```
 ### Postgres
 ```bash
