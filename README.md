@@ -101,15 +101,11 @@ sudo -u postgres psql dspace -c "CREATE EXTENSION pgcrypto;"
 ### Tomcat
 
 ```bash
-sudo apt-get -y install tomcat8
-sudo usermod -g tomcat8 dspace
-#sudo chown -R dspace.dspace /usr/share/tomcat8
-#sudo cp /home/ubuntu/DSpace-Setup/config/tomcat/tomcat.service /etc/systemd/system/tomcat.service
-#sudo cp /home/ubuntu/DSpace-Setup/config/tomcat/server.xml /etc/server.xml
-#sudo systemctl daemon-reload
-#sudo systemctl start tomcat8
-# TODO edit JAVA_OPTS...
-sudo service tomcat8 restart
+sudo apt-get -y install tomcat7
+sudo groupadd tomcat
+
+sudo vim /etc/default/tomcat # put there JAVA_OPTS="-Djava.awt.headless=true -Xmx1024m -Xms64M -Dfile.encoding=UTF-8 -XX:+UseConcMarkSweepGC"
+sudo service tomcat7 restart
 ```
 
 Now you should be able to find your tomcat running at http://$(hostname):8080
@@ -117,13 +113,17 @@ Now you should be able to find your tomcat running at http://$(hostname):8080
 ### DSpace
 
 ```bash
+sudo usermod -aG tomcat tomcat7
+sudo usermod -aG tomcat dspace
 wget https://github.com/DSpace/DSpace/releases/download/dspace-5.10/dspace-5.10-release.tar.gz -O /tmp/dspace.tgz
 sudo -u dspace tar -xzvf /tmp/dspace.tgz -C /tmp
+sudo chown -R dspace.tomcat /tmp/dspace-5.10-release
 ```
+
 ```bash
 sudo mkdir /dspace
-sudo chown dspace /dspace
-sudo chgrp dspace /dspace
+sudo chown dspace:tomcat /dspace
+sudo chmod g+ws /dspace
 ```
 ```bash
 # NOTE needs sudo interactive or else build fails for Mirage2(xmlui)
