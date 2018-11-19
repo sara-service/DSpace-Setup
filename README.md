@@ -124,7 +124,7 @@ sudo chgrp dspace /dspace
 ```
 ```bash
 # NOTE needs sudo interactive or else build fails for Mirage2(xmlui)
-sudo -H -u dspace sh -c 'cd /tmp/dspace-5.10-release && mvn -e package -Dmirage2.on=true'
+sudo -H -u dspace sh -c 'cd /tmp/dspace-5.10-release && mvn -Dhttps.protocols=TLSv1.2 -e package -Dmirage2.on=true'
 sudo -H -u dspace -- sh -c 'cd /tmp/dspace-5.10-release/dspace/target/dspace-installer; ant fresh_install'
 ```
 ```bash
