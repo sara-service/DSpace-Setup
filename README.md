@@ -168,12 +168,12 @@ cat /home/ubuntu/DSpace-Setup/config/default.license | sudo -u dspace tee /dspac
 ```
 ```bash
 # Copy all webapps from dspace to tomcat
-sudo cp -R -p /dspace/webapps/* /var/lib/tomcat7/webapps/
+sudo cp -R -p /dspace/webapps/* /opt/tomcat7/webapps/
 ```
 ```bash
-sudo service tomcat7 restart
+sudo service tomcat restart
 sudo systemctl enable postgresql
-sudo systemctl enable tomcat7
+sudo systemctl enable tomcat
 ```
 
 ### Test your instance
