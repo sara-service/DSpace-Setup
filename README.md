@@ -240,7 +240,7 @@ Now you will see the standard apache index page: http://dspace5-test.sara-servic
 
 ### Install letsencrypt, create and configure SSL cert
 ```bash
-sudo apt -y install python3-certbot-apache
+sudo apt -y install python-letsencrypt-apache
 sudo systemctl stop apache2
 sudo letsencrypt --authenticator standalone --installer apache --domains $(hostname)
 ```
