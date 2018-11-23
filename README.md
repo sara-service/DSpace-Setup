@@ -110,32 +110,19 @@ sudo systemctl daemon-reload
 sudo systemctl start tomcat
 ```
 
-XXX
-
-```bash
-sudo apt-get -y install tomcat7
-sudo groupadd tomcat
-
-sudo vim /etc/default/tomcat # put there JAVA_OPTS="-Djava.awt.headless=true -Xmx1024m -Xms64M -Dfile.encoding=UTF-8 -XX:+UseConcMarkSweepGC"
-sudo service tomcat7 restart
-```
-
-Now you should be able to find your tomcat running at http://$(hostname):8080
+Now you should be able to find your tomcat running at http://http://dspace5-test.sara-service.org:8080
 
 ### DSpace
 
 ```bash
-sudo usermod -aG tomcat tomcat7
-sudo usermod -aG tomcat dspace
 wget https://github.com/DSpace/DSpace/releases/download/dspace-5.10/dspace-5.10-release.tar.gz -O /tmp/dspace.tgz
 sudo -u dspace tar -xzvf /tmp/dspace.tgz -C /tmp
-sudo chown -R dspace.tomcat /tmp/dspace-5.10-release
+sudo chown -R dspace:dspace /tmp/dspace-5.10-release
 ```
 
 ```bash
 sudo mkdir /dspace
-sudo chown dspace:tomcat /dspace
-sudo chmod g+ws /dspace
+sudo chown dspace:dspace /dspace
 ```
 ```bash
 # NOTE needs sudo interactive or else build fails for Mirage2(xmlui)
@@ -190,8 +177,7 @@ sudo systemctl enable tomcat7
 ```
 
 ### Test your instance
-Please visit a web page of the DSpace server: http://dspace5-test.sara-service.org:8080/xmlui
-You should be able to login with your admin account.
+You should be able to login with your admin account: http://dspace5-test.sara-service.org:8080/xmlui 
 
 ## Configuration
 
