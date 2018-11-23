@@ -136,44 +136,20 @@ export ADMIN_EMAIL="katakombi@gmail.com"
 sudo -u dspace /dspace/bin/dspace create-administrator -e $ADMIN_EMAIL -f "kata" -l "kombi" -p "secret" -c en
 ```
 
-### Apply presets
-
-OMIT!!!
-
+### Configure SWordV2
 
 ```bash
-# Enable REST
-cat /home/ubuntu/DSpace-Setup/config/rest/web.xml            | sudo -u dspace sh -c 'cat > /dspace/webapps/rest/WEB-INF/web.xml'
-# Enable Mirage2 Themes
-cat /home/ubuntu/DSpace-Setup/config/xmlui.xconf             | sudo -u dspace sh -c 'cat > /dspace/config/xmlui.xconf'
-# Apply customized item submission form
-cat /home/ubuntu/DSpace-Setup/config/item-submission.xml     | sudo -u dspace sh -c 'cat > /dspace/config/item-submission.xml'
-cat /home/ubuntu/DSpace-Setup/config/input-forms.xml         | sudo -u dspace sh -c 'cat > /dspace/config/input-forms.xml'
-# Custom item view
-cat /home/ubuntu/DSpace-Setup/config/xmlui/item-view.xsl     | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/themes/Mirage2/xsl/aspect/artifactbrowser/item-view.xsl'
-# Custom messages
-cat /home/ubuntu/DSpace-Setup/config/xmlui/messages.xml      | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/i18n/messages.xml'
-cat /home/ubuntu/DSpace-Setup/config/xmlui/messages_de.xml   | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/i18n/messages_de.xml'
-# Custom landing page
-cat /home/ubuntu/DSpace-Setup/config/xmlui/news-xmlui.xml    | sudo -u dspace sh -c 'cat > /dspace/config/news-xmlui.xml'
-# Custom thumbnails
-cat /home/ubuntu/DSpace-Setup/config/xmlui/Logo_SARA_RGB.png | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/themes/Mirage2/images/Logo_SARA_RGB.png'
-# Custom icons
-cat /home/ubuntu/DSpace-Setup/config/xmlui/arrow.png         | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/themes/Mirage2/images/arrow.png'
-# Copy email templates
-sudo cp /home/ubuntu/DSpace-Setup/config/emails/* /dspace/config/emails/
-sudo chown -R dspace /dspace/config/emails
-sudo chgrp -R dspace /dspace/config/emails
-# Apply custom local configurations
-cat /home/ubuntu/DSpace-Setup/config/local.cfg | sed 's/devel-dspace.sara-service.org/'$(hostname)'/g' | sudo -u dspace tee /dspace/config/local.cfg
+# Customized dspace.cfg / swordvw-server.cgf
+cat /home/ubuntu/DSpace-Setup/config/dspace.cfg | sudo -u dspace tee /dspace/config/dspace.cfg
+cat /home/ubuntu/DSpace-Setup/config/swordv2/swordv2-server.cfg | sudo -u dspace tee /dspace/config/modules/swordv2-server.cfg
+
 # Apply default deposit license
 cat /home/ubuntu/DSpace-Setup/config/default.license | sudo -u dspace tee /dspace/config/default.license
-```
-```bash
+
 # Copy all webapps from dspace to tomcat
 sudo cp -R -p /dspace/webapps/* /opt/tomcat/webapps/
-```
-```bash
+
+# Restart tomcat and enable services
 sudo service tomcat restart
 sudo systemctl enable postgresql
 sudo systemctl enable tomcat
@@ -221,6 +197,35 @@ curl -H "on-behalf-of: $USER3" -i $DSPACE_SERVER/swordv2/servicedocument --user 
 ```bash
 curl -s -H "Accept: application/json" $DSPACE_SERVER/rest/hierarchy | python -m json.tool
 # This should dump the bibliography structure. In case of `No JSON object could be decoded` something is wrong.
+```
+
+### Apply presets
+
+MOVE AND DEBUG!!!!
+
+```bash
+# Enable REST
+cat /home/ubuntu/DSpace-Setup/config/rest/web.xml            | sudo -u dspace sh -c 'cat > /dspace/webapps/rest/WEB-INF/web.xml'
+# Enable Mirage2 Themes
+cat /home/ubuntu/DSpace-Setup/config/xmlui.xconf             | sudo -u dspace sh -c 'cat > /dspace/config/xmlui.xconf'
+# Apply customized item submission form
+cat /home/ubuntu/DSpace-Setup/config/item-submission.xml     | sudo -u dspace sh -c 'cat > /dspace/config/item-submission.xml'
+cat /home/ubuntu/DSpace-Setup/config/input-forms.xml         | sudo -u dspace sh -c 'cat > /dspace/config/input-forms.xml'
+# Custom item view
+cat /home/ubuntu/DSpace-Setup/config/xmlui/item-view.xsl     | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/themes/Mirage2/xsl/aspect/artifactbrowser/item-view.xsl'
+# Custom messages
+cat /home/ubuntu/DSpace-Setup/config/xmlui/messages.xml      | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/i18n/messages.xml'
+cat /home/ubuntu/DSpace-Setup/config/xmlui/messages_de.xml   | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/i18n/messages_de.xml'
+# Custom landing page
+cat /home/ubuntu/DSpace-Setup/config/xmlui/news-xmlui.xml    | sudo -u dspace sh -c 'cat > /dspace/config/news-xmlui.xml'
+# Custom thumbnails
+cat /home/ubuntu/DSpace-Setup/config/xmlui/Logo_SARA_RGB.png | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/themes/Mirage2/images/Logo_SARA_RGB.png'
+# Custom icons
+cat /home/ubuntu/DSpace-Setup/config/xmlui/arrow.png         | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/themes/Mirage2/images/arrow.png'
+# Copy email templates
+sudo cp /home/ubuntu/DSpace-Setup/config/emails/* /dspace/config/emails/
+sudo chown -R dspace /dspace/config/emails
+sudo chgrp -R dspace /dspace/config/emails
 ```
 
 ### Install apache httpd
