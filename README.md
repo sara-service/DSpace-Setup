@@ -171,7 +171,7 @@ cat /home/ubuntu/DSpace-Setup/config/default.license | sudo -u dspace tee /dspac
 ```
 ```bash
 # Copy all webapps from dspace to tomcat
-sudo cp -R -p /dspace/webapps/* /opt/tomcat7/webapps/
+sudo cp -R -p /dspace/webapps/* /opt/tomcat/webapps/
 ```
 ```bash
 sudo service tomcat restart
