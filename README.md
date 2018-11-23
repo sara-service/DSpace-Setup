@@ -1,4 +1,4 @@
-# How to Install Oparu-Beta on bwCloud Scope
+# How to Install DSpace5 on bwCloud Scope
 
 ## Intro
 
@@ -140,8 +140,8 @@ sudo -u dspace /dspace/bin/dspace create-administrator -e $ADMIN_EMAIL -f "kata"
 
 ```bash
 # Customized dspace.cfg / swordvw-server.cgf
-cat /home/ubuntu/DSpace-Setup/config/dspace.cfg | sudo -u dspace tee /dspace/config/dspace.cfg
-cat /home/ubuntu/DSpace-Setup/config/swordv2/swordv2-server.cfg | sudo -u dspace tee /dspace/config/modules/swordv2-server.cfg
+cat /home/ubuntu/DSpace-Setup/config/dspace.cfg | sed 's/DSPACE_HOSTNAME/'$(hostname)':8080/' | sudo -u dspace tee /dspace/config/dspace.cfg
+cat /home/ubuntu/DSpace-Setup/config/swordv2/swordv2-server.cfg  | sed 's/DSPACE_HOSTNAME/'$(hostname)':8080/' | sudo -u dspace tee /dspace/config/modules/swordv2-server.cfg
 
 # Apply default deposit license
 cat /home/ubuntu/DSpace-Setup/config/default.license | sudo -u dspace tee /dspace/config/default.license
@@ -189,8 +189,8 @@ USER1="stefan.kombrink@uni-ulm.de" # set existing SARA User
 USER2="demo-user-noaccess@sara-service.org" # set existing user without any permissions
 USER3="daniel.duesentrieb@uni-entenhausen.de" # set nonexisting user
 
-curl -H "on-behalf-of: $USER1" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => downloads TermsOfServices for all available collections
-curl -H "on-behalf-of: $USER2" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => downloads empty service document
+curl -H "on-behalf-of: $USER1" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => downloads first level of bibliography
+curl -H "on-behalf-of: $USER2" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => downloads first level of bibliography
 curl -H "on-behalf-of: $USER3" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => HTML Error Status 403: Forbidden
 ```
 
@@ -201,11 +201,10 @@ curl -s -H "Accept: application/json" $DSPACE_SERVER/rest/hierarchy | python -m 
 
 ### Apply presets
 
-MOVE AND DEBUG!!!!
-
 ```bash
-# Enable REST
-cat /home/ubuntu/DSpace-Setup/config/rest/web.xml            | sudo -u dspace sh -c 'cat > /dspace/webapps/rest/WEB-INF/web.xml'
+# Stop tomcat
+sudo systemctl stop tomcat
+
 # Enable Mirage2 Themes
 cat /home/ubuntu/DSpace-Setup/config/xmlui.xconf             | sudo -u dspace sh -c 'cat > /dspace/config/xmlui.xconf'
 # Apply customized item submission form
@@ -226,6 +225,8 @@ cat /home/ubuntu/DSpace-Setup/config/xmlui/arrow.png         | sudo -u dspace sh
 sudo cp /home/ubuntu/DSpace-Setup/config/emails/* /dspace/config/emails/
 sudo chown -R dspace /dspace/config/emails
 sudo chgrp -R dspace /dspace/config/emails
+
+sudo systemctl start tomcat
 ```
 
 ### Install apache httpd
@@ -293,8 +294,8 @@ USER1="stefan.kombrink@uni-ulm.de" # set existing SARA User
 USER2="demo-user-noaccess@sara-service.org" # set existing user without any permissions
 USER3="daniel.duesentrieb@uni-entenhausen.de" # set nonexisting user
 
-curl -H "on-behalf-of: $USER1" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => downloads TermsOfServices for all available collections
-curl -H "on-behalf-of: $USER2" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => downloads empty service document
+curl -H "on-behalf-of: $USER1" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => downloads first level of bibliography
+curl -H "on-behalf-of: $USER2" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => downloads first level of bibliography
 curl -H "on-behalf-of: $USER3" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => HTML Error Status 403: Forbidden
 ```
 ```bash
