@@ -143,9 +143,6 @@ sudo -u dspace /dspace/bin/dspace create-administrator -e $ADMIN_EMAIL -f "kata"
 cat /home/ubuntu/DSpace-Setup/config/dspace.cfg | sed 's/DSPACE_HOSTNAME/'$(hostname)':8080/' | sudo -u dspace tee /dspace/config/dspace.cfg
 cat /home/ubuntu/DSpace-Setup/config/swordv2/swordv2-server.cfg  | sed 's/DSPACE_HOSTNAME/'$(hostname)':8080/' | sudo -u dspace tee /dspace/config/modules/swordv2-server.cfg
 
-# Apply default deposit license
-cat /home/ubuntu/DSpace-Setup/config/default.license | sudo -u dspace tee /dspace/config/default.license
-
 # Copy all webapps from dspace to tomcat
 sudo cp -R -p /dspace/webapps/* /opt/tomcat/webapps/
 
@@ -225,6 +222,9 @@ cat /home/ubuntu/DSpace-Setup/config/xmlui/arrow.png         | sudo -u dspace sh
 sudo cp /home/ubuntu/DSpace-Setup/config/emails/* /dspace/config/emails/
 sudo chown -R dspace /dspace/config/emails
 sudo chgrp -R dspace /dspace/config/emails
+# Apply default deposit license
+cat /home/ubuntu/DSpace-Setup/config/default.license | sudo -u dspace tee /dspace/config/default.license
+
 
 sudo systemctl start tomcat
 ```
