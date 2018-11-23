@@ -279,7 +279,7 @@ sudo systemctl restart apache2
 
 Now you need to remove the local port 8080 and the http in the dspace config:
 ```bash
-sudo sed -i 's/'"$(hostname):8080"'/'$(hostname)'/' /dspace/config/dspace.cfg /dspace/config/modules/swordv2-server.cfg
+sudo sed -i 's/http://'"$(hostname):8080"'/https://'$(hostname)'/' /dspace/config/dspace.cfg /dspace/config/modules/swordv2-server.cfg
 sudo systemctl restart tomcat
 ```
 
