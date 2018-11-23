@@ -236,7 +236,7 @@ sudo a2enmod ssl proxy proxy_http proxy_ajp
 sudo systemctl restart apache2
 ```
 
-Now you will see the standard apache index page: http://oparu-beta.sara-service.org
+Now you will see the standard apache index page: http://dspace5-test.sara-service.org/
 
 ### Install letsencrypt, create and configure SSL cert
 ```bash
@@ -244,7 +244,7 @@ sudo apt -y install python3-certbot-apache
 sudo systemctl stop apache2
 sudo letsencrypt --authenticator standalone --installer apache --domains $(hostname)
 ```
-Choose `secure redirect` . Now you should be able to access via https only: http://oparu-beta.sara-service.org
+Choose `secure redirect` . Now you should be redirected to access via https only: http://dspace5-test.sara-service.org/
 
 ### Configure apache httpd
 First stop tomcat:
