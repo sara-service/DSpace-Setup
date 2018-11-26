@@ -376,3 +376,14 @@ sudo rm -rf /tmp/dspace-6.?-src-release
 
 Now you can login the bwCloud user interface and disable the tomcat ports 8080/8443 for better security!
 Also, in Tomcat's `server.xml`, change all `<Connector>`s to add `address="127.0.0.1"`. Better save than sorry.
+
+### Troubleshooting SWORDv2
+
+SWORD Servicedocument does not work with certain combinations of 
+* Java SE
+* Java JDK
+* TomCat
+* DSpace
+
+Java 1.7 + JDK7 + TomCat7 is okay, but Tomcat8 DOES NOT WORK!
+Java 1.8 + JDK8 + TomCat9 is okay [TODO VERIFY]
