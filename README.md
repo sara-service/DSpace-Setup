@@ -90,8 +90,6 @@ sudo update-java-alternatives -s java-1.7.0-openjdk-amd64
 ### Postgres
 ```bash
 sudo systemctl start postgresql
-sudo groupadd dspace
-sudo useradd -m -g dspace dspace
 sudo -u postgres createuser --no-superuser dspace
 sudo -u postgres psql -c "ALTER USER dspace WITH PASSWORD 'dspace';"
 sudo -u postgres createdb --owner=dspace --encoding=UNICODE dspace
@@ -100,6 +98,8 @@ sudo -u postgres psql dspace -c "CREATE EXTENSION pgcrypto;"
 
 ### Tomcat
 ```bash
+sudo groupadd dspace
+sudo useradd -m -g dspace dspace
 wget http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.82/bin/apache-tomcat-7.0.82.tar.gz -O /tmp/tomcat.tgz
 sudo mkdir /opt/tomcat
 sudo tar xzvf /tmp/tomcat.tgz -C /opt/tomcat --strip-components=1
