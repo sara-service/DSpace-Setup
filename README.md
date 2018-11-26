@@ -379,11 +379,11 @@ Also, in Tomcat's `server.xml`, change all `<Connector>`s to add `address="127.0
 
 ### Troubleshooting SWORDv2
 
-SWORD Servicedocument does not work with certain combinations of 
+SWORD Servicedocument does not work with most combinations of 
 * Java SE
 * Java JDK
 * TomCat
 * DSpace
 
 Java 1.7 + JDK7 + TomCat7 is okay, but Tomcat8 DOES NOT WORK!
-Java 1.8 + JDK8 + TomCat9 is okay [TODO VERIFY]
+I have not found any other version combination working reliably yet :(
