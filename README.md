@@ -110,7 +110,7 @@ sudo systemctl daemon-reload
 sudo systemctl start tomcat
 ```
 
-Now you should be able to find your tomcat running at http://http://dspace5-test.sara-service.org:8080
+Now you should be able to find your tomcat running at http://dspace5-test.sara-service.org:8080
 
 ### DSpace
 
