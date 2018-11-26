@@ -58,13 +58,6 @@ bash
 # Adapt host name
 sudo hostname dspace5-test.sara-service.org
 
-# Fetch latest updates
-sudo apt-get update && sudo apt-get -y upgrade
-
-# Install some packages
-sudo apt-get -y install vim git locales
-```
-```bash
 # Fix locales
 sudo locale-gen de_DE.UTF-8 en_US.UTF-8
 sudo localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
@@ -72,6 +65,13 @@ sudo localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-
 # Fix timezone
 sudo sh -c 'echo "Europe/Berlin" > /etc/timezone'
 sudo DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true apt-get install tzdata
+```
+```bash
+# Fetch latest updates
+sudo apt-get update && sudo apt-get -y upgrade
+
+# Install some packages
+sudo apt-get -y install vim git locales
 ```
 ```bash
 # Clone this setup from git
