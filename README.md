@@ -115,9 +115,9 @@ Now you should be able to find your tomcat running at http://dspace5-test.sara-s
 ### DSpace
 
 ```bash
-wget https://github.com/DSpace/DSpace/releases/download/dspace-5.8/dspace-5.8-release.tar.gz -O /tmp/dspace.tgz
+wget https://github.com/DSpace/DSpace/releases/download/dspace-5.10/dspace-5.10-release.tar.gz -O /tmp/dspace.tgz
 sudo -u dspace tar -xzvf /tmp/dspace.tgz -C /tmp
-sudo chown -R dspace:dspace /tmp/dspace-5.8-release
+sudo chown -R dspace:dspace /tmp/dspace-5.10-release
 ```
 
 ```bash
@@ -126,8 +126,8 @@ sudo chown dspace:dspace /dspace
 ```
 ```bash
 # NOTE needs sudo interactive or else build fails for Mirage2(xmlui)
-sudo -H -u dspace sh -c 'cd /tmp/dspace-5.8-release && mvn -Dhttps.protocols=TLSv1.2 -e package -Dmirage2.on=true'
-sudo -H -u dspace -- sh -c 'cd /tmp/dspace-5.8-release/dspace/target/dspace-installer; ant fresh_install'
+sudo -H -u dspace sh -c 'cd /tmp/dspace-5.10-release && mvn -Dhttps.protocols=TLSv1.2 -e package -Dmirage2.on=true'
+sudo -H -u dspace -- sh -c 'cd /tmp/dspace-5.10-release/dspace/target/dspace-installer; ant fresh_install'
 ```
 ```bash
 # export admins email = it is used by the script to create the bibliography, too
