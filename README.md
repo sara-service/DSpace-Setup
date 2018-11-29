@@ -169,7 +169,7 @@ cat /home/ubuntu/DSpace-Setup/config/default.license | sudo -u dspace tee /dspac
 ```
 ```bash
 # Copy all webapps from dspace to tomcat
-sudo rsync -a -v -z --delete --force /dspace/webapps /opt/tomcat/webapps
+sudo rsync -a -v -z --delete --force /dspace/webapps/ /opt/tomcat/webapps
 ```
 ```bash
 sudo systemctl restart tomcat
@@ -178,7 +178,7 @@ sudo systemctl enable tomcat
 ```
 
 ### Test your instance
-Please visit a web page of the DSpace server: http://dspace6-test.sara-service.org:8080/xmlui
+Please visit a web page of the DSpace server: http://dspace5-test.sara-service.org:8080/xmlui
 You should be able to login with your admin account.
 
 ## Configuration
