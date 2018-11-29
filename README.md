@@ -102,7 +102,7 @@ sudo groupadd dspace
 sudo useradd -m -g dspace dspace
 wget http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.82/bin/apache-tomcat-7.0.82.tar.gz -O /tmp/tomcat.tgz
 sudo mkdir /opt/tomcat
-sudo tar xzvf /tmp/tomcat.tgz -C /opt/tomcat --strip-components=1
+sudo tar -xzvf /tmp/tomcat.tgz -C /opt/tomcat --strip-components=1
 sudo cp /home/ubuntu/DSpace-Setup/config/tomcat/tomcat.service /etc/systemd/system/tomcat.service
 sudo cp /home/ubuntu/DSpace-Setup/config/tomcat/server.xml /opt/tomcat/conf/server.xml
 sudo chown -R dspace.dspace /opt/tomcat
@@ -115,11 +115,11 @@ Now you should be able to find your tomcat running at http://dspace5-test.sara-s
 ### DSpace
 
 ```bash
-git clone https://github.com/DSpace/DSpace.git /tmp/dspace-src
-cd /tmp/dspace-src
-git checkout dspace-5.10 -b dspace-5.10_with_abdera_swordv2_fix
+wget https://github.com/DSpace/DSpace/releases/download/dspace-5.10/dspace-5.10-src-release.tar.gz -O /tmp/dspace-src.tgz
+mkdir -p /dspace-src
+tar -xzvf /tmp/dspace-src.tgz -C /tmp/dspace-src --strip-components=1
 # fix abdera dependency or else swordv2 will be broken
-sed -i.orig 's/1.1.1/1.1.3/' dspace-swordv2/pom.xml
+cd /tmp/dspace-src && sed -i.orig 's/1.1.1/1.1.3/' dspace-swordv2/pom.xml
 sudo chown -R dspace:dspace /tmp/dspace-src
 ```
 
@@ -147,7 +147,7 @@ cat /home/ubuntu/DSpace-Setup/config/dspace.cfg | sed 's/DSPACE_HOSTNAME/'$(host
 cat /home/ubuntu/DSpace-Setup/config/swordv2/swordv2-server.cfg  | sed 's/DSPACE_HOSTNAME/'$(hostname)':8080/' | sudo -u dspace tee /dspace/config/modules/swordv2-server.cfg
 
 # Copy all webapps from dspace to tomcat
-sudo cp -R -p /dspace/webapps/* /opt/tomcat/webapps/
+rsync -a -v -z --delete --force /dspace/webapps /opt/tomcat/webapps
 
 # Restart tomcat and enable services
 sudo service tomcat restart
