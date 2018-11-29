@@ -115,7 +115,7 @@ Now you should be able to find your tomcat running at http://dspace5-test.sara-s
 ### DSpace
 
 ```bash
-git pull https://github.com/DSpace/DSpace.git /tmp/dspace-src
+git clone https://github.com/DSpace/DSpace.git /tmp/dspace-src
 cd /tmp/dspace-src
 git checkout dspace-5.10 -b dspace-5.10_with_abdera_swordv2_fix
 # fix abdera dependency or else swordv2 will be broken
