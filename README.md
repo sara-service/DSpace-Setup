@@ -116,7 +116,7 @@ Now you should be able to find your tomcat running at http://dspace5-test.sara-s
 
 ```bash
 wget https://github.com/DSpace/DSpace/releases/download/dspace-5.10/dspace-5.10-src-release.tar.gz -O /tmp/dspace-src.tgz
-mkdir -p /dspace-src
+mkdir -p /tmp/dspace-src
 tar -xzvf /tmp/dspace-src.tgz -C /tmp/dspace-src --strip-components=1
 # fix abdera dependency or else swordv2 will be broken
 cd /tmp/dspace-src && sed -i.orig 's/1.1.1/1.1.3/' dspace-swordv2/pom.xml
@@ -370,9 +370,9 @@ It is preferrable to adapt 1) or 1) and 2).
 
 ### Free up disk space
 ```bash
-du -hs /tmp/dspace-6.?-src-release
-#4,2G	dspace-6.3-src-release
-sudo rm -rf /tmp/dspace-6.?-src-release
+du -hs /tmp/dspace-src
+#4,2G	dspace-src
+sudo rm -rf /tmp/dspace-src
 ```
 
 ### Close ports
