@@ -115,9 +115,12 @@ Now you should be able to find your tomcat running at http://dspace5-test.sara-s
 ### DSpace
 
 ```bash
-wget https://github.com/DSpace/DSpace/releases/download/dspace-5.10/dspace-5.10-release.tar.gz -O /tmp/dspace.tgz
-sudo -u dspace tar -xzvf /tmp/dspace.tgz -C /tmp
-sudo chown -R dspace:dspace /tmp/dspace-5.10-release
+git pull https://github.com/DSpace/DSpace.git /tmp/dspace-src
+cd /tmp/dspace-src
+git checkout dspace-5.10 -b dspace-5.10_with_abdera_swordv2_fix
+# fix abdera dependency or else swordv2 will be broken
+sed -i.orig 's/1.1.1/1.1.3/' dspace-swordv2/pom.xml
+sudo chown -R dspace:dspace /tmp/dspace-src
 ```
 
 ```bash
@@ -126,8 +129,8 @@ sudo chown dspace:dspace /dspace
 ```
 ```bash
 # NOTE needs sudo interactive or else build fails for Mirage2(xmlui)
-sudo -H -u dspace sh -c 'cd /tmp/dspace-5.10-release && mvn -Dhttps.protocols=TLSv1.2 -e package -Dmirage2.on=true'
-sudo -H -u dspace -- sh -c 'cd /tmp/dspace-5.10-release/dspace/target/dspace-installer; ant fresh_install'
+sudo -H -u dspace sh -c 'cd /tmp/dspace-src && mvn -Dhttps.protocols=TLSv1.2 -e package -Dmirage2.on=true'
+sudo -H -u dspace -- sh -c 'cd /tmp/dspace-src/dspace/target/dspace-installer; ant fresh_install'
 ```
 ```bash
 # export admins email = it is used by the script to create the bibliography, too
@@ -377,13 +380,7 @@ sudo rm -rf /tmp/dspace-6.?-src-release
 Now you can login the bwCloud user interface and disable the tomcat ports 8080/8443 for better security!
 Also, in Tomcat's `server.xml`, change all `<Connector>`s to add `address="127.0.0.1"`. Better save than sorry.
 
-### Troubleshooting SWORDv2
+### Troubleshooting 
 
-SWORD Servicedocument does not work with most combinations of 
-* Java SE
-* Java JDK
-* TomCat
-* DSpace
-
-Java 1.7 + JDK7 + TomCat7 is okay, but Tomcat8 DOES NOT WORK!
-I have not found any other version combination working reliably yet :(
+* TomCat8 needs Java 1.8 and JDK8
+* DSpace 5.9 and 5.10 have broken RESTv2, you need to apply a fix to pull abdera version 1.1.3 instead of 1.1.1 in the pom.xml. See https://github.com/DSpace/DSpace/pull/2271
