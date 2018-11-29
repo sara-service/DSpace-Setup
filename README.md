@@ -103,9 +103,9 @@ sudo useradd -m -g dspace dspace
 wget http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.82/bin/apache-tomcat-7.0.82.tar.gz -O /tmp/tomcat.tgz
 sudo mkdir /opt/tomcat
 sudo tar xzvf /tmp/tomcat.tgz -C /opt/tomcat --strip-components=1
-sudo chown -R dspace.dspace /opt/tomcat
 sudo cp /home/ubuntu/DSpace-Setup/config/tomcat/tomcat.service /etc/systemd/system/tomcat.service
 sudo cp /home/ubuntu/DSpace-Setup/config/tomcat/server.xml /opt/tomcat/conf/server.xml
+sudo chown -R dspace.dspace /opt/tomcat
 sudo systemctl daemon-reload
 sudo systemctl start tomcat
 ```
