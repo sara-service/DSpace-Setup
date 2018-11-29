@@ -369,3 +369,6 @@ sudo rm -rf /tmp/dspace-6.?-src-release
 
 Now you can login the bwCloud user interface and disable the tomcat ports 8080/8443 for better security!
 Also, in Tomcat's `server.xml`, change all `<Connector>`s to add `address="127.0.0.1"`. Better save than sorry.
+
+### Troubleshooting
+`ant install` throws an exception because it is unhappy to not find a `local.cfg`. This seemingly has no bad side effect although it couln't hurt to fix that...
