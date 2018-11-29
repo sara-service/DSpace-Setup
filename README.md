@@ -59,13 +59,13 @@ sudo sed -i.orig '41,+1s/^# //' /etc/inputrc
 bash
 
 # Adapt host name
-sudo hostname oparu-beta.sara-service.org
+sudo hostname dspace5-test@sara-service.org
 
 # Fetch latest updates
 sudo apt-get update && sudo apt-get -y upgrade
 
 # Install some packages
-sudo apt-get -y install vim git locales
+sudo apt-get -y install vim git locales rsync
 ```
 ```bash
 # Fix locales
@@ -105,14 +105,14 @@ sudo -u postgres psql dspace -c "CREATE EXTENSION pgcrypto;"
 wget http://archive.apache.org/dist/tomcat/tomcat-8/v8.5.32/bin/apache-tomcat-8.5.32.tar.gz -O /tmp/tomcat.tgz
 sudo mkdir /opt/tomcat
 sudo tar xzvf /tmp/tomcat.tgz -C /opt/tomcat --strip-components=1
-sudo chown -R dspace.dspace /opt/tomcat
 sudo cp /home/ubuntu/DSpace-Setup/config/tomcat/tomcat.service /etc/systemd/system/tomcat.service
 sudo cp /home/ubuntu/DSpace-Setup/config/tomcat/server.xml /opt/tomcat/conf/server.xml
+sudo chown -R dspace.dspace /opt/tomcat
 sudo systemctl daemon-reload
 sudo systemctl start tomcat
 ```
 
-Now you should be able to find your tomcat running at http://oparu-beta.sara-service.org:8080
+Now you should be able to find your tomcat running at http://dspace5-test.sara-service.org:8080
 
 ### DSpace
 
