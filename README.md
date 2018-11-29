@@ -1,4 +1,4 @@
-# How to Install Oparu-Beta on bwCloud Scope
+# How to Install DSpace6 on bwCloud Scope
 
 ## Intro
 
@@ -47,7 +47,7 @@ In case of questions please contact:
 
 ### Connect to the machine
 ```bash
-ssh -A ubuntu@oparu-beta.sara-service.org
+ssh -A dspace5-test@sara-service.org
 ```
 
 ## Prerequisites
