@@ -15,7 +15,7 @@ It is based on the "Ubuntu Server 16.04 image" and was performed in a bwCloud SC
 It is advised to walk through this manual without interruptions or intermediate reboots.
 
 Further reading:
-https://wiki.duraspace.org/display/DSDOC6x/DSpace+5.x+Documentation
+https://wiki.duraspace.org/display/DSDOC5x/DSpace+5.x+Documentation
 
 About SARA:
 https://sara-service.org
