@@ -147,7 +147,7 @@ cat /home/ubuntu/DSpace-Setup/config/dspace.cfg | sed 's/DSPACE_HOSTNAME/'$(host
 cat /home/ubuntu/DSpace-Setup/config/swordv2/swordv2-server.cfg  | sed 's/DSPACE_HOSTNAME/'$(hostname)':8080/' | sudo -u dspace tee /dspace/config/modules/swordv2-server.cfg
 
 # Copy all webapps from dspace to tomcat
-rsync -a -v -z --delete --force /dspace/webapps /opt/tomcat/webapps
+sudo rsync -a -v -z --delete --force /dspace/webapps /opt/tomcat/webapps
 
 # Restart tomcat and enable services
 sudo service tomcat restart
