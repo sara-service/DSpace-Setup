@@ -59,7 +59,7 @@ sudo sed -i.orig '41,+1s/^# //' /etc/inputrc
 bash
 
 # Adapt host name
-sudo hostname dspace6-test@sara-service.org
+sudo hostname dspace6-test.sara-service.org
 
 # Fetch latest updates
 sudo apt-get update && sudo apt-get -y upgrade
