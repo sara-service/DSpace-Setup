@@ -47,7 +47,7 @@ In case of questions please contact:
 
 ### Connect to the machine
 ```bash
-ssh -A dspace6-test.sara-service.org
+ssh -A ubuntu@dspace6-test.sara-service.org
 ```
 
 ## Prerequisites
