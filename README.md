@@ -1,4 +1,6 @@
-# How to Install Oparu-Beta on bwCloud Scope
+# DO NOT USE MASTER
+Master needs to be merged from DSpace5/6 Branches into one generic installation manual.
+Until this is done, please choose either DSpace5 or DSpace6 branch!
 
 ## Intro
 
