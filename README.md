@@ -178,7 +178,7 @@ After that, we need to configure permissions. You will need to login as admin us
 
 <sup>1</sup>this is the dedicated SARA Service user and needs to have permissions to submit to any collection a SARA user has access to!
 
-### Validate Swordv2/Rest functionality (HTTP)
+### Validate Swordv2 functionality (HTTP)
 
 ```bash
 DSPACE_SERVER="$(hostname):8080"
@@ -192,11 +192,6 @@ USER3="daniel.duesentrieb@uni-entenhausen.de" # set nonexisting user
 curl -H "on-behalf-of: $USER1" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => downloads first level of bibliography
 curl -H "on-behalf-of: $USER2" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => downloads first level of bibliography
 curl -H "on-behalf-of: $USER3" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => HTML Error Status 403: Forbidden
-```
-
-```bash
-curl -s -H "Accept: application/json" $DSPACE_SERVER/rest/hierarchy | python -m json.tool
-# This should dump the bibliography structure. In case of `No JSON object could be decoded` something is wrong.
 ```
 
 ### Apply presets
@@ -227,7 +222,6 @@ sudo chown -R dspace /dspace/config/emails
 sudo chgrp -R dspace /dspace/config/emails
 # Apply default deposit license
 cat /home/ubuntu/DSpace-Setup/config/default.license | sudo -u dspace tee /dspace/config/default.license
-
 
 sudo systemctl start tomcat
 ```
@@ -282,11 +276,11 @@ sudo systemctl restart apache2
 
 Now you need to remove the local port 8080 and the http in the dspace config:
 ```bash
-sudo sed -i 's/http://'"$(hostname):8080"'/https://'$(hostname)'/' /dspace/config/dspace.cfg /dspace/config/modules/swordv2-server.cfg
+sudo sed -i 's/http:\/\/'"$(hostname):8080"'/https:\/\/'$(hostname)'/' /dspace/config/dspace.cfg /dspace/config/modules/swordv2-server.cfg
 sudo systemctl restart tomcat
 ```
 
-### Validate Swordv2/Rest functionality (HTTPS)
+### Validate Swordv2 functionality (HTTPS)
 
 ```bash
 DSPACE_SERVER="https://$(hostname)"
@@ -300,10 +294,6 @@ USER3="daniel.duesentrieb@uni-entenhausen.de" # set nonexisting user
 curl -H "on-behalf-of: $USER1" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => downloads first level of bibliography
 curl -H "on-behalf-of: $USER2" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => downloads first level of bibliography
 curl -H "on-behalf-of: $USER3" -i $DSPACE_SERVER/swordv2/servicedocument --user "$SARA_USER:$SARA_PWD"  # => HTML Error Status 403: Forbidden
-```
-```bash
-curl -s -H "Accept: application/json" $DSPACE_SERVER/rest/hierarchy | python -m json.tool
-# This should dump the bibliography structure. In case of `No JSON object could be decoded` something is wrong.
 ```
 
 ## Final steps
@@ -366,7 +356,9 @@ https://github.com/54r4/DSpace/tree/dspace-6.3_OboFixVariant2
 
 It is preferrable to adapt 1) or 1) and 2).
 
-*TODO Source build and install*
+## TODO
+* add REST
+* fix order of tomcat / apache2 service starts
 
 ### Free up disk space
 ```bash
