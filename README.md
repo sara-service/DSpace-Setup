@@ -75,7 +75,7 @@ sudo apt-get -y install vim git locales
 ```
 ```bash
 # Clone this setup from git
-git clone -b DSpace5 git@git.uni-konstanz.de:sara/DSpace-Setup.git
+git clone -b DSpace5 https://git.uni-konstanz.de/sara/DSpace-Setup.git
 sudo cp ~/DSpace-Setup/config/vimrc.local /etc/vim/vimrc.local
 ```
 
