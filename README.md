@@ -78,7 +78,7 @@ sudo DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true apt-get ins
 ```
 ```bash
 # Clone this setup from git
-git clone -b DSpace6 git@git.uni-konstanz.de:sara/DSpace-Setup.git
+git clone -b DSpace6 https://git.uni-konstanz.de/sara/DSpace-Setup.git
 sudo cp ~/DSpace-Setup/config/vimrc.local /etc/vim/vimrc.local
 ```
 
