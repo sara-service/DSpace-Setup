@@ -359,6 +359,8 @@ It is preferrable to adapt 1) or 1) and 2).
 ## TODO
 * add REST
 * fix order of tomcat / apache2 service starts
+* add mirage2 build fix
+* add cronjob for renewing cert
 
 ### Free up disk space
 ```bash
