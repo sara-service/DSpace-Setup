@@ -120,7 +120,12 @@ mkdir -p /tmp/dspace-src
 tar -xzvf /tmp/dspace-src.tgz -C /tmp/dspace-src --strip-components=1
 # fix abdera dependency or else swordv2 will be broken
 cd /tmp/dspace-src && sed -i.orig 's/1.1.1/1.1.3/' dspace-swordv2/pom.xml
-sudo chown -R dspace:dspace /tmp/dspace-src
+# fix jruby dependency or else mirage2 will be broken
+cd /tmp/dspace-src && sed -i.orig 's/3.3.14/3.4.25/' ./dspace/modules/xmlui-mirage2/pom.xml
+sed -i -e '29a\
+		<!-- Override version of JRuby that gem-maven-plugin installs when "mirage2.deps.included=true" --> 
+		<jruby.version>9.1.17.0</jruby.version>' 
+sudo chown -R dspace:dspace /tmp/dspace-src ./dspace/modules/xmlui-mirage2/pom.xml
 ```
 
 ```bash
