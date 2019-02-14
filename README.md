@@ -131,7 +131,8 @@ sudo mkdir /dspace
 sudo chown dspace:dspace /dspace
 ```
 ```bash
-# NOTE needs sudo interactive or else build fails for Mirage2(xmlui)
+# fix abdera dependency or else swordv2 will be broken
+cd /tmp/dspace-src && sed -i.orig 's/1.1.1/1.1.3/' dspace-swordv2/pom.xml
 sudo -H -u dspace sh -c 'cd /tmp/dspace-src && mvn -e clean package'
 sudo -H -u dspace -- sh -c 'cd /tmp/dspace-src/dspace/target/dspace-installer; ant fresh_install'
 ```
