@@ -31,7 +31,7 @@ In case of questions please contact:
 
   * https://portal.bw-cloud.org
   * Compute -> Instances -> Start new instance
-  * Use "Ubuntu Server 16.04" image
+  * Use "Ubuntu Server 18.04" image
   * Use flavor "m1.medium" with 12GB disk space and 4GB RAM
   * Enable port 8080 egress/ingress by creating and enabling a new Security Group 'tomcat'
   * Enable port 80/443 egress/ingress by creating and enabling a new Security Group 'apache'
@@ -58,6 +58,12 @@ bash
 # Adapt host name
 sudo hostname dspace5-test.sara-service.org
 
+# Fetch latest updates
+sudo apt-get update
+
+# Install some important dependencies
+sudo apt-get -y install vim git locales rsync
+
 # Fix locales
 sudo locale-gen de_DE.UTF-8 en_US.UTF-8
 sudo localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
@@ -65,13 +71,9 @@ sudo localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-
 # Fix timezone
 sudo sh -c 'echo "Europe/Berlin" > /etc/timezone'
 sudo DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true apt-get install tzdata
-```
-```bash
-# Fetch latest updates
-sudo apt-get update && sudo apt-get -y upgrade
 
-# Install some packages
-sudo apt-get -y install vim git locales
+# Upgrade all packages
+sudo apt-get -y upgrade
 ```
 ```bash
 # Clone this setup from git
@@ -82,10 +84,8 @@ sudo cp ~/DSpace-Setup/config/vimrc.local /etc/vim/vimrc.local
 ## Installation
 
 ```bash
-sudo add-apt-repository -y ppa:openjdk-r/ppa
-sudo apt-get update
-sudo apt-get -y install python openjdk-7-jdk maven ant postgresql postgresql-contrib curl wget haveged
-sudo update-java-alternatives -s java-1.7.0-openjdk-amd64
+sudo apt-mark hold openjdk-11-jre-headless
+sudo apt-get -y install python openjdk-8-jdk maven ant postgresql postgresql-contrib curl wget haveged
 ```
 ### Postgres
 ```bash
@@ -100,7 +100,7 @@ sudo -u postgres psql dspace -c "CREATE EXTENSION pgcrypto;"
 ```bash
 sudo groupadd dspace
 sudo useradd -m -g dspace dspace
-wget http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.82/bin/apache-tomcat-7.0.82.tar.gz -O /tmp/tomcat.tgz
+wget http://archive.apache.org/dist/tomcat/tomcat-9/v9.0.16/bin/apache-tomcat-9.0.16.tar.gz -O /tmp/tomcat.tgz
 sudo mkdir /opt/tomcat
 sudo tar -xzvf /tmp/tomcat.tgz -C /opt/tomcat --strip-components=1
 sudo cp /home/ubuntu/DSpace-Setup/config/tomcat/tomcat.service /etc/systemd/system/tomcat.service
@@ -118,13 +118,6 @@ Now you should be able to find your tomcat running at http://dspace5-test.sara-s
 wget https://github.com/DSpace/DSpace/releases/download/dspace-5.10/dspace-5.10-src-release.tar.gz -O /tmp/dspace-src.tgz
 mkdir -p /tmp/dspace-src
 tar -xzvf /tmp/dspace-src.tgz -C /tmp/dspace-src --strip-components=1
-# fix abdera dependency or else swordv2 will be broken
-cd /tmp/dspace-src && sed -i.orig 's/1.1.1/1.1.3/' dspace-swordv2/pom.xml
-# fix jruby dependency or else mirage2 will be broken
-cd /tmp/dspace-src && sed -i.orig 's/3.3.14/3.4.25/' ./dspace/modules/xmlui-mirage2/pom.xml
-sed -i -e '29a\
-		<!-- Override version of JRuby that gem-maven-plugin installs when "mirage2.deps.included=true" --> \
-		<jruby.version>9.1.17.0</jruby.version>' ./dspace/modules/xmlui-mirage2/pom.xml
 sudo chown -R dspace:dspace /tmp/dspace-src 
 ```
 
@@ -134,7 +127,7 @@ sudo chown dspace:dspace /dspace
 ```
 ```bash
 # NOTE needs sudo interactive or else build fails for Mirage2(xmlui)
-sudo -H -u dspace sh -c 'cd /tmp/dspace-src && mvn -Dhttps.protocols=TLSv1.2 -e package -Dmirage2.on=true'
+sudo -H -u dspace sh -c 'cd /tmp/dspace-src && mvn -e clean package'
 sudo -H -u dspace -- sh -c 'cd /tmp/dspace-src/dspace/target/dspace-installer; ant fresh_install'
 ```
 ```bash
@@ -147,7 +140,7 @@ sudo -u dspace /dspace/bin/dspace create-administrator -e $ADMIN_EMAIL -f "kata"
 ### Configure SWordV2
 
 ```bash
-# Customized dspace.cfg / swordvw-server.cgf
+# Customized dspace.cfg / swordv2-server.cgf
 cat /home/ubuntu/DSpace-Setup/config/dspace.cfg | sed 's/DSPACE_HOSTNAME/'$(hostname)':8080/' | sudo -u dspace tee /dspace/config/dspace.cfg
 cat /home/ubuntu/DSpace-Setup/config/swordv2/swordv2-server.cfg  | sed 's/DSPACE_HOSTNAME/'$(hostname)':8080/' | sudo -u dspace tee /dspace/config/modules/swordv2-server.cfg
 
@@ -242,7 +235,7 @@ Now you will see the standard apache index page: http://dspace5-test.sara-servic
 
 ### Install letsencrypt, create and configure SSL cert
 ```bash
-sudo apt -y install python-letsencrypt-apache
+sudo apt -y install python3-certbot-apache
 sudo systemctl stop apache2
 sudo letsencrypt --authenticator standalone --installer apache --domains $(hostname)
 ```
