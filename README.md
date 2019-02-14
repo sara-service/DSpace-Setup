@@ -225,6 +225,9 @@ sudo chgrp -R dspace /dspace/config/emails
 # Apply default deposit license
 cat /home/ubuntu/DSpace-Setup/config/default.license | sudo -u dspace tee /dspace/config/default.license
 
+# Copy all webapps from dspace to tomcat
+sudo rsync -a -v -z --delete --force /dspace/webapps/ /opt/tomcat/webapps
+
 sudo systemctl start tomcat
 ```
 
