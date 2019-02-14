@@ -60,7 +60,7 @@ exit
 ```
 
 ## Prerequisites
-```
+```bash
 ssh ubuntu@dspace5-test.sara-service.org
 
 # Fetch latest updates
