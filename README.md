@@ -7,11 +7,11 @@ The final instance can be used as institutional repository to receive automated 
 
 Contents:
 * SWORDv2
-* xmlui with Mirage-2 theme
+* xmlui with Atmire Mirage theme
 * SMTP mailing functionality
 * Initial configuration (Groups, Users, Communities, Collections, Permissions...)
 
-It is based on the "Ubuntu Server 16.04 image" and was performed in a bwCloud SCOPE VM. 
+It is based on the "Ubuntu Server 18.04 image" and was performed in a bwCloud SCOPE VM. 
 It is advised to walk through this manual without interruptions or intermediate reboots.
 
 Further reading:
@@ -47,17 +47,19 @@ In case of questions please contact:
 ssh -A ubuntu@dspace5-test.sara-service.org
 ```
 
-## Prerequisites
+## Fix hostname
 ```bash
 # Enable history search (pgdn/pgup)
 sudo sed -i.orig '41,+1s/^# //' /etc/inputrc
 
-# start a new bash to apply modified inputrc
-bash
-
 # Adapt host name
 sudo hostname dspace5-test.sara-service.org
 
+# Log off to apply new host name
+exit
+```
+
+## Prerequisites
 # Fetch latest updates
 sudo apt-get update
 
@@ -198,22 +200,20 @@ curl -H "on-behalf-of: $USER3" -i $DSPACE_SERVER/swordv2/servicedocument --user 
 # Stop tomcat
 sudo systemctl stop tomcat
 
-# Enable Mirage2 Themes
-cat /home/ubuntu/DSpace-Setup/config/xmlui.xconf             | sudo -u dspace sh -c 'cat > /dspace/config/xmlui.xconf'
 # Apply customized item submission form
 cat /home/ubuntu/DSpace-Setup/config/item-submission.xml     | sudo -u dspace sh -c 'cat > /dspace/config/item-submission.xml'
 cat /home/ubuntu/DSpace-Setup/config/input-forms.xml         | sudo -u dspace sh -c 'cat > /dspace/config/input-forms.xml'
 # Custom item view
-cat /home/ubuntu/DSpace-Setup/config/xmlui/item-view.xsl     | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/themes/Mirage2/xsl/aspect/artifactbrowser/item-view.xsl'
+cat /home/ubuntu/DSpace-Setup/config/xmlui/item-view.xsl     | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/themes/Mirage/lib/xsl/aspect/artifactbrowser/item-view.xsl'
 # Custom messages
 cat /home/ubuntu/DSpace-Setup/config/xmlui/messages.xml      | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/i18n/messages.xml'
 cat /home/ubuntu/DSpace-Setup/config/xmlui/messages_de.xml   | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/i18n/messages_de.xml'
 # Custom landing page
 cat /home/ubuntu/DSpace-Setup/config/xmlui/news-xmlui.xml    | sudo -u dspace sh -c 'cat > /dspace/config/news-xmlui.xml'
 # Custom thumbnails
-cat /home/ubuntu/DSpace-Setup/config/xmlui/Logo_SARA_RGB.png | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/themes/Mirage2/images/Logo_SARA_RGB.png'
+cat /home/ubuntu/DSpace-Setup/config/xmlui/Logo_SARA_RGB.png | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/themes/Mirage/images/Logo_SARA_RGB.png'
 # Custom icons
-cat /home/ubuntu/DSpace-Setup/config/xmlui/arrow.png         | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/themes/Mirage2/images/arrow.png'
+cat /home/ubuntu/DSpace-Setup/config/xmlui/arrow.png         | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/themes/Mirage/images/arrow.png'
 # Copy email templates
 sudo cp /home/ubuntu/DSpace-Setup/config/emails/* /dspace/config/emails/
 sudo chown -R dspace /dspace/config/emails
