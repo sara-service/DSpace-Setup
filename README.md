@@ -44,7 +44,7 @@ In case of questions please contact:
 
 ### Connect to the machine
 ```bash
-ssh -A ubuntu@dspace5-test.sara-service.org
+ssh ubuntu@dspace5-test.sara-service.org
 ```
 
 ## Fix hostname
@@ -60,6 +60,9 @@ exit
 ```
 
 ## Prerequisites
+```bash
+ssh ubuntu@dspace5-test.sara-service.org
+
 # Fetch latest updates
 sudo apt-get update
 
@@ -79,7 +82,7 @@ sudo apt-get -y upgrade
 ```
 ```bash
 # Clone this setup from git
-git clone -b DSpace5 https://git.uni-konstanz.de/sara/DSpace-Setup.git
+git clone -b Tuebingen https://git.uni-konstanz.de/sara/DSpace-Setup.git
 sudo cp ~/DSpace-Setup/config/vimrc.local /etc/vim/vimrc.local
 ```
 
@@ -128,7 +131,8 @@ sudo mkdir /dspace
 sudo chown dspace:dspace /dspace
 ```
 ```bash
-# NOTE needs sudo interactive or else build fails for Mirage2(xmlui)
+# fix abdera dependency or else swordv2 will be broken
+cd /tmp/dspace-src && sed -i.orig 's/1.1.1/1.1.3/' dspace-swordv2/pom.xml
 sudo -H -u dspace sh -c 'cd /tmp/dspace-src && mvn -e clean package'
 sudo -H -u dspace -- sh -c 'cd /tmp/dspace-src/dspace/target/dspace-installer; ant fresh_install'
 ```
@@ -220,6 +224,9 @@ sudo chown -R dspace /dspace/config/emails
 sudo chgrp -R dspace /dspace/config/emails
 # Apply default deposit license
 cat /home/ubuntu/DSpace-Setup/config/default.license | sudo -u dspace tee /dspace/config/default.license
+
+# Copy all webapps from dspace to tomcat
+sudo rsync -a -v -z --delete --force /dspace/webapps/ /opt/tomcat/webapps
 
 sudo systemctl start tomcat
 ```
