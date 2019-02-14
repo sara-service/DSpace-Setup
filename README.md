@@ -44,7 +44,7 @@ In case of questions please contact:
 
 ### Connect to the machine
 ```bash
-ssh -A ubuntu@dspace5-test.sara-service.org
+ssh ubuntu@dspace5-test.sara-service.org
 ```
 
 ## Fix hostname
@@ -60,6 +60,9 @@ exit
 ```
 
 ## Prerequisites
+```
+ssh ubuntu@dspace5-test.sara-service.org
+
 # Fetch latest updates
 sudo apt-get update
 
