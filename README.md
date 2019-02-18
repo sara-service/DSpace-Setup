@@ -11,7 +11,7 @@ Contents:
 * SMTP mailing functionality
 * Initial configuration (Groups, Users, Communities, Collections, Permissions...)
 
-It is based on the "Ubuntu Server 16.04 image" and was performed in a bwCloud SCOPE VM. 
+It is based on the "Ubuntu Server 18.04 image" and was performed in a bwCloud SCOPE VM. 
 It is advised to walk through this manual without interruptions or intermediate reboots.
 
 Further reading:
@@ -31,7 +31,7 @@ In case of questions please contact:
 
   * https://portal.bw-cloud.org
   * Compute -> Instances -> Start new instance
-  * Use "Ubuntu Server 16.04" image
+  * Use "Ubuntu Server 18.04" image
   * Use flavor "m1.medium" with 12GB disk space and 4GB RAM
   * Enable port 8080 egress/ingress by creating and enabling a new Security Group 'tomcat'
   * Enable port 80/443 egress/ingress by creating and enabling a new Security Group 'apache'
@@ -59,6 +59,7 @@ bash
 sudo hostname dspace5-test.sara-service.org
 
 # Fix locales
+sudo apt-get update && sudo apt-get -y install vim git locales
 sudo locale-gen de_DE.UTF-8 en_US.UTF-8
 sudo localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 
@@ -69,9 +70,6 @@ sudo DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true apt-get ins
 ```bash
 # Fetch latest updates
 sudo apt-get update && sudo apt-get -y upgrade
-
-# Install some packages
-sudo apt-get -y install vim git locales
 ```
 ```bash
 # Clone this setup from git
