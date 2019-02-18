@@ -7,7 +7,7 @@ The final instance can be used as institutional repository to receive automated 
 
 Contents:
 * SWORDv2
-* xmlui with Mirage-2 theme
+* xmlui with Atmire Mirage theme
 * SMTP mailing functionality
 * Initial configuration (Groups, Users, Communities, Collections, Permissions...)
 
@@ -44,46 +44,53 @@ In case of questions please contact:
 
 ### Connect to the machine
 ```bash
-ssh -A ubuntu@dspace5-test.sara-service.org
+ssh ubuntu@dspace5-test.sara-service.org
 ```
 
-## Prerequisites
+## Fix hostname
 ```bash
 # Enable history search (pgdn/pgup)
 sudo sed -i.orig '41,+1s/^# //' /etc/inputrc
 
-# start a new bash to apply modified inputrc
-bash
-
 # Adapt host name
 sudo hostname dspace5-test.sara-service.org
 
+# Log off to apply new host name
+exit
+```
+
+## Prerequisites
+```bash
+ssh ubuntu@dspace5-test.sara-service.org
+
+# Fetch latest updates
+sudo apt-get update
+
+# Install some important dependencies
+sudo apt-get -y install vim git locales rsync
+
 # Fix locales
-sudo apt-get update && sudo apt-get -y install vim git locales
 sudo locale-gen de_DE.UTF-8 en_US.UTF-8
 sudo localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 
 # Fix timezone
 sudo sh -c 'echo "Europe/Berlin" > /etc/timezone'
 sudo DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true apt-get install tzdata
-```
-```bash
-# Fetch latest updates
-sudo apt-get update && sudo apt-get -y upgrade
+
+# Upgrade all packages
+sudo apt-get -y upgrade
 ```
 ```bash
 # Clone this setup from git
-git clone -b DSpace5 https://git.uni-konstanz.de/sara/DSpace-Setup.git
+git clone -b Tuebingen https://git.uni-konstanz.de/sara/DSpace-Setup.git
 sudo cp ~/DSpace-Setup/config/vimrc.local /etc/vim/vimrc.local
 ```
 
 ## Installation
 
 ```bash
-sudo add-apt-repository -y ppa:openjdk-r/ppa
-sudo apt-get update
-sudo apt-get -y install python openjdk-7-jdk maven ant postgresql postgresql-contrib curl wget haveged
-sudo update-java-alternatives -s java-1.7.0-openjdk-amd64
+sudo apt-mark hold openjdk-11-jre-headless
+sudo apt-get -y install python openjdk-8-jdk maven ant postgresql postgresql-contrib curl wget haveged
 ```
 ### Postgres
 ```bash
@@ -98,7 +105,7 @@ sudo -u postgres psql dspace -c "CREATE EXTENSION pgcrypto;"
 ```bash
 sudo groupadd dspace
 sudo useradd -m -g dspace dspace
-wget http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.82/bin/apache-tomcat-7.0.82.tar.gz -O /tmp/tomcat.tgz
+wget http://archive.apache.org/dist/tomcat/tomcat-9/v9.0.16/bin/apache-tomcat-9.0.16.tar.gz -O /tmp/tomcat.tgz
 sudo mkdir /opt/tomcat
 sudo tar -xzvf /tmp/tomcat.tgz -C /opt/tomcat --strip-components=1
 sudo cp /home/ubuntu/DSpace-Setup/config/tomcat/tomcat.service /etc/systemd/system/tomcat.service
@@ -116,13 +123,6 @@ Now you should be able to find your tomcat running at http://dspace5-test.sara-s
 wget https://github.com/DSpace/DSpace/releases/download/dspace-5.10/dspace-5.10-src-release.tar.gz -O /tmp/dspace-src.tgz
 mkdir -p /tmp/dspace-src
 tar -xzvf /tmp/dspace-src.tgz -C /tmp/dspace-src --strip-components=1
-# fix abdera dependency or else swordv2 will be broken
-cd /tmp/dspace-src && sed -i.orig 's/1.1.1/1.1.3/' dspace-swordv2/pom.xml
-# fix jruby dependency or else mirage2 will be broken
-cd /tmp/dspace-src && sed -i.orig 's/3.3.14/3.4.25/' ./dspace/modules/xmlui-mirage2/pom.xml
-sed -i -e '29a\
-		<!-- Override version of JRuby that gem-maven-plugin installs when "mirage2.deps.included=true" --> \
-		<jruby.version>9.1.17.0</jruby.version>' ./dspace/modules/xmlui-mirage2/pom.xml
 sudo chown -R dspace:dspace /tmp/dspace-src 
 ```
 
@@ -131,8 +131,9 @@ sudo mkdir /dspace
 sudo chown dspace:dspace /dspace
 ```
 ```bash
-# NOTE needs sudo interactive or else build fails for Mirage2(xmlui)
-sudo -H -u dspace sh -c 'cd /tmp/dspace-src && mvn -Dhttps.protocols=TLSv1.2 -e package -Dmirage2.on=true'
+# fix abdera dependency or else swordv2 will be broken
+cd /tmp/dspace-src && sed -i.orig 's/1.1.1/1.1.3/' dspace-swordv2/pom.xml
+sudo -H -u dspace sh -c 'cd /tmp/dspace-src && mvn -e clean package'
 sudo -H -u dspace -- sh -c 'cd /tmp/dspace-src/dspace/target/dspace-installer; ant fresh_install'
 ```
 ```bash
@@ -145,7 +146,7 @@ sudo -u dspace /dspace/bin/dspace create-administrator -e $ADMIN_EMAIL -f "kata"
 ### Configure SWordV2
 
 ```bash
-# Customized dspace.cfg / swordvw-server.cgf
+# Customized dspace.cfg / swordv2-server.cgf
 cat /home/ubuntu/DSpace-Setup/config/dspace.cfg | sed 's/DSPACE_HOSTNAME/'$(hostname)':8080/' | sudo -u dspace tee /dspace/config/dspace.cfg
 cat /home/ubuntu/DSpace-Setup/config/swordv2/swordv2-server.cfg  | sed 's/DSPACE_HOSTNAME/'$(hostname)':8080/' | sudo -u dspace tee /dspace/config/modules/swordv2-server.cfg
 
@@ -203,28 +204,29 @@ curl -H "on-behalf-of: $USER3" -i $DSPACE_SERVER/swordv2/servicedocument --user 
 # Stop tomcat
 sudo systemctl stop tomcat
 
-# Enable Mirage2 Themes
-cat /home/ubuntu/DSpace-Setup/config/xmlui.xconf             | sudo -u dspace sh -c 'cat > /dspace/config/xmlui.xconf'
 # Apply customized item submission form
 cat /home/ubuntu/DSpace-Setup/config/item-submission.xml     | sudo -u dspace sh -c 'cat > /dspace/config/item-submission.xml'
 cat /home/ubuntu/DSpace-Setup/config/input-forms.xml         | sudo -u dspace sh -c 'cat > /dspace/config/input-forms.xml'
 # Custom item view
-cat /home/ubuntu/DSpace-Setup/config/xmlui/item-view.xsl     | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/themes/Mirage2/xsl/aspect/artifactbrowser/item-view.xsl'
+cat /home/ubuntu/DSpace-Setup/config/xmlui/item-view.xsl     | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/themes/Mirage/lib/xsl/aspect/artifactbrowser/item-view.xsl'
 # Custom messages
 cat /home/ubuntu/DSpace-Setup/config/xmlui/messages.xml      | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/i18n/messages.xml'
 cat /home/ubuntu/DSpace-Setup/config/xmlui/messages_de.xml   | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/i18n/messages_de.xml'
 # Custom landing page
 cat /home/ubuntu/DSpace-Setup/config/xmlui/news-xmlui.xml    | sudo -u dspace sh -c 'cat > /dspace/config/news-xmlui.xml'
 # Custom thumbnails
-cat /home/ubuntu/DSpace-Setup/config/xmlui/Logo_SARA_RGB.png | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/themes/Mirage2/images/Logo_SARA_RGB.png'
+cat /home/ubuntu/DSpace-Setup/config/xmlui/Logo_SARA_RGB.png | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/themes/Mirage/images/Logo_SARA_RGB.png'
 # Custom icons
-cat /home/ubuntu/DSpace-Setup/config/xmlui/arrow.png         | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/themes/Mirage2/images/arrow.png'
+cat /home/ubuntu/DSpace-Setup/config/xmlui/arrow.png         | sudo -u dspace sh -c 'cat > /dspace/webapps/xmlui/themes/Mirage/images/arrow.png'
 # Copy email templates
 sudo cp /home/ubuntu/DSpace-Setup/config/emails/* /dspace/config/emails/
 sudo chown -R dspace /dspace/config/emails
 sudo chgrp -R dspace /dspace/config/emails
 # Apply default deposit license
 cat /home/ubuntu/DSpace-Setup/config/default.license | sudo -u dspace tee /dspace/config/default.license
+
+# Copy all webapps from dspace to tomcat
+sudo rsync -a -v -z --delete --force /dspace/webapps/ /opt/tomcat/webapps
 
 sudo systemctl start tomcat
 ```
@@ -240,7 +242,7 @@ Now you will see the standard apache index page: http://dspace5-test.sara-servic
 
 ### Install letsencrypt, create and configure SSL cert
 ```bash
-sudo apt -y install python-letsencrypt-apache
+sudo apt -y install python3-certbot-apache
 sudo systemctl stop apache2
 sudo letsencrypt --authenticator standalone --installer apache --domains $(hostname)
 ```
