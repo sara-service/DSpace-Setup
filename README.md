@@ -131,9 +131,16 @@ sudo mkdir /dspace
 sudo chown dspace:dspace /dspace
 ```
 ```bash
+# install mirage2 deps locally
+sudo -H -u dspace sh -c 'wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash'
+sudo -H -u dspace bash -c 'export NVM_DIR="$HOME/.nvm" && source "$NVM_DIR/nvm.sh" && nvm install v8'
+sudo -H -u dspace bash -c 'export NVM_DIR="$HOME/.nvm" && source "$NVM_DIR/nvm.sh" && npm install -g bower grunt grunt-cli'
+```
+```bash
 # fix abdera dependency or else swordv2 will be broken
 cd /tmp/dspace-src && sed -i.orig 's/1.1.1/1.1.3/' dspace-swordv2/pom.xml
-sudo -H -u dspace sh -c 'cd /tmp/dspace-src && mvn -e clean package'
+# DEPRECATED sudo -H -u dspace sh -c 'cd /tmp/dspace-src && mvn -e clean package'
+sudo -H -u dspace bash -c 'export GEM_HOME=/var/lib/gems/2.5.0 && export GEM_PATH=/var/lib/gems/2.5.0 && export NVM_DIR="$HOME/.nvm" && source "$NVM_DIR/nvm.sh" && cd /tmp/dspace-src && mvn -e clean package -Dmirage2.on=true -Dmirage2.deps.included=false'
 sudo -H -u dspace -- sh -c 'cd /tmp/dspace-src/dspace/target/dspace-installer; ant fresh_install'
 ```
 ```bash
