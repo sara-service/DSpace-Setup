@@ -82,7 +82,7 @@ sudo apt-get -y upgrade
 ```
 ```bash
 # Clone this setup from git
-git clone -b Tuebingen https://git.uni-konstanz.de/sara/DSpace-Setup.git
+git clone -b DSpace5 https://git.uni-konstanz.de/sara/DSpace-Setup.git
 sudo cp ~/DSpace-Setup/config/vimrc.local /etc/vim/vimrc.local
 ```
 
