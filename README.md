@@ -90,7 +90,7 @@ sudo cp ~/DSpace-Setup/config/vimrc.local /etc/vim/vimrc.local
 
 ```bash
 sudo apt-mark hold openjdk-11-jre-headless
-sudo apt-get -y install python openjdk-8-jdk maven ant postgresql postgresql-contrib curl wget haveged
+sudo apt-get -y install python openjdk-8-jdk maven ant postgresql postgresql-contrib curl wget haveged ruby-compass ruby-sass
 ```
 ### Postgres
 ```bash
