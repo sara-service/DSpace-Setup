@@ -285,7 +285,7 @@ sudo systemctl stop apache2
 sudo systemctl start apache2
 ```
 
-### Update DSpace local.cfg
+### Update DSpace Config
 
 Now you need to remove the local port 8080 and the http in the dspace config:
 ```bash
