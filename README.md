@@ -211,6 +211,8 @@ curl -H "on-behalf-of: $USER3" -i $DSPACE_SERVER/swordv2/servicedocument --user 
 # Stop tomcat
 sudo systemctl stop tomcat
 
+# Enable Mirage2 Themes
+cat /home/ubuntu/DSpace-Setup/config/xmlui.xconf             | sudo -u dspace sh -c 'cat > /dspace/config/xmlui.xconf'
 # Apply customized item submission form
 cat /home/ubuntu/DSpace-Setup/config/item-submission.xml     | sudo -u dspace sh -c 'cat > /dspace/config/item-submission.xml'
 cat /home/ubuntu/DSpace-Setup/config/input-forms.xml         | sudo -u dspace sh -c 'cat > /dspace/config/input-forms.xml'
