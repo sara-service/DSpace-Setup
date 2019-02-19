@@ -399,5 +399,4 @@ Also, in Tomcat's `server.xml`, change all `<Connector>`s to add `address="127.0
 
 ### Troubleshooting 
 
-* TomCat8 needs Java 1.8 and JDK8
-* DSpace 5.9 and 5.10 have broken RESTv2, you need to apply a fix to pull abdera version 1.1.3 instead of 1.1.1 in the pom.xml. See https://github.com/DSpace/DSpace/pull/2271
+* DSpace 5/6 has broken RESTv2, you need to apply a fix to pull abdera version 1.1.3 instead of 1.1.1 in the pom.xml. See https://github.com/DSpace/DSpace/pull/2271
