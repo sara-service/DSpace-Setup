@@ -314,12 +314,12 @@ curl -H "on-behalf-of: $USER3" -i $DSPACE_SERVER/swordv2/servicedocument --user 
 ### Cron job for cert renewal
 *untested*
 ```
-sudo cat << EOF > /etc/cron.d/letsencrypt
+sudo sh -c 'cat << EOF > /etc/cron.d/letsencrypt
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
 0 */12 * * * root test -x /usr/bin/certbot -a \! -d /run/systemd/system && perl -e 'sleep int(rand(43200))' && /etc/init.d/apache2 stop && letsencrypt renew && /etc/init.d/apache2 start
-EOF
+EOF'
 ```
 
 ### Stability optimizations
