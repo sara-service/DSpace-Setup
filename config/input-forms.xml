@@ -674,6 +674,10 @@ it, please enter the types and the actual numbers or codes.</hint>
        <stored-value>Faculty of Computer Science</stored-value>
      </pair>
      <pair>
+       <displayed-value>Faculty of Education</displayed-value>
+       <stored-value>Faculty of Education</stored-value>
+     </pair>
+     <pair>
        <displayed-value>Faculty of Science and Technology</displayed-value>
        <stored-value>Faculty of Science and Technology</stored-value>
      </pair>
